@@ -1,0 +1,43 @@
+{
+  "name": "@mini-app/shell",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "dist",
+    "skill",
+    "lib/types",
+    "README.md",
+    "!**/*.tsbuildinfo"
+  ],
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@mini-app/host": "workspace:^",
+    "@mini-app/panel": "workspace:^",
+    "@mini-app/runtime-pi": "workspace:^",
+    "@mini-app/runtime-provider": "workspace:^",
+    "esbuild": "^0.28.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0"
+  }
+}

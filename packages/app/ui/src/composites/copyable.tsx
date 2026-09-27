@@ -1,0 +1,44 @@
+
+import * as React from 'react'
+import { Check, Copy } from 'lucide-react'
+
+import { Button } from '@mini-app/ui/components/button'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@mini-app/ui/components/input-group'
+import { useLabels } from '@mini-app/ui/i18n/context'
+import { writeClipboard } from '@mini-app/ui/lib/clipboard'
+
+/**
+ * Inline text with a copy button.
+ * @when IDs, hashes, URLs, tokens the user pastes elsewhere.
+ * @example
+ * <Copyable value="i_1724918400" />
+ * @family Discovery & inspect
+ */
+export function Copyable({ value }: { value: string }) {
+  const t = useLabels('copyable')
+  const [copied, setCopied] = React.useState(false)
+  return (
+    <InputGroup data-testid="copyable">
+      <InputGroupInput readOnly value={value} />
+      <InputGroupAddon align="inline-end">
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          type="button"
+          aria-label={t.copy}
+          onClick={async () => {
+            if (!(await writeClipboard(value))) return
+            setCopied(true)
+            window.setTimeout(() => setCopied(false), 1200)
+          }}
+        >
+          {copied ? <Check /> : <Copy />}
+        </Button>
+      </InputGroupAddon>
+    </InputGroup>
+  )
+}

@@ -1,0 +1,17 @@
+[package]
+name = "mini-app-window"
+version = "1.0.0"
+edition = "2021"
+description = "Mohou panel window (launcher). Loads the loopback origin; not part of @mini-app/shell."
+publish = false
+
+[dependencies]
+tauri = "2"
+url = "2"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+signal-hook = { version = "0.3", features = ["iterator"] }
+
+[build-dependencies]
+tauri-build = "2"

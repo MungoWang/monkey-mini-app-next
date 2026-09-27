@@ -1,0 +1,47 @@
+
+import { useDropzone } from 'react-dropzone'
+
+import { cn } from '@mini-app/ui/lib/utils'
+import { useLabels } from '@mini-app/ui/i18n/context'
+import { Attachment, AttachmentContent, AttachmentTitle } from '@mini-app/ui/components/attachment'
+
+/**
+ * Drag-drop + click file picker.
+ * @when Getting a local File into the app (then upload via `ctx.http` in the api layer).
+ * @example
+ * <FileDropzone onFiles={(fs) => set(fs)} />
+ * @family Form
+ */
+export function FileDropzone({
+  files,
+  onFiles,
+}: {
+  files?: File[]
+  onFiles?: (files: File[]) => void
+}) {
+  const t = useLabels('fileDropzone')
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: accepted => onFiles?.(accepted),
+  })
+  return (
+    <div className="flex flex-col gap-2" data-testid="file-dropzone">
+      <div
+        {...getRootProps()}
+        className={cn(
+          'flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed px-4 py-8 text-sm text-muted-foreground',
+          isDragActive && 'border-primary bg-muted/40'
+        )}
+      >
+        <input {...getInputProps()} />
+        {t.drop}
+      </div>
+      {files?.map(file => (
+        <Attachment key={file.name}>
+          <AttachmentContent>
+            <AttachmentTitle>{file.name}</AttachmentTitle>
+          </AttachmentContent>
+        </Attachment>
+      ))}
+    </div>
+  )
+}

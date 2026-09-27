@@ -1,0 +1,17 @@
+# Git hooks. Local checkpoints stay narrow; CI owns a wider matrix when one exists.
+# Install: node scripts/install-lefthook.mjs (postinstall).
+
+pre-commit:
+  jobs:
+    - name: lint (staged)
+      glob: '*.{ts,tsx,mts,cts}'
+      run: pnpm exec oxlint --config .oxlintrc.staged.json --no-error-on-unmatched-pattern --fix {staged_files}
+      stage_fixed: true
+
+    - name: whitespace (staged)
+      run: git diff --cached --check
+
+pre-push:
+  jobs:
+    - name: typecheck
+      run: pnpm run typecheck

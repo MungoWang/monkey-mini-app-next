@@ -1,0 +1,16 @@
+node_modules/
+**/lib/types/
+dist/
+artifacts/
+packages/launcher/tauri/target/
+packages/host/vendor/
+packages/shell/skill/
+coverage/
+*.tsbuildinfo
+.pnpm-store/
+pnpm-debug.log
+.DS_Store
+.env
+.idea
+.vscode/
+tmp/

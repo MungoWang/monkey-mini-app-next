@@ -1,0 +1,112 @@
+---
+status: locked
+updated: 2026-09-23
+---
+
+# Product decisions
+
+One fact per bullet. Feature pages under `docs/product/` rely on these sentences. The index is `docs/product/features.md`.
+
+- The product is a local mini-app platform for the machine owner. A mini-app runs with the host user's privileges. The iframe isolates a crashed view from the panel. It does not confine what the app can do on the machine.
+- The product runs on macOS and Windows. A feature that cannot is named on its page. It is not assumed to be macOS-only.
+- Shell is the only process that constructs Host. Panel never constructs Host. Panel talks to Host only over HTTP.
+- Adapters that embed this platform in another agent product are out of scope.
+- Host does not embed a model provider. Shell injects a runtime provider at boot. That provider supplies `llm` and `agent` only.
+- There is no `ctx.tool` and no `listTools`. Tools stay on the runtime provider. Switching model does not change the tool set. Switching provider replaces the brain, and the new provider's tool set is the one that runs. The authoring tool catalog is never part of an in-app agent tool set.
+- `ctx.mcp(serverId, toolName, args)` is the only external-tool call. Args are the tool's own object, never wrapped as `{ input: string }`.
+- `ctx.llm` and `ctx.agent` return string. `ctx.http` returns `{ ok, status, headers, text, json }`. `ctx.bash` returns `{ stdout, stderr, exitCode }`.
+- A missing config file is bootstrapped to a complete `host.json`. A present but corrupt config fails loud. Load does not fill missing fields and does not skip a bad file.
+- Authoring MCP exposes only platform authoring tools, not the app `ctx` capability bag. It does not re-export external MCP servers. `ctx.mcp` does not see authoring tools.
+- UI imports are `react`, the UI kit, `lodash`, `lodash-es`, `motion`, `motion/react`, and relative paths inside the app that are not `api/**` and not `main.api.ts`.
+- Backend imports are `defineApp` from the backend contract, `lodash`, `lodash-es`, Node built-ins, one library installed into that app, and relative paths inside the app that are not `ui/**`. The backend never imports `motion` or the UI kit. UI and `shared` do not import Node built-ins.
+- `shared/**` is pure isomorphic code: no React, no DOM, no `ctx`, no Node.
+- An app id is a reverse-DNS string matching `^[a-z][a-z0-9-]*(\.[a-z0-9-]+)+$`. The directory name and `manifest.id` are that same string. Branded id types at package boundaries are an architecture rule, not a user-facing id format.
+- The runtime root defaults to `~/.mini-app/runtime`. Apps live in `apps/<appId>/`. Config is `host.json` in that root. Custom host themes live in `~/.mini-app/themes/`. MCP servers live in `mcp.json` in the runtime root. There is no fallback into another product's home directory.
+- The runtime provider id `echo` is always registered. `echo` returns the prompt from `llm` and the goal from `agent`, reports healthy, and exposes no tools.
+- Deleting a whole app is a panel user action. The directory is moved to trash, not removed, so the delete can be undone. There is no authoring unregister tool. Authors do not delete the app directory.
+- `mini_app_register` takes manifest fields and returns the absolute app directory and the absolute paths of the files the app still needs. It does not take file bytes. The agent creates, reads, updates, and deletes those files with its own file tools.
+- The agent does not commit. A successful reload of a dirty tree commits that tree. A failed reload does not. After that reload, the agent exercises the app with host tools. A later source edit is committed by the next successful reload.
+- Compile success is not proof the view runs. Runtime diagnostics are a host channel. They never mix into `ctx.push`.
+- The platform-module allowlist is one table owned by Host. The UI compiler, the backend loader, and the vendor file route all read that table.
+- `mini_app_install` is the only writer of an app `package.json`. It always installs with scripts ignored, strips a `scripts` field on write, and resolves extra modules only from that app's `node_modules`.
+- A corrupt storage file is quarantined and the call fails. It is never read back as an empty object.
+- A theme file that lacks `background`, `foreground`, or `primary` in either mode is omitted from the palette list and reported as ignored. It is not applied. A short name does not count.
+- Saving a runtime provider writes config. The live brain changes only when Shell restarts Host.
+- A missing `mcp.json` means zero external servers, and the app still boots. A present but invalid `mcp.json` fails Host boot.
+- Authoring MCP and the HTTP tool invoke route require a loopback token. App iframe routes and panel data routes are loopback-only and carry no token.
+- History is one branch per app. The only history-moving authoring tool makes the working tree match a snapshot and keeps a backup ref. There is no revert tool. A successful tree change tells an open view to refetch. Snapshots exclude `storage/`, history metadata, `node_modules/`, `theme.json`, `logs/`, `dist/`, `.cache/`, and `.autogen/`. `coverage/` is not one of those names.
+- App UI colour is design tokens. The host does not reject a hex literal at compile time. The author skill forbids hex in app UI, and view inspection is how an author confirms it.
+- Looks are recipes. There is no runtime look attribute and no class-string gate.
+- A keyframe name that collides with a platform name, or that is declared twice in one app, is a reload notice. Reload still succeeds.
+- A synchronous infinite loop in a view cannot be interrupted by a tool. The user reloads the browser tab.
+- `ctx.push` never fails the API call that emitted it. A non-JSON payload is dropped.
+- HTTP 4xx and 5xx do not throw. A non-http(s) URL, a timeout, an oversize body, and a network failure throw.
+- A non-zero `ctx.bash` exit does not throw. A missing shell throws.
+- `schema` on `ctx.llm` and `ctx.agent` does not change the return type. The caller parses the string.
+- `ctx.llm` and `ctx.agent` with `stream: true` return a pull stream. The method reads it. Those events are not copied onto `streamCall`. `streamCall` yields only what the method yields. Awaiting it is the method return.
+- Credentials are a read provider Shell injects. The author lists names and descriptions. The app gets one secret by that name. The panel has no credential editor. An absent name is `undefined`. One account is one name.
+- First-run approval of installed npm packages is not part of this product. Sharing or installing third-party mini-app packages is not part of this product.
+- `date-fns` and `zod` are not platform modules.
+- Platform chrome strings exist in `en` and `zh-CN`. A new chrome string lands in both locales in the same change.
+- Panel history is read-only. Rollback is an authoring tool.
+- Storage writes are never blocked by a size notice. When a notice exists, it names the table and the heaviest keys. The byte threshold is host policy and is not locked.
+- Host serves the app iframe. Panel embeds that iframe and is cross-origin to it, so Panel cannot read the iframe DOM. Shell relays theme variables and view queries with `postMessage` because Shell owns the parent frame.
+- A successful reload tells an already-open iframe to refetch. Switching tabs does not refetch.
+- The host clears boot art before the app component mounts and injects the error boundary. Authors do not wrap their own.
+- The UI bundle keeps component names so a render error names the author's component.
+- Reload runs an undefined-identifier pass. If that parser cannot load, reload continues and records a notice.
+- Reload clears the per-app error ring and the view-alive marker. The previous document does not vouch for the new one.
+- A view-query id is issued by Host, bound to one app id, and consumed by the first answer.
+- Diagnostic posts from the iframe answer `204` even when the body is malformed, the app id is unknown, or the payload is oversized.
+- An in-app agent run is isolated from the user's chat session and is disposed when it finishes.
+- Agent working-directory mode defaults to the host process directory. A path with no mode means custom. A path plus a non-custom mode fails the call.
+- Call shapes are the app contract. Timeouts, body caps, retry counts, token caps, buffer sizes, ping intervals, ports, and locale defaults are host policy. Host resolves them once at the boundary. An omitted caller option uses that resolved policy. A caller option outside the resolved bound fails that call. The contract does not embed the number. Previously copied numbers are not locked.
+- A caller that branches on a failure matches a closed code from [docs/product/implementation.md](../product/implementation.md). The message is for a person. A message prefix is not the contract.
+- One SQLite file per app. The directory and file names live in one layout module, not at each call site. The file is `storage/app.sqlite`. Host table `kv` holds JSON values. App tables come from `schema/`. There is no second storage file and no JSON table file.
+- Layout presets take nodes. They do not fetch, store, or route. There is no `Stack`, `Text`, or `Box` component.
+- `RichTextEditor` is a local editor. `CodeEditor`, `CodeBlock`, and `DiffViewer` load their engine on demand and degrade when that fetch fails. Authors do not import those engines.
+- Illustration accent colour is `--primary-svg-color`, which resolves to `--primary`. Illustration assets contain no hard-coded hex.
+- A custom theme id matches `^[a-z0-9-]+$`. Following the host palette while an app `theme.css` exists is a stored sentinel, not deletion of the pin file.
+- The first HTML response for an app that ships `theme.css` already contains that file's resolved variables.
+- The theme picker refetches custom palettes each time it opens.
+- A settings form with unsaved edits asks before close and before restore.
+- Host port in settings is an integer from 1024 to 65535. A saved port applies on the next Host start.
+- An update check that fails is shown. It does not block the panel.
+- When Host is unreachable, the panel shows that error. It does not present an empty gallery as if the user had no apps.
+- A provider probe in Settings does not switch the live brain.
+- The authoring token is created at bootstrap if missing, stored at `authoring.token` in the runtime root, and is not a field of `host.json`.
+- `npm` is required on `PATH` only for `mini_app_install`. The install has a timeout. The duration is host policy and is not locked.
+- The install denylist is `react`, `react-dom`, `lodash`, `lodash-es`, `axios`, `typescript`, `motion`, `framer-motion`, and any package under the platform scope. The error names the replacement (`ctx.http`, the UI kit, or the platform `motion` import).
+- Facades ship without `package.json`. Absence means the closed loader and no install step.
+- The lockfile is part of history. `node_modules` is not.
+- Arguments to an API method are untrusted. The method validates them.
+- Event names shared by UI and backend are declared once in `shared/`.
+- `useApp()` runs inside the host wrapper. Outside that wrapper, `call` throws.
+- Author events use one stream per app id. With no stream implementation, the hooks are inert and the UI still renders.
+- The host event stream is not an author channel. An author cannot subscribe to another app's events.
+- A replay gap tells the UI to refetch a snapshot. The UI does not treat the gap as a silent skip.
+- Author events keep a per-app buffer. The error ring keeps a per-app cap. A view query stops on bytes, nodes, depth, or time, and the result shows which bound fired. Those sizes and durations are host policy and are not locked.
+- Reaching an external system prefers `ctx.http`, then `ctx.bash`, then `ctx.mcp`, then a backend library install. HTTP is not done by shelling out to a client.
+- MCP and the HTTP tool API are projections of one authoring implementation. If they disagree, the authoring implementation wins.
+- Settings has one language control. It writes `locale` and `chatLanguage` to the same value.
+- The model default the app inherits is `runtimeProvider.config.provider` and `runtimeProvider.config.model`. `ctx.config.llm` mirrors that pair. There is not a second, divergent default.
+- `ctx.config` exposes `theme`, `palette`, `locale`, `chatLanguage`, `hostPort`, and `llm`. It does not expose secrets, the authoring token, or MCP server environment.
+- An app agent working directory of `app` is that app's directory. `process` is the directory Shell started in. `temp` is a fresh temporary directory for that run. `custom` is the absolute path the caller passed.
+- A palette is a theme file. Shipped themes and custom themes use the same token contract. A user file with the same id replaces the shipped file. Appearance is `system`, `light`, or `dark`. `system` is a preference; resolving it for storage would stop following the OS. The runner sets `data-mode` from that preference.
+- Gallery card styles are `glass`, `stamp`, `etch`, `hero`, `pulse`, and `list`. The shipped Shell window hides close-panel because the panel is the window. The panel has no dock mode.
+- `mini_app_call` accepts one method or a batch of at most 20 calls, run in order. One failure does not hide the others.
+- `mini_app_open` returns `panel: "notified"` or `panel: "no-panel-connected"`. The second value means the app is fine and no panel is attached.
+- View states are `live`, `not-open`, `runner-not-booted`, `pending`, and `stuck`. `pending` means the view is healthy and the query is still running. Only `stuck` means the main thread is blocked.
+- The injected view helpers are exactly `mma.$`, `mma.$$`, and `mma.selector`. No fourth name is added. Omitting `code` returns `mma.$("#root")`.
+- `CodeEditor` degrades to a plain text area when its engine cannot load. `CodeBlock` and `DiffViewer` render unhighlighted text in that case. The page does not fail closed.
+- Icons are `Icon.<name>` from the UI kit, using the icon set's existing names. The ten illustrations are `IlluEmpty`, `IlluNoData`, `IlluSearch`, `IlluLoading`, `IlluServerStatus`, `IlluAccessDenied`, `IlluPageNotFound`, `IlluDataProcessing`, `IlluBugFixing`, and `IlluCodeReview`.
+- Layout presets are `ListDetail`, `TablePage`, `DashboardShell`, `SettingsSplit`, `WizardShell`, and `FormSheet`.
+- Facades, cut by interaction loop, are `minimal`, `today`, `board`, `radar`, `sheets`, `runner`, `chores`, and `watch`. Looks are `glass-island`, `aurora-bento`, `desk-split`, `editorial`, `tape`, `void`, `signage`, and `terminal`. Conventional kit chrome is not a Look.
+- A new facade requires a new interaction loop. A new Look is an opt-in recipe, not a new app.
+- `Reveal` honours reduced-motion and is demonstrated on `watch` only.
+- Live metric views stop their timer when the document is hidden.
+- Long jobs check `ctx.signal` between batches, persist a snapshot, and push progress. The UI subscribes. It does not poll.
+- The skill's component catalog is generated from the UI kit. A hand-written catalog is not the contract.
+- The author skill documents MCP-mounted authoring tools only. It does not name `mini_app_write`, `mini_app_edit`, or `mini_app_delete`. Those stay on HTTP invoke. Agents edit app source with their own file tools; a successful reload commits a dirty tree.
+- The skill may ship `bin/diagnose` to report Host about, authoring MCP, tool names, skill version, and runtime root when authoring tools fail. It is not a boot gate and not an authoring tool. It does not scan assistant mcp.json files.
+- Instructions in the author skill are English. Strings a mini-app renders follow the host locale, with `zh-CN` and `en` copies in the facades.

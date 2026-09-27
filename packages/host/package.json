@@ -1,0 +1,61 @@
+{
+  "name": "@mini-app/host",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "themes",
+    "lib/types",
+    "README.md",
+    "!**/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build:vendor": "node --experimental-strip-types src/compile/build-vendor-cli.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./http": {
+      "types": "./src/http/layout.ts",
+      "default": "./src/http/layout.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@mini-app/app-view": "workspace:^",
+    "@mini-app/contract": "workspace:^",
+    "@mini-app/mcp-client": "workspace:^",
+    "@mini-app/runtime-provider": "workspace:^",
+    "@mini-app/ui": "workspace:^",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@tailwindcss/node": "^4.3.3",
+    "@tailwindcss/oxide": "^4.3.3",
+    "better-sqlite3": "^13.0.3",
+    "esbuild": "^0.28.2",
+    "hono": "^4.13.8",
+    "isomorphic-git": "^1.42.2",
+    "lodash": "^4.18.1",
+    "lodash-es": "^4.18.1",
+    "motion": "^12.23.12",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.3.3",
+    "tw-animate-css": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/react": "^19.2.0"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@mini-app/ui",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "lib/types",
+    "README.md",
+    "!**/*.tsbuildinfo"
+  ],
+  "main": "./src/index.ts",
+  "types": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": "./src/*",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@mini-app/app-view": "workspace:^",
+    "@mini-app/contract": "workspace:^",
+    "@base-ui/react": "^1.7.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@shadcn/react": "^0.3.1",
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.12",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "diff": "^9.0.0",
+    "lodash-es": "^4.18.1",
+    "lucide-react": "^0.544.0",
+    "motion": "^12.23.12",
+    "react": "^19.2.0",
+    "react-day-picker": "^10.0.1",
+    "react-dom": "^19.2.0",
+    "react-dropzone": "^20.1.1",
+    "react-markdown": "^10.1.0",
+    "react-resizable-panels": "^4.12.3",
+    "recharts": "^3.8.0",
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/diff": "^8.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0"
+  }
+}

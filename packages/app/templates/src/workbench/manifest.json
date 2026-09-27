@@ -1,0 +1,8 @@
+{
+  "id": "com.example.workbench",
+  "name": "工作台",
+  "description": "第一屏是今天要处理的事，应用列表在旁边",
+  "version": "0.1.0",
+  "entry": "ui.tsx",
+  "kind": "workbench"
+}

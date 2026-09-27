@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "composite": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": false,
+    "erasableSyntaxOnly": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": ["node"],
+    "paths": {
+      "@mini-app/values": ["./packages/util/values/src/index.ts"],
+      "@mini-app/app-view": ["./packages/app/view/src/index.ts"],
+      "@mini-app/app-view/css": ["./packages/app/view/src/app-card-css.ts"],
+      "@mini-app/contract": ["./packages/app/contract/src/index.ts"],
+      "@mini-app/ui": ["./packages/app/ui/src/index.ts"],
+      "@mini-app/ui/*": ["./packages/app/ui/src/*"],
+      "@mini-app/runtime-provider": ["./packages/runtime/provider/src/index.ts"],
+      "@mini-app/host": ["./packages/host/src/index.ts"],
+      "@mini-app/host/http": ["./packages/host/src/http/layout.ts"],
+      "@mini-app/mcp-client": ["./packages/mcp/client/src/index.ts"]
+    }
+  }
+}

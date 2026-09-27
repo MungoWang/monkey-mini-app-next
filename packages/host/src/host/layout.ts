@@ -1,0 +1,68 @@
+import path from 'node:path'
+
+/** Names under the runtime root. Spell them here, not at each call site. */
+export const hostLayout = {
+  config: 'host.json',
+  apps: 'apps',
+  trash: 'trash',
+  trashSep: '_',
+  authoringToken: 'authoring.token',
+  mcp: 'mcp.json',
+  logs: 'logs',
+  appLog: 'app.log',
+  activity: 'activity.json',
+} as const
+
+export function hostConfigPath(runtimeRoot: string): string {
+  return path.join(runtimeRoot, hostLayout.config)
+}
+
+export function hostAppsDir(runtimeRoot: string): string {
+  return path.join(runtimeRoot, hostLayout.apps)
+}
+
+export function hostTrashDir(runtimeRoot: string): string {
+  return path.join(runtimeRoot, hostLayout.trash)
+}
+
+export function hostAuthoringToken(runtimeRoot: string): string {
+  return path.join(runtimeRoot, hostLayout.authoringToken)
+}
+
+export function hostMcpPath(runtimeRoot: string): string {
+  return path.join(runtimeRoot, hostLayout.mcp)
+}
+
+/** Usage on this machine. Not source history. */
+export function hostActivityPath(runtimeRoot: string): string {
+  return path.join(runtimeRoot, hostLayout.activity)
+}
+
+/** Active app log. It sits at `apps/<appId>/logs/app.log`. */
+export function hostAppLogPath(runtimeRoot: string, appId: string): string {
+  return path.join(runtimeRoot, hostLayout.apps, appId, hostLayout.logs, hostLayout.appLog)
+}
+
+/** Product home. Themes sit beside the runtime root, not inside it. */
+export const homeLayout = {
+  dir: '.mini-app',
+  runtime: 'runtime',
+  themes: 'themes',
+  credentials: 'credentials.json',
+} as const
+
+export function homeDir(home: string): string {
+  return path.join(home, homeLayout.dir)
+}
+
+export function defaultRuntimeRoot(home: string): string {
+  return path.join(homeDir(home), homeLayout.runtime)
+}
+
+export function homeThemesDir(home: string): string {
+  return path.join(homeDir(home), homeLayout.themes)
+}
+
+export function homeCredentialsPath(home: string): string {
+  return path.join(homeDir(home), homeLayout.credentials)
+}

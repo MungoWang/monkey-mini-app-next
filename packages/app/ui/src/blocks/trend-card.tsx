@@ -1,0 +1,57 @@
+
+import type { ReactNode } from 'react'
+import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@mini-app/ui/components/chart'
+import { StatCard } from '@mini-app/ui/blocks/stat-card'
+
+export type TrendPoint = { label: string; value: number }
+
+const chartConfig = {
+  value: { label: 'Value', color: 'var(--primary)' },
+} satisfies ChartConfig
+
+/**
+ * KPI card with a trend series.
+ * @when Metric + direction over time. Metric only → `StatCard`.
+ * @example
+ * <TrendCard title="请求数" value="1.2k" trend="up" data={[{ value: 9 }, { value: 12 }]} />
+ * @family Chart & data
+ */
+export function TrendCard({
+  title,
+  value,
+  delta,
+  trend,
+  data,
+}: {
+  title: string
+  value: ReactNode
+  delta?: string
+  trend?: 'up' | 'down' | 'flat'
+  data: TrendPoint[]
+}) {
+  return (
+    <StatCard title={title} value={value} delta={delta} trend={trend}>
+      <ChartContainer config={chartConfig} className="h-[120px] w-full">
+        <LineChart data={data} accessibilityLayer>
+          <CartesianGrid vertical={false} />
+          <XAxis dataKey="label" tickLine={false} axisLine={false} />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <Line
+            dataKey="value"
+            type="monotone"
+            stroke="var(--color-value)"
+            strokeWidth={2}
+            dot={false}
+          />
+        </LineChart>
+      </ChartContainer>
+    </StatCard>
+  )
+}

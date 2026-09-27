@@ -1,0 +1,261 @@
+/** @vitest-environment jsdom */
+import { act } from 'react'
+import { createRoot } from 'react-dom/client'
+import { describe, expect, it } from 'vitest'
+
+import type { PanelClient } from '../src/gallery/client.ts'
+import type { HistoryClient } from '../src/history/client.ts'
+import type { PanelSettingsClient } from '../src/settings/client.ts'
+import type { StorageClient } from '../src/storage/client.ts'
+import { PanelSurface, type PanelControls } from '../src/surface/view.tsx'
+import type { ThemeClient } from '../src/theme/client.ts'
+
+describe('PanelSurface', () => {
+  it('hides sections without a client and opens the app Shell names', async () => {
+    const host = document.createElement('div')
+    document.body.append(host)
+    const root = createRoot(host)
+    let controls: PanelControls | undefined
+    await act(async () => {
+      root.render(<PanelSurface
+        client={client()}
+        locale="en"
+        mode="production"
+        shell="standalone"
+        onControls={(value) => { controls = value }}
+      />)
+    })
+    expect(host.textContent).toContain('Library')
+    expect(document.title).toBe('Mohou')
+    expect(host.textContent).not.toContain('Settings')
+    await act(async () => {
+      controls?.showApp('com.example.todo', 'Todo')
+    })
+    expect(host.textContent).toContain('Todo')
+    await act(async () => {
+      controls?.unavailable('com.example.todo')
+    })
+    expect(host.textContent).toContain('Host is unreachable')
+    root.unmount()
+    host.remove()
+  })
+
+  it('shows the other sections when their clients exist', async () => {
+    const host = document.createElement('div')
+    document.body.append(host)
+    const root = createRoot(host)
+    let controls: PanelControls | undefined
+    let closed = false
+    await act(async () => {
+      root.render(<PanelSurface
+        client={client()}
+        settings={settings()}
+        history={history()}
+        storage={storage()}
+        theme={theme()}
+        appId="com.example.todo"
+        locale="en"
+        mode="production"
+        shell="overlay"
+        versions="0.0.0"
+        onClosePanel={() => {
+          closed = true
+        }}
+        onControls={(value) => { controls = value }}
+      />)
+    })
+    expect(host.textContent).toContain('Close panel')
+    const close = [...host.querySelectorAll('button')].find(item => item.textContent === 'Close panel')
+    await act(async () => {
+      close?.click()
+    })
+    expect(closed).toBe(true)
+    expect(host.textContent).toContain('Settings')
+    await act(async () => {
+      controls?.showApp('com.example.todo', 'Todo')
+    })
+    for (const name of ['Settings', 'History', 'Theme', 'Storage']) {
+      const button = [...host.querySelectorAll('button')].find(item => item.textContent === name)
+      await act(async () => {
+        button?.click()
+      })
+      if (name === 'Settings') {
+        const about = host.querySelector('button[data-nav="about"]')
+        await act(async () => {
+          about?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+        })
+        expect(host.textContent).toContain('0.0.0')
+        expect(host.textContent).toContain('Mohou')
+        expect(host.textContent).toContain('grind ink')
+      }
+    }
+    await act(async () => {
+      controls?.showNotice('com.example.todo', 'kv')
+    })
+    expect(host.textContent).toContain('kv')
+    root.unmount()
+    host.remove()
+  })
+
+  it('reads history for the focused app, not the injected id', async () => {
+    const seen: string[] = []
+    const host = document.createElement('div')
+    document.body.append(host)
+    const root = createRoot(host)
+    let controls: PanelControls | undefined
+    await act(async () => {
+      root.render(<PanelSurface
+        client={client()}
+        history={{
+          readHistory: (appId) => {
+            seen.push(appId)
+            return new Promise(() => undefined)
+          },
+          readCommit: () => new Promise(() => undefined),
+        }}
+        appId="com.example.todo"
+        locale="en"
+        mode="production"
+        shell="standalone"
+        onControls={(value) => { controls = value }}
+      />)
+    })
+    await act(async () => {
+      controls?.showApp('com.example.other', 'Other')
+    })
+    const button = [...host.querySelectorAll('button')].find(item => item.textContent === 'History')
+    await act(async () => {
+      button?.click()
+    })
+    expect(seen).toEqual(['com.example.other'])
+    root.unmount()
+    host.remove()
+  })
+
+  it('shows the default workbench in the slot and clears it from the host event', async () => {
+    const host = document.createElement('div')
+    document.body.append(host)
+    const root = createRoot(host)
+    let controls: PanelControls | undefined
+    const policy = {
+      theme: 'light' as const,
+      palette: 'default',
+      locale: 'en' as const,
+      chatLanguage: 'en',
+      hostPort: 9743,
+      llm: null,
+      runtimeProvider: { id: 'echo' },
+      defaultWorkbenchId: 'com.example.desk',
+    }
+    await act(async () => {
+      root.render(<PanelSurface
+        client={{
+          list: () => Promise.resolve([{ id: 'com.example.desk', name: 'Desk', description: 'Home', version: '1', acronym: 'DE', kind: 'workbench' }]),
+          open: () => Promise.resolve(),
+          deleteApp: () => Promise.resolve(),
+        }}
+        settings={{
+          readPolicy: () => Promise.resolve(policy),
+          writePolicy: () => Promise.resolve({ policy, restartRequired: false }),
+          probe: () => Promise.resolve({ healthy: true }),
+        }}
+        locale="en"
+        mode="production"
+        shell="standalone"
+        frame={() => <span>desk-frame</span>}
+        onControls={(value) => { controls = value }}
+      />)
+    })
+    await act(async () => {
+      await Promise.resolve()
+    })
+    expect(host.textContent).toContain('desk-frame')
+    const written: Array<string | undefined> = []
+    await act(async () => {
+      controls?.setWorkbench('default')
+    })
+    expect(host.textContent).toContain('Library')
+    root.unmount()
+    host.remove()
+    const host2 = document.createElement('div')
+    document.body.append(host2)
+    const root2 = createRoot(host2)
+    await act(async () => {
+      root2.render(<PanelSurface
+        client={{
+          list: () => Promise.resolve([{ id: 'com.example.desk', name: 'Desk', description: 'Home', version: '1', acronym: 'DE', kind: 'workbench' }]),
+          open: () => Promise.resolve(),
+          deleteApp: () => Promise.resolve(),
+        }}
+        settings={{
+          readPolicy: () => Promise.resolve(policy),
+          writePolicy: (next) => {
+            written.push(next.defaultWorkbenchId)
+            const { defaultWorkbenchId: stored, ...rest } = next
+            void stored
+            return Promise.resolve({ policy: next.defaultWorkbenchId === 'default' ? rest : next, restartRequired: false })
+          },
+          probe: () => Promise.resolve({ healthy: true }),
+        }}
+        locale="en"
+        mode="production"
+        shell="standalone"
+        frame={() => <span>desk-frame</span>}
+      />)
+    })
+    await act(async () => {
+      await Promise.resolve()
+    })
+    const back = [...host2.querySelectorAll('button')].find(item => item.textContent === 'Library')
+    await act(async () => {
+      back?.click()
+      await Promise.resolve()
+    })
+    expect(written).toEqual(['default'])
+    expect(host2.textContent).toContain('Library')
+    expect(host2.textContent).not.toContain('desk-frame')
+    root2.unmount()
+    host2.remove()
+  })
+})
+
+function client(): PanelClient {
+  return {
+    list: () => new Promise(() => undefined),
+    open: () => Promise.resolve(),
+    deleteApp: () => Promise.resolve(),
+  }
+}
+
+function pending<T>(): Promise<T> {
+  return new Promise(() => undefined)
+}
+
+function settings(): PanelSettingsClient {
+  return {
+    readPolicy: () => pending(),
+    writePolicy: () => pending(),
+    probe: () => pending(),
+  }
+}
+
+function history(): HistoryClient {
+  return {
+    readHistory: () => pending(),
+    readCommit: () => pending(),
+  }
+}
+
+function storage(): StorageClient {
+  return {
+    readStorage: () => pending(),
+    readTable: () => pending(),
+  }
+}
+
+function theme(): ThemeClient {
+  return {
+    listPalettes: () => pending(),
+    setPin: () => pending(),
+  }
+}

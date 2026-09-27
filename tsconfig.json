@@ -1,0 +1,43 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "lib": ["es2024", "dom"],
+    "paths": {
+      "@mini-app/values": ["./packages/util/values/src/index.ts"],
+      "@mini-app/app-view": ["./packages/app/view/src/index.ts"],
+      "@mini-app/app-view/css": ["./packages/app/view/src/app-card-css.ts"],
+      "@mini-app/contract": ["./packages/app/contract/src/index.ts"],
+      "@mini-app/contract/event-type": ["./packages/app/contract/src/event-type.ts"],
+      "@mini-app/ui": ["./packages/app/ui/src/index.ts"],
+      "@mini-app/ui/*": ["./packages/app/ui/src/*"],
+      "@mini-app/runtime-provider": ["./packages/runtime/provider/src/index.ts"],
+      "@mini-app/runtime-pi": ["./packages/runtime/pi/src/index.ts"],
+      "@mini-app/host": ["./packages/host/src/index.ts"],
+      "@mini-app/host/http": ["./packages/host/src/http/layout.ts"],
+      "@mini-app/mcp-client": ["./packages/mcp/client/src/index.ts"],
+      "@mini-app/panel": ["./packages/panel/src/index.ts"],
+      "@mini-app/shell": ["./packages/shell/src/index.ts"]
+    }
+  },
+  "include": [
+    "packages/*/*/src/**/*.ts",
+    "packages/*/*/src/**/*.tsx",
+    "packages/*/*/tests/**/*.ts",
+    "packages/*/*/tests/**/*.tsx",
+    "packages/host/src/**/*.ts",
+    "packages/host/tests/**/*.ts",
+    "packages/panel/src/**/*.ts",
+    "packages/panel/src/**/*.tsx",
+    "packages/panel/tests/**/*.ts",
+    "packages/panel/tests/**/*.tsx",
+    "packages/shell/src/**/*.ts",
+    "packages/shell/src/**/*.tsx",
+    "packages/shell/tests/**/*.ts",
+    "apps/*/src/**/*.ts",
+    "apps/*/tests/**/*.ts"
+  ],
+  "exclude": ["packages/app/templates"]
+}

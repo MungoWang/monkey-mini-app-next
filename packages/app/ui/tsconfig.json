@@ -1,0 +1,15 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib/types",
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "jsx": "react-jsx",
+    "lib": ["es2024", "dom"],
+    "paths": {
+      "@mini-app/ui/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}

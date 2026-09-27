@@ -1,0 +1,6 @@
+# Editor text conventions: LF line endings and a trailing newline.
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true

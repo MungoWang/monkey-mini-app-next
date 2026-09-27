@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "extends": ["./.oxlintrc.json"],
+  "options": {
+    "typeAware": false
+  },
+  "ignorePatterns": [
+    "**/lib/**",
+    "**/node_modules/**",
+    ".claude/**",
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.config.ts",
+    "packages/app/ui/**"
+  ]
+}

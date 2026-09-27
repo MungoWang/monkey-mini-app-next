@@ -1,0 +1,44 @@
+{
+  "name": "@mini-app/root",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "scripts": {
+    "lint": "oxlint .",
+    "types": "tsc -b packages/util/values packages/app/contract packages/app/view packages/app/ui packages/runtime/provider packages/host packages/mcp/client packages/panel packages/shell --pretty false",
+    "typecheck": "tsc -p tsconfig.json --noEmit --pretty false && tsc -p packages/app/templates/tsconfig.json --noEmit --pretty false",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm run test:coverage && pnpm run check:skill",
+    "build:panel": "node --experimental-strip-types packages/shell/src/build-panel.ts",
+    "build:window": "cargo build --manifest-path packages/launcher/tauri/Cargo.toml",
+    "build:artifact": "node scripts/build/artifact.mjs",
+    "publish:check": "pnpm sync:skill && pnpm build:panel && node scripts/publish/packages.mjs",
+    "publish:packages": "pnpm sync:skill && pnpm build:panel && node scripts/publish/packages.mjs --publish",
+    "dev:host": "node scripts/run-host-loop.mjs -- node --experimental-strip-types packages/shell/src/dev.ts",
+    "gen:skill": "node scripts/gen/skill/index.mjs",
+    "sync:skill": "node scripts/sync/skill-into-shell.mjs",
+    "check:skill": "node scripts/check/skill.mjs",
+    "dist:local": "node scripts/local-app/index.mjs",
+    "dist:app": "node scripts/build/app.mjs",
+    "pack:source": "node scripts/pack/source.mjs",
+    "postinstall": "node scripts/install-lefthook.mjs"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^22.20.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "eslint-plugin-sonarjs": "^4.1.0",
+    "jsdom": "^30.0.1",
+    "lefthook": "^2.1.9",
+    "oxlint": "1.76.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "typescript": "^6.0.3",
+    "vitest": "4.1.11"
+  }
+}

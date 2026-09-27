@@ -1,0 +1,22 @@
+import { homedir } from 'node:os'
+import path from 'node:path'
+
+import { describe, expect, it } from 'vitest'
+
+import { builtinMcpAgents } from '../src/mcp-agents.ts'
+import { builtinSkillAgents } from '../src/skill-agents.ts'
+
+describe('assistant dest tables', () => {
+  it('points Claude MCP at ~/.claude.json unless CLAUDE_CONFIG_DIR is set', () => {
+    const home = homedir()
+    const agents = builtinMcpAgents(home, {})
+    expect(agents.find(agent => agent.id === 'claude')?.file).toBe(path.join(home, '.claude.json'))
+    const moved = builtinMcpAgents(home, { CLAUDE_CONFIG_DIR: '/tmp/claude-home' })
+    expect(moved.find(agent => agent.id === 'claude')).toMatchObject({
+      file: '/tmp/claude-home/.claude.json',
+      detectDir: '/tmp/claude-home',
+      format: 'claude',
+    })
+    expect(builtinSkillAgents(home, { CLAUDE_CONFIG_DIR: '/tmp/claude-home' }).find(agent => agent.id === 'claude')?.skillsDir).toBe('/tmp/claude-home/skills')
+  })
+})
