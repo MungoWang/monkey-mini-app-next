@@ -36,6 +36,8 @@ pnpm pack:source      # source tarball under artifacts/source-pack/ (no node_mod
 Node.js `^22.19.0 || >=24.0.0`. The root `package.json` pins `pnpm@11.7.0`.
 `tsconfig.base.json` sets `erasableSyntaxOnly` so typecheck refuses constructor parameter properties, enums, and namespaces. `pnpm dev:host` runs with `--experimental-strip-types`, which cannot transform those forms.
 
+GitHub Actions runs `pnpm build:panel`, `pnpm build:window`, then `pnpm run check` on macOS for every push and pull request. The workflow file is `.github/workflows/check.yml`.
+
 `pnpm install` runs `scripts/install-lefthook.mjs`. That script exits 0 when git hooks cannot be installed. Run it again with `node scripts/install-lefthook.mjs` after git metadata is present.
 
 `lefthook.yml` checks staged TypeScript with `.oxlintrc.staged.json` and checks staged whitespace before commit. It runs `pnpm run typecheck` before push.
