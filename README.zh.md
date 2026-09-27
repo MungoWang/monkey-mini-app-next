@@ -1,18 +1,24 @@
-# Mohou
+# 墨猴 · Mohou
 
 [English](README.md) | 中文
 
-给坐在键盘前的人用的小程序平台。三句话：
+[![check](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml/badge.svg)](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue)](package.json)
+[![node](https://img.shields.io/badge/node-22.19%20%7C%2024-339933)](package.json)
+[![pnpm](https://img.shields.io/badge/pnpm-11.7.0-F69220)](package.json)
+[![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-111111)](docs/architecture/decisions.md)
 
-1. 你说要什么，agent 把 app 写出来。不用先起一个 React 工程，不用配构建，不用开编辑器。
-2. app 不留在对话里。它跑在这台机器上。关掉会话，明天它还在库里，并且带着自己的历史。
-3. 攒下来的是你的：今日台子、阶段看板、信息雷达、表格对比、周五杂事的一个按钮，或者你自己排的首页。
+墨猴，独属于你的个人小程序创造和运行平台！
 
-这些 app 会回头用这台机器上的东西。`ctx.llm` 和 `ctx.agent` 走 Shell 启动时注入的 provider（Echo；装了 Pi 就是 Pi）。`ctx.mcp` 调你已经接好的 MCP。`ctx.bash` 在这台电脑上跑。
+- 一个小书童，提供笔墨纸砚让你熟悉的AI agent帮你构建自己的程序库和工作台。
+- 一个藏书阁，一套稳定可靠的运行框架，你尽情发挥你的想象力和创造力，它帮你运行和管理一切！即开即用！
+- 随心所欲的构建属于自己的日常工作生活的首页面板，不同的情景定制不同的工作台！
 
 ![面板里的阶段看板](docs/images/board.png)
 
 *阶段看板，从库里点开。上面是数量，下面四列，旁边一个让模型记工时的按钮。*
+
+这些 app 会回头用这台机器上的东西。`ctx.llm` 和 `ctx.agent` 走 Shell 启动时注入的 provider（Echo；装了 Pi 就是 Pi）。`ctx.mcp` 调你已经接好的 MCP。`ctx.bash` 在这台电脑上跑。
 
 ## 能做什么
 

@@ -1,18 +1,24 @@
-# Mohou
+# 墨猴 · Mohou
 
 English | [中文](README.zh.md)
 
-A mini-app platform for the person at the keyboard. Three sentences:
+[![check](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml/badge.svg)](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue)](package.json)
+[![node](https://img.shields.io/badge/node-22.19%20%7C%2024-339933)](package.json)
+[![pnpm](https://img.shields.io/badge/pnpm-11.7.0-F69220)](package.json)
+[![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-111111)](docs/architecture/decisions.md)
 
-1. You say what you want. The agent writes the app. You do not stand up a React project, a bundler, or an editor first.
-2. The app leaves the chat. It runs on this machine. Close the session and tomorrow it is still in the library, with its own history.
-3. What you keep is yours: a today desk, a stage board, a source radar, a spreadsheet diff, a button for Friday's chores, or a homepage you lay out yourself.
+Mohou. Your own place to make mini-apps, and to run them.
 
-Those apps call back into this machine. `ctx.llm` and `ctx.agent` use the provider Shell started (Echo, or Pi when it is installed). `ctx.mcp` calls an MCP server you already connected. `ctx.bash` runs on this computer.
+- It lays out the desk, so the agent you already use can build your library of programs and a workbench to go with it.
+- The shelves are steady. You invent. It runs them and looks after them. Open it and start.
+- Make the front page of your day however you like. A different situation gets a different workbench.
 
 ![A stage board in the panel](docs/images/board.png)
 
 *阶段看板, opened from the library. Counts on top, four columns under them, and a button that asks the model to log time.*
+
+Those apps call back into this machine. `ctx.llm` and `ctx.agent` use the provider Shell started (Echo, or Pi when it is installed). `ctx.mcp` calls an MCP server you already connected. `ctx.bash` runs on this computer.
 
 ## What you can build
 
