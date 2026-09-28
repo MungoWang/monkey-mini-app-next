@@ -39,7 +39,11 @@ pub fn shell_entry(prefix: &Path) -> PathBuf {
 /// `Contents/MacOS/<exe>` uses `Contents/Resources/prefix`. A sibling `prefix/` is the local layout.
 pub fn prefix_from_exe(exe: &Path) -> Option<PathBuf> {
     let dir = exe.parent()?;
-    for candidate in [dir.join("../Resources/prefix"), dir.join("prefix")] {
+    for candidate in [
+        dir.join("../Resources/prefix"),
+        dir.join("Resources/prefix"),
+        dir.join("prefix"),
+    ] {
         if shell_entry(&candidate).is_file() {
             return Some(fs::canonicalize(&candidate).unwrap_or(candidate));
         }
@@ -97,41 +101,126 @@ fn is_exec(path: &Path) -> bool {
 }
 
 pub fn find_node(path_env: &str, home: &Path) -> Option<PathBuf> {
-    for dir in path_env.split(path_sep()).filter(|dir| !dir.is_empty()) {
-        let candidate = Path::new(dir).join(node_file_name());
-        if is_exec(&candidate) {
-            return Some(candidate);
+    let candidates = node_candidates(path_env, home);
+    // Pi is an optional global peer. Prefer a Node that actually has it so a
+    // saved `runtimeProvider: pi` can boot. Otherwise keep the first Node.
+    candidates
+        .iter()
+        .find(|node| has_pi_peer(node, home))
+        .cloned()
+        .or_else(|| candidates.into_iter().next())
+}
+
+fn node_candidates(path_env: &str, home: &Path) -> Vec<PathBuf> {
+    let mut found = Vec::new();
+    let mut push = |candidate: PathBuf| {
+        if is_exec(&candidate) && !found.iter().any(|item| item == &candidate) {
+            found.push(candidate);
         }
+    };
+    for dir in path_env.split(path_sep()).filter(|dir| !dir.is_empty()) {
+        push(Path::new(dir).join(node_file_name()));
     }
     #[cfg(unix)]
-    if let Some(nvm) = nvm_node(home) {
-        return Some(nvm);
-    }
-    for dir in ["/opt/homebrew/bin", "/usr/local/bin"] {
-        let candidate = Path::new(dir).join(node_file_name());
-        if is_exec(&candidate) {
-            return Some(candidate);
+    {
+        for node in nvm_nodes(home) {
+            push(node);
         }
     }
-    let _ = home;
-    None
+    #[cfg(windows)]
+    {
+        for node in nvm_windows_nodes(home) {
+            push(node);
+        }
+        if let Some(programs) = std::env::var_os("ProgramFiles") {
+            push(PathBuf::from(programs).join("nodejs").join("node.exe"));
+        }
+    }
+    for dir in ["/opt/homebrew/bin", "/usr/local/bin"] {
+        push(Path::new(dir).join(node_file_name()));
+    }
+    found
+}
+
+/// Global module roots for one Node. Unix installs use `lib/node_modules`.
+/// Windows installs use the directory beside `node.exe`, and npm's user prefix.
+fn module_roots(node: &Path, home: &Path) -> Vec<PathBuf> {
+    let mut roots = Vec::new();
+    if let Some(dir) = node.parent() {
+        if let Some(prefix) = dir.parent() {
+            roots.push(prefix.join("lib/node_modules"));
+        }
+        roots.push(dir.join("node_modules"));
+        roots.push(dir.join("lib/node_modules"));
+    }
+    roots.push(home.join("AppData").join("Roaming").join("npm").join("node_modules"));
+    if let Some(appdata) = std::env::var_os("APPDATA") {
+        let prefixed = PathBuf::from(appdata).join("npm").join("node_modules");
+        if !roots.iter().any(|item| item == &prefixed) {
+            roots.push(prefixed);
+        }
+    }
+    roots
+}
+
+fn has_pi_peer(node: &Path, home: &Path) -> bool {
+    module_roots(node, home)
+        .iter()
+        .any(|global| pi_package(global, "pi-coding-agent").is_some())
+}
+
+fn pi_package(global: &Path, pkg: &str) -> Option<PathBuf> {
+    let direct = global.join("@earendil-works").join(pkg);
+    if direct.is_dir() {
+        return Some(direct);
+    }
+    let nested = global
+        .join("@earendil-works/pi-coding-agent/node_modules/@earendil-works")
+        .join(pkg);
+    nested.is_dir().then_some(nested)
+}
+
+fn version_nodes(root: &Path, file_name: &str) -> Vec<PathBuf> {
+    let Ok(entries) = fs::read_dir(root) else {
+        return Vec::new();
+    };
+    let mut names: Vec<_> = entries.filter_map(|entry| entry.ok()).collect();
+    names.sort_by_key(|entry| entry.file_name());
+    names.reverse();
+    names
+        .into_iter()
+        .filter_map(|entry| {
+            let name = entry.file_name();
+            let name = name.to_string_lossy();
+            if !(name.starts_with("v22") || name.starts_with("v24")) {
+                return None;
+            }
+            let candidate = entry.path().join(file_name);
+            is_exec(&candidate).then_some(candidate)
+        })
+        .collect()
 }
 
 #[cfg(unix)]
-fn nvm_node(home: &Path) -> Option<PathBuf> {
-    let root = home.join(".nvm/versions/node");
-    let entries = fs::read_dir(&root).ok()?;
-    let mut names: Vec<_> = entries.filter_map(|entry| entry.ok()).collect();
-    names.sort_by_key(|entry| entry.file_name());
-    names.into_iter().rev().find_map(|entry| {
-        let name = entry.file_name();
-        let name = name.to_string_lossy();
-        if !(name.starts_with("v22") || name.starts_with("v24")) {
-            return None;
-        }
-        let candidate = entry.path().join("bin").join("node");
-        is_exec(&candidate).then_some(candidate)
-    })
+fn nvm_nodes(home: &Path) -> Vec<PathBuf> {
+    version_nodes(&home.join(".nvm/versions/node"), "node")
+}
+
+#[cfg(windows)]
+fn nvm_windows_nodes(home: &Path) -> Vec<PathBuf> {
+    let mut roots = Vec::new();
+    if let Some(nvm_home) = std::env::var_os("NVM_HOME") {
+        roots.push(PathBuf::from(nvm_home));
+    }
+    roots.push(home.join("AppData").join("Roaming").join("nvm"));
+    if let Some(programs) = std::env::var_os("ProgramFiles") {
+        roots.push(PathBuf::from(programs).join("nvm"));
+    }
+    let mut nodes = Vec::new();
+    for root in roots {
+        nodes.extend(version_nodes(&root, "node.exe"));
+    }
+    nodes
 }
 
 pub fn prepend_path(path: &str, dir: &str) -> String {
@@ -189,7 +278,7 @@ fn launch_plan(prefix: &Path) -> Result<Launch, String> {
     let path = prepend_path(&base_path, &node_bin);
     let runtime = runtime_dir(prefix, std::env::var("MINI_APP_RUNTIME").ok().as_deref(), &home);
     fs::create_dir_all(&runtime).map_err(|error| format!("could not create runtime: {error}"))?;
-    link_pi_peers(prefix, &node);
+    link_pi_peers(prefix, &node, &home);
     Ok(Launch {
         node,
         path,
@@ -228,42 +317,60 @@ fn login_path() -> Option<String> {
         .map(|line| line.to_string())
 }
 
-#[cfg(unix)]
-fn link_pi_peers(prefix: &Path, node: &Path) {
-    let Some(global) = node
-        .parent()
-        .and_then(|bin| bin.parent())
-        .map(|root| root.join("lib/node_modules"))
-    else {
-        return;
-    };
+fn link_pi_peers(prefix: &Path, node: &Path, home: &Path) {
     let dest_root = prefix.join("node_modules/@earendil-works");
     if fs::create_dir_all(&dest_root).is_err() {
         return;
     }
+    let roots = module_roots(node, home);
     for pkg in ["pi-coding-agent", "pi-ai"] {
         let dest = dest_root.join(pkg);
-        let candidates = [
-            global.join("@earendil-works").join(pkg),
-            global
-                .join("@earendil-works/pi-coding-agent/node_modules/@earendil-works")
-                .join(pkg),
-        ];
-        if let Some(src) = candidates.iter().find(|path| path.is_dir()) {
-            let _ = fs::remove_file(&dest);
-            let _ = std::os::unix::fs::symlink(src, &dest);
-        } else if dest
-            .symlink_metadata()
-            .map(|meta| meta.file_type().is_symlink())
-            .unwrap_or(false)
-        {
-            let _ = fs::remove_file(&dest);
+        let src = roots.iter().find_map(|global| pi_package(global, pkg));
+        if let Some(src) = src {
+            place_peer_link(&dest, &src);
+        } else {
+            remove_peer_link(&dest);
         }
     }
 }
 
-#[cfg(not(unix))]
-fn link_pi_peers(_prefix: &Path, _node: &Path) {}
+fn remove_peer_link(dest: &Path) {
+    let Ok(meta) = dest.symlink_metadata() else {
+        return;
+    };
+    if meta.file_type().is_symlink() {
+        let _ = fs::remove_file(dest);
+        return;
+    }
+    // A Windows junction is a directory reparse point, not a symlink.
+    // remove_dir drops the link and leaves the target.
+    let _ = fs::remove_dir(dest);
+}
+
+fn place_peer_link(dest: &Path, src: &Path) {
+    remove_peer_link(dest);
+    #[cfg(unix)]
+    {
+        let _ = std::os::unix::fs::symlink(src, dest);
+    }
+    #[cfg(windows)]
+    {
+        if !junction(dest, src) {
+            let _ = std::os::windows::fs::symlink_dir(src, dest);
+        }
+    }
+}
+
+#[cfg(windows)]
+fn junction(dest: &Path, src: &Path) -> bool {
+    Command::new("cmd")
+        .args(["/C", "mklink", "/J"])
+        .arg(dest)
+        .arg(src)
+        .status()
+        .map(|status| status.success())
+        .unwrap_or(false)
+}
 
 fn spawn_sidecar(prefix: &Path) -> Result<Child, String> {
     let launch = launch_plan(prefix)?;
@@ -293,14 +400,61 @@ fn spawn_sidecar(prefix: &Path) -> Result<Child, String> {
         use std::os::unix::process::CommandExt;
         cmd.process_group(0);
     }
-    cmd.spawn()
-        .map_err(|error| format!("could not start Node: {error}"))
+    let child = cmd
+        .spawn()
+        .map_err(|error| format!("could not start Node: {error}"))?;
+    // process_group(0) keeps grandchildren killable, but then a dead parent
+    // does not take the sidecar with it. A watcher notices that and kills the group.
+    spawn_parent_watch(child.id());
+    Ok(child)
+}
+
+fn spawn_parent_watch(child_pid: u32) {
+    let parent = std::process::id();
+    #[cfg(unix)]
+    {
+        let script = format!(
+            "while kill -0 {parent} 2>/dev/null; do sleep 0.2; done; kill -TERM -{child_pid} 2>/dev/null; kill -KILL -{child_pid} 2>/dev/null"
+        );
+        let _ = Command::new("/bin/sh")
+            .arg("-c")
+            .arg(script)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn();
+    }
+    #[cfg(windows)]
+    {
+        let script = format!(
+            "while (Get-Process -Id {parent} -ErrorAction SilentlyContinue) {{ Start-Sleep -Milliseconds 200 }}; taskkill /PID {child_pid} /T /F | Out-Null"
+        );
+        let _ = Command::new("powershell")
+            .args(["-NoProfile", "-WindowStyle", "Hidden", "-Command", &script])
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn();
+    }
 }
 
 enum OriginRead {
-    Ready(Url),
+    Ready(Url, mpsc::Receiver<Url>),
     Exited(Option<i32>),
     TimedOut,
+}
+
+fn follow_origins(app: AppHandle, follow: mpsc::Receiver<Url>) {
+    thread::spawn(move || {
+        while let Ok(next) = follow.recv() {
+            let app_nav = app.clone();
+            let _ = app.run_on_main_thread(move || {
+                if let Some(window) = app_nav.get_webview_window("main") {
+                    let _ = window.navigate(next);
+                }
+            });
+        }
+    });
 }
 
 fn read_origin(stdout: impl std::io::Read + Send + 'static, child: &mut Child) -> OriginRead {
@@ -320,7 +474,7 @@ fn read_origin(stdout: impl std::io::Read + Send + 'static, child: &mut Child) -
     let started = Instant::now();
     loop {
         match rx.recv_timeout(Duration::from_millis(200)) {
-            Ok(url) => return OriginRead::Ready(url),
+            Ok(url) => return OriginRead::Ready(url, rx),
             Err(RecvTimeoutError::Timeout) => {
                 if started.elapsed() > READY_LIMIT {
                     return OriginRead::TimedOut;
@@ -379,6 +533,32 @@ pub fn stop_process(pid: u32) {
     });
 }
 
+/// Sidecar writes this, then exits 75. Install after it has released native modules.
+fn apply_pending_update(prefix: &Path, gui: bool) {
+    let path = prefix.join("update.json");
+    let Ok(text) = fs::read_to_string(&path) else {
+        return;
+    };
+    let value: serde_json::Value = match serde_json::from_str(&text) {
+        Ok(value) => value,
+        Err(_) => {
+            let _ = fs::remove_file(&path);
+            return;
+        }
+    };
+    let Some(args) = value.get("args").and_then(|item| item.as_array()) else {
+        let _ = fs::remove_file(&path);
+        return;
+    };
+    let args: Vec<String> = args.iter().filter_map(|item| item.as_str().map(str::to_string)).collect();
+    let npm = if cfg!(windows) { "npm.cmd" } else { "npm" };
+    let status = Command::new(npm).args(&args).current_dir(prefix).status();
+    let _ = fs::remove_file(&path);
+    if !status.map(|item| item.success()).unwrap_or(false) {
+        tell_user("Mohou could not install the update.", gui);
+    }
+}
+
 fn tell_user(message: &str, gui: bool) {
     eprintln!("{message}");
     if !gui {
@@ -407,6 +587,7 @@ pub fn supervise(
             app.exit(0);
             return;
         }
+        apply_pending_update(&prefix, gui);
         let mut child = match spawn_sidecar(&prefix) {
             Ok(child) => child,
             Err(message) => {
@@ -428,7 +609,10 @@ pub fn supervise(
             return;
         };
         let url = match read_origin(stdout, &mut child) {
-            OriginRead::Ready(url) => url,
+            OriginRead::Ready(url, follow) => {
+                follow_origins(app.clone(), follow);
+                url
+            }
             OriginRead::Exited(code) => {
                 pid.store(0, Ordering::SeqCst);
                 match child_stop(code) {
@@ -521,6 +705,19 @@ mod tests {
         let runtime = runtime_dir(&sibling, None, Path::new("/Users/me"));
         assert_eq!(runtime.file_name().unwrap(), "runtime");
         assert_eq!(runtime.parent().unwrap().file_name().unwrap(), "local");
+
+        let win = root.join("win/Mohou.exe");
+        let win_prefix = root.join("win/Resources/prefix/node_modules/@mini-app/shell/src");
+        fs::create_dir_all(&win_prefix).unwrap();
+        fs::write(win_prefix.join("dev.ts"), "export {}\n").unwrap();
+        fs::create_dir_all(win.parent().unwrap()).unwrap();
+        fs::write(&win, "").unwrap();
+        let win_found = prefix_from_exe(&win).unwrap();
+        assert!(is_app_bundle(&win_found));
+        assert_eq!(
+            runtime_dir(&win_found, None, Path::new("/Users/me")),
+            Path::new("/Users/me/.mini-app/runtime")
+        );
         let _ = fs::remove_dir_all(&root);
     }
 
@@ -544,6 +741,54 @@ mod tests {
         let joined = prepend_path("/usr/bin", &bin.display().to_string());
         assert!(joined.starts_with(&bin.display().to_string()));
         assert_eq!(prepend_path(&joined, &bin.display().to_string()), joined);
+
+        let plain = root.join("plain/bin");
+        let with_pi = root.join("with-pi/bin");
+        fs::create_dir_all(&plain).unwrap();
+        fs::create_dir_all(&with_pi).unwrap();
+        let plain_node = plain.join("node");
+        let pi_node = with_pi.join("node");
+        fs::write(&plain_node, "").unwrap();
+        fs::write(&pi_node, "").unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            for path in [&plain_node, &pi_node] {
+                let mut permissions = fs::metadata(path).unwrap().permissions();
+                permissions.set_mode(0o755);
+                fs::set_permissions(path, permissions).unwrap();
+            }
+        }
+        fs::create_dir_all(
+            root.join("with-pi/lib/node_modules/@earendil-works/pi-coding-agent"),
+        )
+        .unwrap();
+        let path = format!("{}:{}", plain.display(), with_pi.display());
+        assert_eq!(find_node(&path, &root).unwrap(), pi_node);
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn finds_pi_in_the_windows_user_npm_prefix() {
+        let root = std::env::temp_dir().join(format!("mohou-npm-prefix-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        let bin = root.join("bin");
+        fs::create_dir_all(&bin).unwrap();
+        let node = bin.join(if cfg!(windows) { "node.exe" } else { "node" });
+        fs::write(&node, "").unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let mut permissions = fs::metadata(&node).unwrap().permissions();
+            permissions.set_mode(0o755);
+            fs::set_permissions(&node, permissions).unwrap();
+        }
+        let home = root.join("home");
+        fs::create_dir_all(
+            home.join("AppData/Roaming/npm/node_modules/@earendil-works/pi-coding-agent"),
+        )
+        .unwrap();
+        assert_eq!(find_node(&bin.display().to_string(), &home).unwrap(), node);
         let _ = fs::remove_dir_all(&root);
     }
 }

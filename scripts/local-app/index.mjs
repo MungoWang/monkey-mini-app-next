@@ -115,7 +115,7 @@ Installed from workspace tarballs under \`artifacts/npm/\` (file: deps only for 
 - \`prefix/node_modules/@mini-app/shell/skill/\` — writing skill source (K≡S)
 - \`Mohou\` — app executable. It spawns the shell sidecar and opens the window
 - \`runtime/\` — created on first run (\`MINI_APP_RUNTIME\`)
-- \`run\` — execs \`Mohou\` (Windows: \`run.cmd\` starts the sidecar)
+- \`run\` — execs \`Mohou\` (Windows: \`run.cmd\` execs \`Mohou.exe\`)
 
 ## Run
 

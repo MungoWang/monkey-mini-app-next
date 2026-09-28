@@ -2,6 +2,8 @@
 
 Status: implemented
 
+Windows Pi linking is completed by [Windows launcher links Pi peers](./2026-09-28-windows-launcher-links-pi.md).
+
 ## Problem
 
 Installed Mohou.app only showed Echo. `host.json` asked for Pi, but `probePiRuntime` could not `import('@earendil-works/pi-coding-agent')` from the app prefix: the package is a global optional peer and ESM does not use `NODE_PATH`. Settings MCP "试连接" printed `fetch failed` for HTTPS servers because Finder launches Node without the shell's `NODE_USE_SYSTEM_CA`, so a private CA fails as self-signed. Stdio MCP commands such as `npx` also missed the Node bin directory on Finder's bare `PATH`.
