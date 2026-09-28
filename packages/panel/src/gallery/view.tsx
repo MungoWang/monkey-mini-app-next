@@ -1,5 +1,5 @@
 import { WorkbenchLibrary, workbenchEntries } from '@mini-app/app-view'
-import { Palette, RefreshCw, Search, Settings } from 'lucide-react'
+import { ArrowUpRight, Palette, RefreshCw, Search, Settings } from 'lucide-react'
 import { cloneElement, isValidElement, useEffect, useLayoutEffect, useReducer, useRef, useState, type ReactElement, type ReactNode } from 'react'
 
 import type { PanelLabelMode, PanelLocale } from '../labels.ts'
@@ -231,6 +231,22 @@ export function GalleryBody(props: {
           <span className="mma-dot" data-status={statusDot(kind)} />
           <span>{kind === 'unreachable' || kind === 'failed' ? label('host-unreachable') : label('status-ready')}</span>
           <span>{label('gallery-count').replaceAll('{n}', String(state.apps.length))}</span>
+          {desk === undefined ? null : (
+            <button
+              type="button"
+              className="mma-status-action"
+              data-open-workbench={desk.id}
+              aria-label={label('open-workbench-tab')}
+              title={label('open-workbench-tab-hint')}
+              onClick={() => {
+                const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === desk.id)
+                void openApp(props.client, desk.id, desk.name, dispatch, open)
+              }}
+            >
+              <span>{desk.name}</span>
+              <ArrowUpRight size={11} strokeWidth={2} />
+            </button>
+          )}
         </div>
       )}
       <div className="relative min-h-0 flex-1">

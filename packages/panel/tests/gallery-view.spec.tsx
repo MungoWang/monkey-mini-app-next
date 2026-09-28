@@ -87,6 +87,12 @@ describe('GalleryBody', () => {
     expect(slot).toContain('mma-app-frame')
     expect(slot).toContain('flex flex-col')
     expect(slot).not.toContain('>Library</h2>')
+    expect(slot).toContain('data-open-workbench="com.example.desk"')
+    expect(slot).toContain('aria-label="Open as tab"')
+    expect(slot).toContain('>Desk</span>')
+    expect(slot).toContain('Open this workbench in a tab for storage, history, and theme')
+    expect(grid).not.toContain('data-open-workbench=')
+    expect(markup(open, { defaultWorkbenchId: desk.id })).not.toContain('data-open-workbench=')
   })
 })
 

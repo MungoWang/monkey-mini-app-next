@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-27
+updated: 2026-09-28
 ---
 
 # Workbench
@@ -50,10 +50,12 @@ The stored id is the optional field `defaultWorkbenchId` on `host.json`. The fie
 
 The builtin library is one grid. Choosing a card opens a tab and does not change the slot. The grid does not put a label or a set-default control above a card. On the list home, a bar to the left of the toolbar lists the builtin library and every workbench app. That bar is hidden on an app tab. The slot changes from that bar, from the workbench tab action, or from `setDefaultWorkbench`. Those three write the same field. Saving another setting does not clear the field. Refresh on the list home reloads the workbench in the slot after it refreshes the list. Refresh on an app tab reloads that app and does not reload the slot.
 
+When a workbench fills the slot, the host status row names that workbench on the right. That name opens the same workbench as an app tab. It is not a second toolbar. History, storage, and the app theme pin live on an app tab, not on the slot. The builtin library has no such control. Opening again focuses the existing tab.
+
 A workbench tab shows `set as default workbench`. When that app is already the stored id, the action names the current default and does not write. The builtin library has no such action.
 
 The builtin library renders `WorkbenchLibrary` from `@mini-app/app-view`. It takes `apps` and `openApp`. The panel fills those from the owner list. A workbench app does not render that component. It calls `ctx.workbench` and composes its own page. `AppCard` is available. A card does not open an app. [UI kit](../app-contract/ui-kit.md) owns the card props.
 
 ## Implementation
 
-Role: definition in `@mini-app/contract`. `createAppWorkbench` in the host attaches `ctx.workbench` only for a live workbench app, and publishes `workbench:default` after a write. The panel renders `WorkbenchLibrary` for the builtin slot and that app's iframe when the stored id names a workbench. The home bar and the workbench-tab action write the same `host.json` field. The panel imports `@mini-app/app-view` and does not import the UI kit. Plan: [implementation.md](../implementation.md).
+Role: definition in `@mini-app/contract`. `createAppWorkbench` in the host attaches `ctx.workbench` only for a live workbench app, and publishes `workbench:default` after a write. The panel renders `WorkbenchLibrary` for the builtin slot and that app's iframe when the stored id names a workbench. The home bar and the workbench-tab action write the same `host.json` field. The status-row control opens the slot workbench through the same open path as a library card. The panel imports `@mini-app/app-view` and does not import the UI kit. Plan: [implementation.md](../implementation.md).
