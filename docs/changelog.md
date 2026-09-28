@@ -7,6 +7,14 @@ updated: 2026-09-28
 
 This page owns released version notes. The product version is the `version` field of `@mini-app/shell`. `@mini-app/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
 
+## 1.0.3
+
+A workbench tab shows pin plus current home / set as home, then a trash icon. Chrome hints use the panel tooltip instead of native `title`. The home desk switcher shows a grid icon on the builtin library and an acronym tile on each workbench.
+
+## 1.0.2
+
+App-tab set-default and delete are icons in their own block, with a short rule between them. An update confirm returns before the sidecar restarts, so a dropped connection is not a failed install.
+
 ## 1.0.1
 
 Settings, history, and storage open with a short rise instead of a hard fade. Local app bundles copy their tarballs to `~/.mini-app/packages` so an installed tarball build can see a newer pack.
