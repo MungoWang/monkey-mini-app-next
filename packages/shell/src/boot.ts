@@ -118,14 +118,18 @@ async function startHost(
       if (!isPortInUseError(error) || reopen === undefined) throw error
       const policy = host.policy
       await host.dispose()
+      const supervised = process.env.MINI_APP_SUPERVISED === '1'
       const decision = await resolvePortConflict({
         busyPort: error.busyPort,
         suggestedPort: error.suggestedPort,
         locale: policy.locale,
         mode: options.portConflict ?? 'prompt',
-        openWindow: options.portConflict === 'prompt' || options.portConflict === undefined
-          ? options.openWindow !== false
-          : false,
+        openWindow: supervised
+          ? false
+          : options.portConflict === 'prompt' || options.portConflict === undefined
+            ? options.openWindow !== false
+            : false,
+        ...supervised ? { onReady: (origin: string) => { console.log(origin) } } : {},
         ...options.windowSpawn === undefined ? {} : { windowSpawn: options.windowSpawn },
       })
       if (decision.kind === 'quit') throw error
