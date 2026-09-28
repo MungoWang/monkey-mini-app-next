@@ -278,7 +278,7 @@ fn launch_plan(prefix: &Path) -> Result<Launch, String> {
     let path = prepend_path(&base_path, &node_bin);
     let runtime = runtime_dir(prefix, std::env::var("MINI_APP_RUNTIME").ok().as_deref(), &home);
     fs::create_dir_all(&runtime).map_err(|error| format!("could not create runtime: {error}"))?;
-    link_pi_peers(prefix, &node, &home);
+    link_pi_peers(prefix, &node, &home, &base_path);
     Ok(Launch {
         node,
         path,
@@ -317,21 +317,39 @@ fn login_path() -> Option<String> {
         .map(|line| line.to_string())
 }
 
-fn link_pi_peers(prefix: &Path, node: &Path, home: &Path) {
+fn link_pi_peers(prefix: &Path, node: &Path, home: &Path, path_env: &str) {
     let dest_root = prefix.join("node_modules/@earendil-works");
     if fs::create_dir_all(&dest_root).is_err() {
         return;
     }
-    let roots = module_roots(node, home);
+    let roots = pi_search_roots(node, home, path_env);
     for pkg in ["pi-coding-agent", "pi-ai"] {
         let dest = dest_root.join(pkg);
-        let src = roots.iter().find_map(|global| pi_package(global, pkg));
-        if let Some(src) = src {
+        if let Some(src) = roots.iter().find_map(|global| pi_package(global, pkg)) {
             place_peer_link(&dest, &src);
-        } else {
-            remove_peer_link(&dest);
         }
     }
+}
+
+fn pi_search_roots(node: &Path, home: &Path, path_env: &str) -> Vec<PathBuf> {
+    let mut roots = module_roots(node, home);
+    let mut push = |root: PathBuf| {
+        if root.is_dir() && !roots.iter().any(|item| item == &root) {
+            roots.push(root);
+        }
+    };
+    for candidate in node_candidates(path_env, home) {
+        for root in module_roots(&candidate, home) {
+            push(root);
+        }
+    }
+    #[cfg(unix)]
+    if let Ok(entries) = fs::read_dir(home.join(".nvm/versions/node")) {
+        for entry in entries.flatten() {
+            push(entry.path().join("lib/node_modules"));
+        }
+    }
+    roots
 }
 
 fn remove_peer_link(dest: &Path) {
@@ -416,13 +434,18 @@ fn spawn_parent_watch(child_pid: u32) {
         let script = format!(
             "while kill -0 {parent} 2>/dev/null; do sleep 0.2; done; kill -TERM -{child_pid} 2>/dev/null; kill -KILL -{child_pid} 2>/dev/null"
         );
-        let _ = Command::new("/bin/sh")
-            .arg("-c")
-            .arg(script)
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .spawn();
+        // Own process group so a SIGKILL of Mohou does not take the watcher with it.
+        let _ = {
+            use std::os::unix::process::CommandExt;
+            Command::new("/bin/sh")
+                .arg("-c")
+                .arg(script)
+                .stdin(Stdio::null())
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .process_group(0)
+                .spawn()
+        };
     }
     #[cfg(windows)]
     {
