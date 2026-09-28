@@ -1,11 +1,15 @@
 ---
 status: locked
-updated: 2026-09-23
+updated: 2026-09-28
 ---
 
 # Changelog
 
 This page owns released version notes. The product version is the `version` field of `@mini-app/shell`. `@mini-app/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
+
+## 1.0.1
+
+Settings, history, and storage open with a short rise instead of a hard fade. Local app bundles copy their tarballs to `~/.mini-app/packages` so an installed tarball build can see a newer pack.
 
 ## 1.0.0
 
