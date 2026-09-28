@@ -1,6 +1,6 @@
 ---
 status: locked
-updated: 2026-09-27
+updated: 2026-09-28
 ---
 
 # Development
@@ -29,7 +29,8 @@ pnpm gen:skill         # regenerate the catalog, copy templates, sync skill into
 pnpm sync:skill       # set skill version from shell; copy skills/ → packages/shell/skill/
 pnpm check:skill      # MCP tools, ctx members, generated contracts, skill version === shell
 pnpm dist:local       # pack tarballs + install artifacts/local-app from file: tarballs; write run
-pnpm dist:app         # macOS Mohou.app + zip + dmg under artifacts/app/ (own tree; needs Node 22+)
+pnpm dist:app:local   # unsigned bundle under artifacts/app/. Prefix from artifacts/npm tarballs. Copies them to ~/.mini-app/packages and stamps that directory as the tarball channel
+pnpm dist:app:release # same bundle shape. Prefix from the npm registry. Channel registry. That shell version must already be published
 pnpm pack:source      # source tarball under artifacts/source-pack/ (no node_modules / build caches)
 ```
 
@@ -37,6 +38,8 @@ Node.js `^22.19.0 || >=24.0.0`. The root `package.json` pins `pnpm@11.7.0`.
 `tsconfig.base.json` sets `erasableSyntaxOnly` so typecheck refuses constructor parameter properties, enums, and namespaces. `pnpm dev:host` runs with `--experimental-strip-types`, which cannot transform those forms.
 
 GitHub Actions runs `pnpm build:panel`, `pnpm build:window`, then `pnpm run check` on macOS for every push and pull request. The workflow file is `.github/workflows/check.yml`.
+
+`.github/workflows/release.yml` runs `pnpm dist:app:release` on `macos-14` (arm64) and `windows-latest` (x64). It runs on `workflow_dispatch` and on a `v*` tag. A tag must match the `@mini-app/shell` version without the `v`, and that version must already be on the npm registry. The tag run also publishes those zip and dmg files on the GitHub Release. The bundles are unsigned. Local install tests use `pnpm dist:app:local`.
 
 `pnpm install` runs `scripts/install-lefthook.mjs`. That script exits 0 when git hooks cannot be installed. Run it again with `node scripts/install-lefthook.mjs` after git metadata is present.
 

@@ -3,8 +3,10 @@
  * Build a double-clickable macOS Mohou.app (own tree under artifacts/app).
  * Does not read or write artifacts/local-app — that stays pnpm dist:local.
  *
- * Writes: artifacts/app/stage/**, artifacts/app/Mohou.app, artifacts/app/Mohou-*-macOS.zip
- * Run as: pnpm dist:app
+ * Writes: artifacts/app/.
+ * macOS: Mohou.app, zip, and dmg named macOS-<arch>.
+ * Windows: zip of Mohou.exe beside prefix/, named windows-<arch>.
+ * Run as: pnpm dist:app:local | pnpm dist:app:release
  */
 import { execFileSync, spawnSync } from 'node:child_process'
 import {
@@ -19,6 +21,7 @@ import {
   symlinkSync,
   writeFileSync,
 } from 'node:fs'
+import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -36,13 +39,80 @@ const contents = join(appRoot, 'Contents')
 const macos = join(contents, 'MacOS')
 const resources = join(contents, 'Resources')
 
+function commandName(cmd) {
+  if (process.platform !== 'win32') return cmd
+  if (cmd === 'npm' || cmd === 'pnpm') return `${cmd}.cmd`
+  if (cmd === 'cargo' || cmd === 'tar') return `${cmd}.exe`
+  return cmd
+}
+
 function run(cmd, args, opts = {}) {
-  console.log(`$ ${cmd} ${args.join(' ')}`)
-  execFileSync(cmd, args, { cwd: root, stdio: 'inherit', ...opts })
+  const executable = commandName(cmd)
+  console.log(`$ ${executable} ${args.join(' ')}`)
+  execFileSync(executable, args, { cwd: root, stdio: 'inherit', ...opts })
+}
+
+/** Artifact id. CI builds macOS-arm64 and windows-x64. */
+function bundleLabel() {
+  const arch = process.arch
+  if (process.platform === 'darwin') return `macOS-${arch}`
+  if (process.platform === 'win32') return `windows-${arch}`
+  return null
 }
 
 function shellVersion() {
   return JSON.parse(readFileSync(join(root, 'packages/shell/package.json'), 'utf8')).version
+}
+
+/** `local` installs file: tarballs. `release` installs `@mini-app/shell` from the registry. */
+function distChannel(argv) {
+  const named = argv.find(arg => arg === '--channel=tarball' || arg === '--channel=registry')
+  if (named === '--channel=tarball') return 'tarball'
+  if (named === '--channel=registry') return 'registry'
+  return null
+}
+
+function localPackagesDir() {
+  return join(homedir(), '.mini-app', 'packages')
+}
+
+function copyTarballs(from, to) {
+  mkdirSync(to, { recursive: true })
+  for (const name of readdirSync(from)) {
+    if (!name.endsWith('.tgz')) continue
+    cpSync(join(from, name), join(to, name))
+  }
+  console.log(`tarballs: ${to}`)
+}
+
+function prefixPackage(channel, version, engines) {
+  const shared = {
+    name: 'mohou-app',
+    private: true,
+    version,
+    type: 'module',
+    engines,
+  }
+  if (channel === 'registry') {
+    return {
+      ...shared,
+      description: 'Mohou install prefix from the npm registry.',
+      mohou: { channel: 'registry', registry: 'https://registry.npmjs.org' },
+      dependencies: {
+        '@mini-app/shell': version,
+        tsx: '^4.20.0',
+      },
+    }
+  }
+  return {
+    ...shared,
+    description: 'Mohou install prefix from workspace tarballs.',
+    mohou: { channel: 'tarball', tarballDir: localPackagesDir() },
+    dependencies: {
+      ...fileDependencies(root, npmDir, version),
+      tsx: '^4.20.0',
+    },
+  }
 }
 
 /**
@@ -114,6 +184,8 @@ function sleep(seconds) {
 }
 
 function osascript(source) {
+  // Finder automation hangs on a headless runner. The symlink fallback still makes a dmg.
+  if (process.env.CI === 'true') return { status: 1, stderr: 'skipped in CI' }
   return spawnSync('osascript', ['-e', source], { encoding: 'utf8' })
 }
 
@@ -224,39 +296,37 @@ end tell`,
   rmSync(rwPath, { force: true })
 }
 
-if (process.platform !== 'darwin') {
-  console.error('dist:app currently builds a macOS .app only')
+const channel = distChannel(process.argv.slice(2))
+if (channel === null) {
+  console.error('Pick one: pnpm dist:app:local (tarball) or pnpm dist:app:release (registry)')
+  process.exit(1)
+}
+const label = bundleLabel()
+if (label === null) {
+  console.error(`dist:app does not build a bundle on ${process.platform}`)
   process.exit(1)
 }
 
 const version = shellVersion()
-console.log(`dist:app: Mohou ${version}`)
+console.log(`dist:app: Mohou ${version} (${label}, ${channel})`)
 
-// 1. skill + panel + pack (shared npm tarballs under artifacts/npm)
-syncSkillIntoShell(root)
-run('pnpm', ['build:panel'])
-run('pnpm', ['publish:check'])
+// Local packs the workspace and installs those tarballs. Release installs the published shell.
+if (channel === 'tarball') {
+  syncSkillIntoShell(root)
+  run('pnpm', ['build:panel'])
+  run('pnpm', ['publish:check'])
+  copyTarballs(npmDir, localPackagesDir())
+}
 
-// 2. own install prefix (not local-app)
 rmSync(outDir, { recursive: true, force: true })
 mkdirSync(prefix, { recursive: true })
 
-const deps = fileDependencies(root, npmDir, version)
+const engines = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).engines
+writeFileSync(join(prefix, 'package.json'), `${JSON.stringify(prefixPackage(channel, version, engines), null, 2)}\n`)
 
-writeFileSync(join(prefix, 'package.json'), `${JSON.stringify({
-  name: 'mohou-app',
-  private: true,
-  version,
-  description: 'Mohou.app install prefix from workspace tarballs.',
-  type: 'module',
-  engines: JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).engines,
-  dependencies: {
-    ...deps,
-    tsx: '^4.20.0',
-  },
-}, null, 2)}\n`)
-
-run('npm', ['install', '--no-fund', '--no-audit'], { cwd: prefix })
+const installArgs = ['install', '--no-fund', '--no-audit']
+if (channel === 'registry') installArgs.push('--registry', 'https://registry.npmjs.org')
+run('npm', installArgs, { cwd: prefix })
 
 const shellRoot = join(prefix, 'node_modules', '@mini-app', 'shell')
 if (!existsSync(join(shellRoot, 'skill', 'monkey-mini-app', 'SKILL.md'))) {
@@ -270,59 +340,85 @@ if (!existsSync(join(shellRoot, 'dist', 'panel.html'))) {
 const pruned = pruneShipModules(join(prefix, 'node_modules'))
 console.log(`prune: removed ${pruned.files} files / ${pruned.dirs} dirs (~${pruned.mb} MB)`)
 
-// 3. Tauri binary is the app executable. It spawns the sidecar in Resources/prefix.
-const builtName = 'mini-app-window'
-const productName = 'Mohou'
+// 3. Tauri binary is the app executable. It spawns the sidecar.
+const builtName = process.platform === 'win32' ? 'mini-app-window.exe' : 'mini-app-window'
 const built = join(root, 'packages/launcher/tauri/target/release', builtName)
 if (!existsSync(built)) {
   run('cargo', ['build', '--release', '--manifest-path', 'packages/launcher/tauri/Cargo.toml'])
 }
 if (!existsSync(built)) throw new Error(`window binary missing: ${built}`)
 
-// 4. .app bundle
-mkdirSync(macos, { recursive: true })
-mkdirSync(resources, { recursive: true })
-cpSync(prefix, join(resources, 'prefix'), { recursive: true })
-const executable = join(macos, productName)
-cpSync(built, executable)
-chmodSync(executable, 0o755)
-writeFileSync(join(resources, 'VERSION'), `${version}\n`)
+if (process.platform === 'win32') {
+  writeWindowsBundle({ version, label, prefix, built })
+} else {
+  writeMacBundle({ version, label, prefix, built })
+}
 
-const icnsSrc = join(root, 'packages/launcher/tauri/icons/icon.icns')
-if (!existsSync(icnsSrc)) throw new Error(`missing app icon: ${icnsSrc}`)
-cpSync(icnsSrc, join(resources, 'AppIcon.icns'))
+function writeMacBundle({ version, label, prefix, built }) {
+  mkdirSync(macos, { recursive: true })
+  mkdirSync(resources, { recursive: true })
+  cpSync(prefix, join(resources, 'prefix'), { recursive: true })
+  const executable = join(macos, 'Mohou')
+  cpSync(built, executable)
+  chmodSync(executable, 0o755)
+  writeFileSync(join(resources, 'VERSION'), `${version}\n`)
 
-const plistSrc = join(root, 'scripts/build/macos-Info.plist')
-const plist = readFileSync(plistSrc, 'utf8').replaceAll('__VERSION__', version)
-if (plist.includes('__VERSION__')) throw new Error(`version was not filled in ${plistSrc}`)
-writeFileSync(join(contents, 'Info.plist'), plist)
+  const icnsSrc = join(root, 'packages/launcher/tauri/icons/icon.icns')
+  if (!existsSync(icnsSrc)) throw new Error(`missing app icon: ${icnsSrc}`)
+  cpSync(icnsSrc, join(resources, 'AppIcon.icns'))
 
-// stage is intermediate; ship .app as zip + dmg
-const zipPath = join(outDir, `Mohou-${version}-macOS.zip`)
-const zip = spawnSync('ditto', ['-c', '-k', '--sequesterRsrc', '--keepParent', appRoot, zipPath], { stdio: 'inherit' })
-if (zip.status !== 0) throw new Error(`ditto failed to zip ${appRoot}`)
+  const plistSrc = join(root, 'scripts/build/macos-Info.plist')
+  const plist = readFileSync(plistSrc, 'utf8').replaceAll('__VERSION__', version)
+  if (plist.includes('__VERSION__')) throw new Error(`version was not filled in ${plistSrc}`)
+  writeFileSync(join(contents, 'Info.plist'), plist)
 
-const dmgPath = join(outDir, `Mohou-${version}-macOS.dmg`)
-createInstallerDmg({ bundleRoot: appRoot, bundleName: appName, dmgPath, volName: 'Mohou' })
+  const zipPath = join(outDir, `Mohou-${version}-${label}.zip`)
+  const zip = spawnSync('ditto', ['-c', '-k', '--sequesterRsrc', '--keepParent', appRoot, zipPath], { stdio: 'inherit' })
+  if (zip.status !== 0) throw new Error(`ditto failed to zip ${appRoot}`)
 
-writeFileSync(
-  join(outDir, 'README.md'),
-  `# Mohou ${version} (macOS app)
+  const dmgPath = join(outDir, `Mohou-${version}-${label}.dmg`)
+  createInstallerDmg({ bundleRoot: appRoot, bundleName: appName, dmgPath, volName: 'Mohou' })
 
-Built by \`pnpm dist:app\` into \`artifacts/app/\` (separate from \`dist:local\`).
+  writeFileSync(join(outDir, 'README.md'), macReadme(version, label))
+  console.log(`\ndist:app ready: ${appRoot}`)
+  console.log(`stage: ${stage}`)
+  console.log(`zip: ${zipPath}`)
+  console.log(`dmg: ${dmgPath}`)
+}
+
+function writeWindowsBundle({ version, label, prefix, built }) {
+  const folderName = `Mohou-${version}-${label}`
+  const folder = join(outDir, folderName)
+  mkdirSync(folder, { recursive: true })
+  cpSync(built, join(folder, 'Mohou.exe'))
+  cpSync(prefix, join(folder, 'Resources/prefix'), { recursive: true })
+  cpSync(join(root, 'scripts/build/sidecar.cmd'), join(folder, 'run.cmd'))
+  writeFileSync(join(folder, 'VERSION'), `${version}\n`)
+  writeFileSync(join(folder, 'README.md'), windowsReadme(version, label))
+  const zipPath = join(outDir, `${folderName}.zip`)
+  rmSync(zipPath, { force: true })
+  run('tar', ['-a', '-c', '-f', zipPath, '-C', outDir, folderName])
+  console.log(`\ndist:app ready: ${folder}`)
+  console.log(`zip: ${zipPath}`)
+}
+
+function macReadme(version, label) {
+  return `# Mohou ${version} (${label})
+
+Built by \`pnpm dist:app\` into \`artifacts/app/\`. Unsigned.
 
 ## Install
 
 **DMG (preferred)**
 
-1. Open \`Mohou-${version}-macOS.dmg\`
+1. Open \`Mohou-${version}-${label}.dmg\`
 2. Drag \`Mohou.app\` onto the Applications alias
-3. First open: right-click → Open if Gatekeeper blocks (unsigned)
+3. First open: right-click → Open if Gatekeeper blocks
 4. Requires **Node.js 22+** on the machine
 
 **Zip**
 
-1. Unzip \`Mohou-${version}-macOS.zip\`
+1. Unzip \`Mohou-${version}-${label}.zip\`
 2. Open \`Mohou.app\` the same way
 
 ## Runtime
@@ -332,10 +428,28 @@ Default data dir: \`~/.mini-app/runtime\` (override with \`MINI_APP_RUNTIME\`).
 ## Restart host
 
 Settings → Restart host exits the Node sidecar with code 75. The Mohou executable starts it again and keeps the window.
-`,
-)
+`
+}
 
-console.log(`\ndist:app ready: ${appRoot}`)
-console.log(`stage: ${stage}`)
-console.log(`zip: ${zipPath}`)
-console.log(`dmg: ${dmgPath}`)
+function windowsReadme(version, label) {
+  return `# Mohou ${version} (${label})
+
+Built by \`pnpm dist:app\`. Unsigned. SmartScreen may warn on first open.
+
+## Install
+
+1. Unzip \`Mohou-${version}-${label}.zip\`
+2. Open \`Mohou.exe\` (or \`run.cmd\`, which starts the same executable)
+3. Requires **Node.js 22+** on the machine
+
+\`Mohou.exe\` sits beside \`Resources/prefix\`. It spawns the shell sidecar and opens the window.
+
+## Runtime
+
+Default data dir: \`%USERPROFILE%\\.mini-app\\runtime\` (override with \`MINI_APP_RUNTIME\`).
+
+## Restart host
+
+Settings → Restart host exits the Node sidecar with code 75. The Mohou executable starts it again and keeps the window.
+`
+}
