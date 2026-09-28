@@ -1,4 +1,91 @@
 <!doctype html>
+<html lang="zh-CN">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
 <title>Mohou</title>
-<p>Starting Mohou…</p>
+<style>
+  :root {
+    color-scheme: dark light;
+    --ground: #141218;
+    --ink: #f3eee4;
+    --quiet: #8f887c;
+    --rule: color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --ground: #f4efe6;
+      --ink: #1a1714;
+      --quiet: #6e675c;
+    }
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+  }
+  body {
+    display: grid;
+    place-items: center;
+    font-family: ui-sans-serif, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: rise .7s ease both;
+  }
+  .mark,
+  .latin,
+  .status {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    line-height: 1;
+  }
+  .mark {
+    gap: .18em;
+    font-size: 42px;
+    font-weight: 600;
+  }
+  .latin {
+    gap: .42em;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--quiet);
+  }
+  .rule {
+    width: 48px;
+    height: 1px;
+    margin-top: 28px;
+    background: var(--rule);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  .status {
+    gap: .16em;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--quiet);
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: .35; }
+    50% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    main, .rule { animation: none; }
+  }
+</style>
+<main>
+  <p class="mark"><span>墨</span><span>猴</span></p>
+  <p class="latin"><span>M</span><span>O</span><span>H</span><span>O</span><span>U</span></p>
+  <div class="rule"></div>
+  <p class="status"><span>启</span><span>动</span><span>中</span></p>
+</main>
