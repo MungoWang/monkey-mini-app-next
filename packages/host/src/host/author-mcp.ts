@@ -15,6 +15,7 @@ export interface AuthorMcpAgent {
   readonly file: string
   readonly detectDir: string
   readonly format: AuthorMcpFormat
+  readonly adapter?: string
 }
 
 export interface AuthorMcpLayout {

@@ -14,6 +14,8 @@ export interface McpAgentTarget {
   readonly file: string
   readonly detectDir: string
   readonly format: McpAgentFormat
+  /** Pi extension that owns this file. Other assistants omit it. */
+  readonly adapter?: string
 }
 
 /**
@@ -27,7 +29,7 @@ export function builtinMcpAgents(home = homedir(), env: NodeJS.ProcessEnv = proc
   const claudeFile = claudeConfigDir === undefined ? path.join(home, '.claude.json') : path.join(claudeConfigDir, '.claude.json')
   return [
     { id: 'claude', label: 'Claude', file: claudeFile, detectDir: claudeHome, format: 'claude' },
-    { id: 'pi', label: 'Pi', file: path.join(home, '.pi', 'agent', 'mcp.json'), detectDir: path.join(home, '.pi', 'agent'), format: 'mcpServers' },
+    { id: 'pi', label: 'Pi', file: path.join(home, '.pi', 'agent', 'mcp-adapter.json'), detectDir: path.join(home, '.pi', 'agent'), format: 'mcpServers', adapter: 'pi-mcp-adapter' },
     { id: 'cursor', label: 'Cursor', file: path.join(home, '.cursor', 'mcp.json'), detectDir: path.join(home, '.cursor'), format: 'mcpServers' },
     { id: 'opencode', label: 'OpenCode', file: path.join(configHome, 'opencode', 'opencode.jsonc'), detectDir: path.join(configHome, 'opencode'), format: 'opencode' },
     { id: 'kiro', label: 'Kiro', file: path.join(home, '.kiro', 'settings', 'mcp.json'), detectDir: path.join(home, '.kiro'), format: 'mcpServers' },

@@ -54,6 +54,9 @@ export function AuthorMcpInstall(props: {
                   <button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" title={agent.dest} onClick={() => { void props.revealAuthorMcp?.(agent.dest) }}>{shortHomePath(agent.dest)}</button>
                 ) : null}
               </span>
+              {agent.adapter === undefined ? null : (
+                <span className="ml-auto shrink-0 rounded-full border px-2 py-0.5 font-mono text-[10px] tracking-normal text-muted-foreground" data-adapter={agent.adapter}>{agent.adapter}</span>
+              )}
             </li>
           ))}
         </ul>

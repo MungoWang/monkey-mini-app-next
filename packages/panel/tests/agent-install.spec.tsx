@@ -59,10 +59,11 @@ const mcp: PanelAuthorMcpStatus = {
     {
       id: 'pi',
       label: 'Pi',
-      dest: '/Users/me/.pi/agent/mcp.json',
+      dest: '/Users/me/.pi/agent/mcp-adapter.json',
       homePresent: true,
       installed: true,
       updateAvailable: true,
+      adapter: 'pi-mcp-adapter',
     },
     {
       id: 'cursor',
@@ -172,6 +173,7 @@ describe('skill and authoring MCP install', () => {
     })
     await flush()
     expect(host.textContent).toContain('Pi')
+    expect(host.querySelector('[data-adapter="pi-mcp-adapter"]')?.textContent).toBe('pi-mcp-adapter')
     await act(async () => {
       [...host.querySelectorAll('button')].find(button => button.textContent === 'mcp-authoring-update-install')?.click()
       await Promise.resolve()
