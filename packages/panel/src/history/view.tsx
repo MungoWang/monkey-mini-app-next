@@ -2,6 +2,7 @@ import { useEffect, useReducer, type ReactNode } from 'react'
 
 import { panelText, type PanelLabelMode, type PanelLocale } from '../labels.ts'
 import type { HistoryClient, HistoryCommit, HistoryFile } from './client.ts'
+import { Tooltip } from '../ui/tooltip.tsx'
 import { historyState, loadCommit, loadHistory, reduceHistory } from './state.ts'
 
 /**
@@ -71,20 +72,22 @@ function CommitRow(props: {
   readonly onSelect: () => void
 }): ReactNode {
   return (
-    <button
-      type="button"
-      className="w-full rounded-xl border bg-card px-3 py-2.5 text-left data-[on=1]:border-primary"
-      aria-pressed={props.pressed}
-      data-on={props.pressed ? '1' : '0'}
-      title={props.commit.id}
-      onClick={props.onSelect}
-    >
-      <span className="flex items-baseline justify-between gap-2">
-        <span className="min-w-0 truncate text-sm font-semibold">{props.commit.message.length > 0 ? props.commit.message : props.commit.id.slice(0, 7)}</span>
-        <time className="shrink-0 text-[11px] text-muted-foreground">{clock(props.commit.time)}</time>
-      </span>
-      <span className="mt-1 block font-mono text-[11px] text-muted-foreground">{props.commit.id.slice(0, 7)}</span>
-    </button>
+    <Tooltip text={props.commit.id} className="w-full">
+      <button
+        type="button"
+        className="w-full rounded-xl border bg-card px-3 py-2.5 text-left data-[on=1]:border-primary"
+        aria-pressed={props.pressed}
+        data-on={props.pressed ? '1' : '0'}
+        data-commit={props.commit.id}
+        onClick={props.onSelect}
+      >
+        <span className="flex items-baseline justify-between gap-2">
+          <span className="min-w-0 truncate text-sm font-semibold">{props.commit.message.length > 0 ? props.commit.message : props.commit.id.slice(0, 7)}</span>
+          <time className="shrink-0 text-[11px] text-muted-foreground">{clock(props.commit.time)}</time>
+        </span>
+        <span className="mt-1 block font-mono text-[11px] text-muted-foreground">{props.commit.id.slice(0, 7)}</span>
+      </button>
+    </Tooltip>
   )
 }
 

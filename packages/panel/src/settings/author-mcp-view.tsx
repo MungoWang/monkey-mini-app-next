@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { Dialog } from '../ui/dialog.tsx'
+import { Tooltip } from '../ui/tooltip.tsx'
 import { readAuthorMcpAgentIds, writeAuthorMcpAgentIds } from './author-mcp.ts'
 import type { PanelAbout, PanelAuthorMcpStatus } from './client.ts'
 import { installingCaption, shortHomePath, toggleId } from './install-row.tsx'
@@ -51,7 +52,7 @@ export function AuthorMcpInstall(props: {
                 {agent.homePresent ? null : <span className="text-[11px] text-muted-foreground">{props.label('skill-missing-home')}</span>}
                 {busy && picked.has(agent.id) ? installingCaption(props.label) : authorMcpCaption(agent, props.label)}
                 {agent.installed && props.revealAuthorMcp !== undefined ? (
-                  <button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" title={agent.dest} onClick={() => { void props.revealAuthorMcp?.(agent.dest) }}>{shortHomePath(agent.dest)}</button>
+                  <Tooltip text={agent.dest}><button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" onClick={() => { void props.revealAuthorMcp?.(agent.dest) }}>{shortHomePath(agent.dest)}</button></Tooltip>
                 ) : null}
               </span>
               {agent.adapter === undefined ? null : (

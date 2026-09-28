@@ -17,8 +17,8 @@ describe('DeskBar', () => {
           <DeskBar
             label="Home"
             choices={[
-              { id: 'default', name: 'Library' },
-              { id: 'com.example.desk', name: 'Desk' },
+              { id: 'default', name: 'Library', icon: 'library' },
+              { id: 'com.example.desk', name: 'Desk', mark: 'DE' },
             ]}
             selected={selected}
             onSelect={(id) => {
@@ -33,6 +33,7 @@ describe('DeskBar', () => {
     expect(pill).not.toBeNull()
     const current = host.querySelector('[data-desk="default"]')
     expect(current?.getAttribute('data-on')).toBe('1')
+    expect(host.querySelector('.mma-desk-mark')?.textContent).toBe('DE')
     await act(async () => {
       current?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     })

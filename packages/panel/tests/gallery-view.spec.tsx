@@ -70,9 +70,14 @@ describe('GalleryBody', () => {
     expect(grid).toContain('Desk')
     expect(grid).toContain('data-desk="default"')
     expect(grid).toContain('data-desk="com.example.desk"')
-    expect(grid).not.toContain('Set as default workbench')
+    expect(grid).toContain('mma-desk-mark')
+    expect(grid).toContain('>TO</span>')
+    expect(grid).not.toContain('Set as home')
     const open = reduceGallery(listed, { type: 'open', appId: desk.id, title: 'Desk' })
-    expect(markup(open, { defaultWorkbenchId: desk.id })).toContain('Current default')
+    expect(markup(open, { defaultWorkbenchId: desk.id })).toContain('Current home')
+    expect(markup(open, { defaultWorkbenchId: desk.id })).toContain('mma-toolbar-rule')
+    expect(markup(open)).toContain('Set as home')
+    expect(markup(open)).toContain('aria-label="Delete"')
     expect(markup(open, { defaultWorkbenchId: desk.id })).not.toContain('data-desk=')
     const slot = renderToStaticMarkup(createElement(GalleryBody, {
       state: listed,

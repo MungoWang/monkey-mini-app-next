@@ -1,10 +1,11 @@
 import { WorkbenchLibrary, workbenchEntries } from '@mini-app/app-view'
-import { ArrowUpRight, Palette, RefreshCw, Search, Settings } from 'lucide-react'
+import { ArrowUpRight, Palette, Pin, RefreshCw, Search, Settings, Trash2 } from 'lucide-react'
 import { cloneElement, isValidElement, useEffect, useLayoutEffect, useReducer, useRef, useState, type ReactElement, type ReactNode } from 'react'
 
 import type { PanelLabelMode, PanelLocale } from '../labels.ts'
 import { panelText } from '../labels.ts'
 import { Dialog } from '../ui/dialog.tsx'
+import { Tooltip } from '../ui/tooltip.tsx'
 import { readCardStyle, writeCardStyle } from './card-style.ts'
 import { DeskBar } from './desk.tsx'
 import type { PanelClient } from './client.ts'
@@ -163,7 +164,11 @@ export function GalleryBody(props: {
         {appTab ? null : (
           <DeskBar
             label={label('desk-switch')}
-            choices={desks.map(entry => ({ id: entry.id, name: entry.name }))}
+            choices={desks.map((entry) => {
+              if (entry.builtin) return { id: entry.id, name: entry.name, icon: 'library' as const }
+              const app = state.apps.find(item => item.id === entry.id)
+              return { id: entry.id, name: entry.name, mark: app?.acronym ?? entry.name.slice(0, 2) }
+            })}
             selected={deskId}
             onSelect={(id) => {
               if (id === deskId) return
@@ -171,52 +176,66 @@ export function GalleryBody(props: {
             }}
           />
         )}
+        {appTab ? (
+          <div className="mma-toolbar">
+            {workbenchTab ? (
+              <button
+                type="button"
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] font-semibold hover:bg-muted"
+                data-default-workbench={active.appId}
+                data-current={props.defaultWorkbenchId === active.appId ? '1' : '0'}
+                aria-label={props.defaultWorkbenchId === active.appId ? label('current-default-workbench') : label('set-default-workbench')}
+                onClick={() => {
+                  if (props.defaultWorkbenchId === active.appId) return
+                  props.onSetDefaultWorkbench?.(active.appId)
+                }}
+              >
+                <Pin size={14} strokeWidth={2} fill={props.defaultWorkbenchId === active.appId ? 'currentColor' : 'none'} />
+                <span>{props.defaultWorkbenchId === active.appId ? label('current-default-workbench') : label('set-default-workbench')}</span>
+              </button>
+            ) : null}
+            {workbenchTab ? <span className="mma-toolbar-rule" aria-hidden="true" /> : null}
+            <Tooltip text={label('delete')}>
+              <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg text-destructive transition-colors duration-150 hover:bg-muted" aria-label={label('delete')} onClick={() => dispatch({ type: 'ask-delete', appId: active.appId })}>
+                <Trash2 size={16} strokeWidth={2} />
+              </button>
+            </Tooltip>
+          </div>
+        ) : null}
         <div className="mma-toolbar">
-          {workbenchTab && appTab ? (
+          <Tooltip text={appTab ? label('reload') : label('refresh')}>
             <button
               type="button"
-              className="h-8 rounded-md px-2 text-sm hover:bg-muted"
-              data-default-workbench={active.appId}
+              className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted"
+              aria-label={appTab ? label('reload') : label('refresh')}
               onClick={() => {
-                if (props.defaultWorkbenchId === active.appId) return
-                props.onSetDefaultWorkbench?.(active.appId)
+                void refreshList(props.client, appTab && active?.kind === 'app' ? active.appId : undefined, !appTab ? desk?.id : undefined, dispatch, setRefreshing)
               }}
             >
-              {props.defaultWorkbenchId === active.appId ? label('current-default-workbench') : label('set-default-workbench')}
+              <span className="sr-only">{appTab ? label('reload') : label('refresh')}</span>
+              <RefreshCw size={16} strokeWidth={2} className={refreshing ? 'animate-spin' : ''} />
             </button>
-          ) : null}
-          {appTab ? (
-            <button type="button" className="h-8 rounded-md px-2 text-sm text-destructive transition-colors duration-150 hover:bg-muted" onClick={() => dispatch({ type: 'ask-delete', appId: active.appId })}>
-              {label('delete')}
-            </button>
-          ) : null}
-          <button
-            type="button"
-            className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted"
-            title={appTab ? label('reload') : label('refresh')}
-            onClick={() => {
-              void refreshList(props.client, appTab && active?.kind === 'app' ? active.appId : undefined, !appTab ? desk?.id : undefined, dispatch, setRefreshing)
-            }}
-          >
-            <span className="sr-only">{appTab ? label('reload') : label('refresh')}</span>
-            <RefreshCw size={16} strokeWidth={2} className={refreshing ? 'animate-spin' : ''} />
-          </button>
+          </Tooltip>
           {props.onToggleTheme === undefined ? null : (
             <div className="relative z-30">
-              <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted" title={label('theme')} aria-label={label('theme')} onClick={props.onToggleTheme}>
-                <span className="sr-only">{label('theme')}</span>
-                <Palette size={18} strokeWidth={1.75} />
-              </button>
+              <Tooltip text={label('theme')} align="end">
+                <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted" aria-label={label('theme')} onClick={props.onToggleTheme}>
+                  <span className="sr-only">{label('theme')}</span>
+                  <Palette size={18} strokeWidth={1.75} />
+                </button>
+              </Tooltip>
               <div className={props.themeOpen === true ? 'absolute top-11 right-0 z-30 max-h-[70vh] w-72 origin-top-right animate-in overflow-auto rounded-xl border bg-card p-3 shadow-lg duration-150 fade-in-0 zoom-in-95' : 'hidden'} onPointerDown={event => event.stopPropagation()}>{themeNode(props.theme, active?.kind === 'app' ? { id: active.appId, title: active.title ?? active.appId } : undefined)}</div>
             </div>
           )}
 
           {appTab ? props.tools : null}
           {props.onToggleSettings === undefined ? null : (
-            <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted" title={label('settings')} aria-label={label('settings')} onClick={props.onToggleSettings}>
-              <span className="sr-only">{label('settings')}</span>
-              <Settings size={16} strokeWidth={2} />
-            </button>
+            <Tooltip text={label('settings')} align="end">
+              <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted" aria-label={label('settings')} onClick={props.onToggleSettings}>
+                <span className="sr-only">{label('settings')}</span>
+                <Settings size={16} strokeWidth={2} />
+              </button>
+            </Tooltip>
           )}
           {state.shell === 'overlay' && props.onClosePanel !== undefined ? (
             <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted" onClick={() => props.onClosePanel?.()}>{label('close-panel')}</button>
@@ -232,20 +251,21 @@ export function GalleryBody(props: {
           <span>{kind === 'unreachable' || kind === 'failed' ? label('host-unreachable') : label('status-ready')}</span>
           <span>{label('gallery-count').replaceAll('{n}', String(state.apps.length))}</span>
           {desk === undefined ? null : (
-            <button
-              type="button"
-              className="mma-status-action"
-              data-open-workbench={desk.id}
-              aria-label={label('open-workbench-tab')}
-              title={label('open-workbench-tab-hint')}
-              onClick={() => {
-                const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === desk.id)
-                void openApp(props.client, desk.id, desk.name, dispatch, open)
-              }}
-            >
-              <span>{desk.name}</span>
-              <ArrowUpRight size={11} strokeWidth={2} />
-            </button>
+            <Tooltip text={label('open-workbench-tab-hint')} align="end">
+              <button
+                type="button"
+                className="mma-status-action"
+                data-open-workbench={desk.id}
+                aria-label={label('open-workbench-tab')}
+                onClick={() => {
+                  const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === desk.id)
+                  void openApp(props.client, desk.id, desk.name, dispatch, open)
+                }}
+              >
+                <span>{desk.name}</span>
+                <ArrowUpRight size={11} strokeWidth={2} />
+              </button>
+            </Tooltip>
           )}
         </div>
       )}

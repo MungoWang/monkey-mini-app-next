@@ -65,7 +65,7 @@ describe('gallery card styles and toolbar', () => {
       host.querySelector('button[data-trash="com.example.todo"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
       ;[...host.querySelectorAll('button')].find(button => button.textContent === 'Cancel')?.click()
       host.querySelector('button.go')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
-      host.querySelector('button[title="Reload"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      host.querySelector('button[aria-label="Reload"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
       const search = host.querySelector('input[type="search"]')
       if (search instanceof HTMLInputElement) {
         Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set?.call(search, 'todo')
@@ -101,7 +101,7 @@ describe('gallery card styles and toolbar', () => {
       )
     })
     await act(async () => {
-      host.querySelector('button[title="Refresh"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      host.querySelector('button[aria-label="Refresh"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
       await Promise.resolve()
     })
     expect(reloadedIds).toEqual([desk.id])

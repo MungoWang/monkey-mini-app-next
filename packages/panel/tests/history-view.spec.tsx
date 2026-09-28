@@ -82,7 +82,7 @@ describe('PanelHistory', () => {
     await act(async () => {
       await Promise.resolve()
     })
-    const row = lines.querySelector('[title="abc"]')
+    const row = lines.querySelector('[data-commit="abc"]')
     await act(async () => {
       if (row instanceof HTMLButtonElement) row.click()
       await Promise.resolve()

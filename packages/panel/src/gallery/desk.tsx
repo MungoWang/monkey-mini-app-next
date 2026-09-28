@@ -1,9 +1,17 @@
+import { LayoutGrid } from 'lucide-react'
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+
+export interface DeskChoice {
+  readonly id: string
+  readonly name: string
+  readonly icon?: 'library'
+  readonly mark?: string
+}
 
 /** Glass switch for the home slot. It does not write the stored id. */
 export function DeskBar(props: {
   readonly label: string
-  readonly choices: readonly { readonly id: string; readonly name: string }[]
+  readonly choices: readonly DeskChoice[]
   readonly selected: string
   readonly fit?: boolean
   onSelect(id: string): void
@@ -36,7 +44,9 @@ export function DeskBar(props: {
             props.onSelect(choice.id)
           }}
         >
-          {choice.name}
+          {choice.icon === 'library' ? <LayoutGrid size={14} strokeWidth={2} /> : null}
+          {choice.mark === undefined ? null : <span className="mma-desk-mark">{choice.mark}</span>}
+          <span className="mma-desk-name">{choice.name}</span>
         </button>
       ))}
     </div>

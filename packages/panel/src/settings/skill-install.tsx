@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 
+import { Tooltip } from '../ui/tooltip.tsx'
 import type { PanelSkillCopy, PanelSkillStatus } from './client.ts'
 import { endsWithSkills, installingCaption, shortHomePath, toggleId } from './install-row.tsx'
 import { readSkillAgentIds, readSkillCustomDirs, writeSkillAgentIds, writeSkillCustomDirs } from './skill-dirs.ts'
@@ -51,7 +52,7 @@ export function SkillInstall(props: {
               {agent.homePresent ? null : <span className="text-[11px] text-muted-foreground">{props.label('skill-missing-home')}</span>}
               {busy && picked.has(agent.id) ? installingCaption(props.label) : skillCopyCaption(agent, props.label)}
               {agent.installed && props.revealSkill !== undefined ? (
-                <button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" title={agent.dest} onClick={() => { void props.revealSkill?.(agent.dest) }}>{shortHomePath(agent.dest)}</button>
+                <Tooltip text={agent.dest}><button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" onClick={() => { void props.revealSkill?.(agent.dest) }}>{shortHomePath(agent.dest)}</button></Tooltip>
               ) : null}
             </span>
           </li>
@@ -87,7 +88,7 @@ export function SkillInstall(props: {
                 <span className="max-w-[28rem] truncate font-mono text-xs">{dir}</span>
                 {busy ? installingCaption(props.label) : row === undefined ? null : skillCopyCaption(row, props.label)}
                 {row?.installed === true && props.revealSkill !== undefined ? (
-                  <button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" title={row.dest} onClick={() => { void props.revealSkill?.(row.dest) }}>{shortHomePath(row.dest)}</button>
+                  <Tooltip text={row.dest}><button type="button" className="max-w-[28rem] truncate font-mono text-[11px] text-muted-foreground underline-offset-2 hover:underline" onClick={() => { void props.revealSkill?.(row.dest) }}>{shortHomePath(row.dest)}</button></Tooltip>
                 ) : null}
                 <button type="button" className="text-[11px] text-muted-foreground" onClick={() => {
                   const next = customDirs.filter(item => item !== dir)

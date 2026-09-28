@@ -8,6 +8,7 @@ import type { HistoryClient } from '../history/client.ts'
 import { isPanelLocale, panelText, type PanelLabelMode, type PanelLocale } from '../labels.ts'
 import type { PanelPolicy, PanelSettingsClient, PanelUpdateCheck } from '../settings/client.ts'
 import { Dialog } from '../ui/dialog.tsx'
+import { Tooltip } from '../ui/tooltip.tsx'
 import { PanelSettings } from '../settings/view.tsx'
 import type { StorageClient } from '../storage/client.ts'
 import { PanelStorage } from '../storage/view.tsx'
@@ -91,10 +92,12 @@ export function PanelSurface(props: {
   const appId = state.focus?.appId ?? props.appId
   const toggle = (section: PanelSection) => dispatch({ type: 'section', section: state.section === section ? 'gallery' : section })
   const tool = (section: PanelSection, title: string, icon: ReactNode) => (
-    <button key={section} type="button" className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted" title={title} onClick={() => toggle(section)}>
-      <span className="sr-only">{title}</span>
-      {icon}
-    </button>
+    <Tooltip key={section} text={title}>
+      <button type="button" className="inline-flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-muted" aria-label={title} onClick={() => toggle(section)}>
+        <span className="sr-only">{title}</span>
+        {icon}
+      </button>
+    </Tooltip>
   )
   return (
     <PanelGallery
