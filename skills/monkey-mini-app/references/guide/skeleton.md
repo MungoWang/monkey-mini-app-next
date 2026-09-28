@@ -1,6 +1,6 @@
 # A short list
 
-This is one `kv()` list. Do not put several filterable entities in this array. Settings and one snapshot stay in `kv()`. Rows you filter get `schema/001_name.sql` plus `query` / `run`. See [ctx.md](ctx.md).
+This is one `kv()` list. Do not put several filterable entities in this array. Settings and one snapshot stay in `kv()`. Rows you filter get `schema/001_name.sql` plus `query` / `run`. Seed data and one-shot row rewrites also go in the next numbered schema file, not a TypeScript migration. See [ctx.md](ctx.md).
 
 `acronym` is optional: two letters or digits in any script. `tags` are lowercase tokens matching `^[a-z][a-z0-9-]*$`. A repeated token is one tag. Omit `tags` when the app is not classified. `kind` is omitted, or `"app"`, for an ordinary app. `"workbench"` is a homepage. There is no theme block.
 

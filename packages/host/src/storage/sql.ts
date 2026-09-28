@@ -19,7 +19,7 @@ export function assertRuntimeSql(sql: string): void {
   }
 }
 
-/** A schema file may change app tables. It may not touch host tables or leave the file. */
+/** A schema file may change app tables and rewrite app rows. It may not touch host tables or leave the file. */
 export function assertMigrationSql(sql: string, name: string): void {
   const bare = stripSql(sql).trim()
   if (bare === '') {

@@ -34,12 +34,13 @@ One SQLite file: `storage/app.sqlite`. JSON files and `table()` are gone. Host o
 |---|---|
 | Settings, one snapshot, a small list | `ctx.storage.kv()` |
 | Rows you filter, join, or page | `schema/001_name.sql` then `query` / `run` |
+| Create/alter tables, seed rows, one-shot data rewrite | next `schema/NNN_name.sql` — not a TypeScript loop of `run` |
 
 `kv().get` returns JSON or `null`. `set` must be JSON-serialisable. `clear` clears only `kv`.
 
-Schema files are `schema/NNN_name.sql`, ids contiguous from 1 (`001_notes.sql`, `002_index.sql`). Host applies pending files when storage opens. One file is one transaction. Do not edit an applied file — write a new one. Schema SQL may `CREATE` app tables. It must not name `kv` / `schema_migrations`, or `ATTACH` / `BEGIN`.
+Schema files are `schema/NNN_name.sql`, ids contiguous from 1 (`001_notes.sql`, `002_seed.sql`, `003_backfill.sql`). Host applies pending files when storage opens. One file is one transaction. Do not edit an applied file — write a new one. A schema file may `CREATE` / `ALTER` / `DROP` app tables, and may `INSERT` / `UPDATE` / `DELETE` app rows (seed data and data migration). It must not name `kv` / `schema_migrations`, or `ATTACH` / `BEGIN`. Do not migrate or bulk-seed with a one-shot TypeScript script of `ctx.storage.run` — that work is the next numbered SQL file.
 
-Runtime SQL is one statement: `SELECT` / `WITH` → `query`; `INSERT` / `UPDATE` / `DELETE` / `REPLACE` → `run`. Params are `?` arrays or named keys without the sigil. Forbidden at runtime: `CREATE` / `DROP` / `ALTER` / `PRAGMA` / `ATTACH` / `BEGIN` / `kv`.
+Runtime SQL is one statement: `SELECT` / `WITH` → `query`; `INSERT` / `UPDATE` / `DELETE` / `REPLACE` → `run`. Params are `?` arrays or named keys without the sigil. Forbidden at runtime: `CREATE` / `DROP` / `ALTER` / `PRAGMA` / `ATTACH` / `BEGIN` / `kv`. Runtime `run` is for ongoing app writes after the schema is in place.
 
 Inside `transaction(work)`, use `tx`, not the outer `ctx.storage`.
 
@@ -50,6 +51,12 @@ CREATE TABLE notes (
   title TEXT NOT NULL,
   done INTEGER NOT NULL DEFAULT 0
 );
+
+-- schema/002_seed.sql
+INSERT INTO notes (title, done) VALUES ('Welcome', 0);
+
+-- schema/003_backfill.sql
+UPDATE notes SET title = trim(title) WHERE title != trim(title);
 ```
 
 ```ts

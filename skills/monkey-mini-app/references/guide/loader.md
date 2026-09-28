@@ -11,14 +11,14 @@ main.api.ts           backend entry
 ui/                   UI only
 api/                  backend only
 shared/               both sides — pure code
-schema/               numbered SQL: `NNN_name.sql`
+schema/               numbered SQL migrations: `NNN_name.sql` (DDL, seed, data rewrite)
 assets/               images and SVG, loaded with `useApp().resolveAssetUrl`
 theme.css             optional app palette (author)
 ui.css                optional author CSS, appended unchanged
 theme.json            panel pin — not an author source file
 ```
 
-A trivial app needs none of the folders. `schema/` files are `NNN_name.sql`, ids from 1 with no gaps. Host applies pending files when storage opens. Runtime `query` / `run` cannot create tables. `theme.css` only when the look depends on a hue. Do not write `theme.json`.
+A trivial app needs none of the folders. `schema/` files are `NNN_name.sql`, ids from 1 with no gaps. Host applies pending files when storage opens. One file may create or alter tables and may seed or rewrite rows. Runtime `query` / `run` cannot create tables and must not replace a one-shot data migration. `theme.css` only when the look depends on a hue. Do not write `theme.json`.
 
 Enforced:
 

@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-09-28
 ---
 
 # Storage engine
@@ -10,7 +10,7 @@ Layer: [Host](README.md). Index: [features.md](../features.md).
 
 - Owner: Host.
 - Input: `ctx.storage` writes, and panel reads of `GET /api/apps/:appId/storage`.
-- Output: one SQLite file, `storage/app.sqlite`, opened with `better-sqlite3` in WAL mode. A missing directory and a missing file are created owner-only on POSIX. Windows keeps the user-profile ACL; the POSIX mode bits are not a second lock. Host creates `STRICT` tables `kv` and `schema_migrations`, prepares the `kv` statements once, and stamps the layout last. App tables come from `schema/NNN_name.sql`. Opening storage applies pending files in order, after one snapshot at `storage/backup.sqlite`. `query` and `run` are row statements only. Past the host size policy, Host may emit one notice. The threshold is not locked, and a notice does not block an ordinary write.
+- Output: one SQLite file, `storage/app.sqlite`, opened with `better-sqlite3` in WAL mode. A missing directory and a missing file are created owner-only on POSIX. Windows keeps the user-profile ACL; the POSIX mode bits are not a second lock. Host creates `STRICT` tables `kv` and `schema_migrations`, prepares the `kv` statements once, and stamps the layout last. App tables and one-shot data changes come from `schema/NNN_name.sql`: create or alter app tables, and insert, update, or delete app rows (seed and data migration). Opening storage applies pending files in order, after one snapshot at `storage/backup.sqlite`. Runtime `query` and `run` are ongoing row statements only; they are not the place for a bulk seed or a structural data rewrite. Past the host size policy, Host may emit one notice. The threshold is not locked, and a notice does not block an ordinary write.
 - Failure: a file that is not a database is renamed aside, with its WAL sidecars, and the call throws `storage-corrupt`. The next open does not create a replacement. A schema stamp from another layout throws `storage-version` and leaves the file in place. Schema files run in id order. One file is one transaction. If it fails, that file is rolled back and is not recorded, and every later file in the batch is not started. A later open runs the failed file again after it is fixed, then continues in order. The error names the files already applied and the files that were not started. Before a new schema file runs, Host estimates the database size from `page_count * page_size`. Over the host backup cap, it does not copy and does not run the file; the call throws `storage-backup-too-large`. The cap is host policy and is not locked. Undoing a migration that succeeded is an owner action, not an app method.
 - Non-goals: a second database file; an engine argument; SQL against `kv`; blocking an ordinary write; keeping one backup per migration.
 

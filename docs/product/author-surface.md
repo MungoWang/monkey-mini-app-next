@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-09-28
 ---
 
 # Author surface
@@ -47,7 +47,7 @@ An empty `mini_app_install` reads the current set. Mutating tools commit unless 
 
 Mounted: `createAuthorTools` is the one implementation. `GET /api/tools`, `POST /api/tools/invoke`, and `POST /mcp` (`initialize`, `tools/list`, `tools/call`) project it. A missing or wrong token is `authoring-token`. A non-loopback caller is `authoring-loopback`. An unknown name is `unknown-tool` and names the catalog that projection mounts. History commit, list, and reset are mounted. A tree change calls `onTreeChanged` and publishes `app:reload`. `mini_app_open` publishes `app:open` and returns `notified` only when a host-stream subscriber is attached. `mini_app_errors` reads the error ring. `mini_app_install` is mounted. It is the only writer of `package.json` and `package-lock.json`. `mini_app_view_eval` is mounted. No subscriber returns `not-open` immediately. A subscriber with no frame also returns `not-open` immediately. A second call while that app's view is still answering returns `pending`. A timeout returns `runner-not-booted` or `stuck` and does not hang. The iframe runs the code; Host only routes `app:eval`. Delete is not an authoring tool. `mini_app_mcp_list`, `mini_app_mcp_tools`, and `mini_app_credential_list` are not on `ctx`.
 
-There is no migration tool. The agent writes `schema/NNN_name.sql`. A file that has not been applied can be edited or deleted. A file that has been applied is changed by adding the next number, not by deleting it. Deleting an applied file fails the next open with `storage-migration`. Opening storage, including reload and the next call, applies pending files.
+There is no migration tool. The agent writes `schema/NNN_name.sql`. One file is one transaction: create or alter app tables, seed rows, or rewrite existing rows. Do not ship a one-shot TypeScript loop of `ctx.storage.run` for that work. A file that has not been applied can be edited or deleted. A file that has been applied is changed by adding the next number, not by deleting it. Deleting an applied file fails the next open with `storage-migration`. Opening storage, including reload and the next call, applies pending files.
 
 `mini_app_open` returning `no-panel-connected` means the app is fine and no panel is attached.
 

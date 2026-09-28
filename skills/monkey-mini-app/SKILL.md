@@ -99,7 +99,7 @@ When `mini_app_*` fails or is unavailable, run `node bin/diagnose.mjs` from this
 - `ctx.llm` / `ctx.agent` return **string**. MCP args are the tool's own object.
 - `shared/` is pure. Event names both sides use are declared once there.
 - `acronym` is two letters or digits. `tags` match `^[a-z][a-z0-9-]*$`. `kind` is omitted, `"app"`, or `"workbench"`.
-- A short `kv()` list: [references/guide/skeleton.md](references/guide/skeleton.md). Filterable rows use `schema/`, not that list.
+- A short `kv()` list: [references/guide/skeleton.md](references/guide/skeleton.md). Filterable rows, table DDL, seeds, and one-shot data rewrites use `schema/NNN_*.sql`, not that list and not a TypeScript `run` loop.
 
 Full `ctx`: [references/guide/ctx.md](references/guide/ctx.md).
 

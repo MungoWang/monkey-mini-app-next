@@ -19,7 +19,7 @@ Ask these when you cannot see the answer. Each line is the recommendation first.
 | Choice | Recommend | Also possible | Consequence |
 |---|---|---|---|
 | First screen | Name the one job that screen does | A different job | The facade you lift follows this job |
-| Records | Rows you filter go in `schema/NNN_*.sql` | `kv()` for a setting, one snapshot, or a short list | One `kv` array cannot be queried. An applied schema file is not edited; the next change is a new file |
+| Records | Rows you filter go in `schema/NNN_*.sql` (DDL, seed, and data rewrite live there too) | `kv()` for a setting, one snapshot, or a short list | One `kv` array cannot be queried. An applied schema file is not edited; the next change is a new file. Do not bulk-seed or migrate with a TypeScript `run` loop |
 | Shape | An ordinary app when the tool is one screen of its own | `kind: "workbench"` when this page is the homepage: first facts, plus entry points to other apps in a layout the person wants | `ctx.workbench` exists only on a workbench. `openApp` opens a panel tab. The homepage layout is free, including using no kit |
 | External system | An MCP server already in `mini_app_mcp_list` | HTTP, a local CLI, or `mini_app_install` | See below. Do not invent a server id or a tool name |
 
@@ -54,5 +54,6 @@ The UI kit is a shortcut for SaaS-shaped screens: lists, settings, boards, dashb
 | I will register while they read the question | The confirm is the gate. Register on the next turn, or in this turn only when no core choice is open |
 | I will keep asking until the brief is complete | One message. A skip is the stated default |
 | I will put every module in one `kv` list | Filterable rows get a schema file |
+| I will migrate or seed rows with a one-shot TypeScript `ctx.storage.run` loop | Put that SQL in the next `schema/NNN_*.sql` file |
 | I will copy the sample rail because this is a workbench | The sample aside is one sketch. Design the homepage and the app entry points. The kit does not choose that layout |
 | The catalog lists `DataGrid`, so the page is a `DataGrid` | The kit did not choose the layout |

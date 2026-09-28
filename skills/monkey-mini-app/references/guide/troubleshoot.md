@@ -126,7 +126,7 @@ Match `code`. The message is for a person. Full table: [loader.md](loader.md).
 | `storage-not-json` | `kv().set` value is not JSON | Pass a JSON-serialisable value |
 | `storage-forbidden` | SQL named `kv`, ran DDL, or used the outer handle in `transaction` | App tables only; use `tx` inside a transaction |
 | `storage-statement` | `query` for a write, or `run` for a read | `SELECT` → `query`; `INSERT`/`UPDATE`/`DELETE`/`REPLACE` → `run` |
-| `storage-migration` | `schema/` file failed or was edited after apply | Fix the file, or write the next numbered file |
+| `storage-migration` | `schema/` file failed or was edited after apply | Fix the file, or write the next numbered file. Seeds and data rewrites also belong in that next file, not a TypeScript `run` loop |
 | `storage-corrupt` | file is not a database | Host quarantined it; do not invent a replacement |
 
 ## UI compile messages
