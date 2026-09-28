@@ -51,6 +51,7 @@ export interface PanelAuthorMcpAgent {
   readonly homePresent: boolean
   readonly installed: boolean
   readonly updateAvailable: boolean
+  readonly adapter?: string
 }
 
 export interface PanelAuthorMcpStatus {
@@ -75,6 +76,8 @@ export interface PanelUpdateCheck {
   readonly current: string
   readonly latest: string | null
   readonly updateAvailable: boolean
+  readonly channel?: 'registry' | 'tarball'
+  readonly installable?: boolean
   readonly error?: string
 }
 
@@ -92,6 +95,7 @@ export interface PanelSettingsClient {
   probe(id: string): Promise<PanelProbe>
   readAbout?(): Promise<PanelAbout>
   checkUpdate?(): Promise<PanelUpdateCheck>
+  installUpdate?(version: string): Promise<void>
   restartHost?(): Promise<void>
   listRuntimes?(): Promise<readonly PanelRuntime[]>
   readSkill?(customDirs?: readonly string[]): Promise<PanelSkillStatus>

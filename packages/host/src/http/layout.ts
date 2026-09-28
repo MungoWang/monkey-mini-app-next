@@ -11,6 +11,7 @@ export const httpLayout = {
   palettes: '/api/palettes',
   about: '/api/about',
   updates: '/api/updates',
+  updateInstall: '/api/updates/install',
   providers: '/api/runtime-providers',
   activate: '/api/runtime-providers/activate',
   probe: '/api/runtime-providers/probe',

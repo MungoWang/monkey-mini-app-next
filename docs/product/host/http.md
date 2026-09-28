@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-09-28
 ---
 
 # HTTP surface
@@ -38,7 +38,8 @@ Layer: [Host](README.md). Index: [features.md](../features.md).
 | `GET /api/apps/:appId/theme` | Panel | current pin |
 | `POST /api/apps/:appId/theme` | Panel | saves or clears the pin |
 | `GET /api/about` | Panel | process name, environment, package versions, and the authoring MCP url plus token |
-| `GET /api/updates` | Panel | `{ name, current, latest, updateAvailable, error? }` |
+| `GET /api/updates` | Panel | `{ name, current, latest, updateAvailable, channel?, installable?, error? }` |
+| `POST /api/updates/install` | Panel | stage `update.json` in the install prefix, then restart the sidecar |
 | `GET /api/runtime-providers` | Panel | registered providers and their settings fields |
 | `POST /api/runtime-providers/activate` | Panel | writes the selection; `{ restartRequired: true }` |
 | `POST /api/runtime-providers/probe` | Panel | one tiny completion against the selected provider; does not switch the live brain |

@@ -44,6 +44,18 @@ export function mountOwner(app: Hono<HostEnv>, ports: LoopbackPorts): void {
   app.get(httpLayout.updates, async (c) => {
     return c.json({ ok: true, ...await ports.checkUpdate() })
   })
+  app.post(httpLayout.updateInstall, async (c) => {
+    if (ports.installUpdate === undefined) {
+      return c.json({ ok: false, error: { code: 'config-invalid', message: 'update install is not available' } }, 400)
+    }
+    const body = await readBody(c)
+    const version = isRecord(body) && typeof body.version === 'string' ? body.version : ''
+    return ok(c, async () => {
+      if (ports.installUpdate === undefined) throw new Error('update install is not available')
+      if (version.length === 0) throw new Error('update version is missing')
+      await ports.installUpdate(version)
+    })
+  })
   app.get(httpLayout.providers, async c => c.json({ providers: await providerList(ports) }))
   app.post(httpLayout.activate, c => activate(c, ports))
   app.post(httpLayout.probe, c => probe(c, ports))

@@ -227,6 +227,48 @@ function client(): PanelClient {
   }
 }
 
+it('asks to install an update found on open', async () => {
+  sessionStorage.clear()
+  const host = document.createElement('div')
+  document.body.append(host)
+  const root = createRoot(host)
+  const offer = {
+    name: '@mini-app/shell',
+    current: '1.0.0',
+    latest: '1.1.0',
+    updateAvailable: true,
+    installable: true,
+    channel: 'tarball' as const,
+  }
+  await act(async () => {
+    root.render(<PanelSurface
+      client={client()}
+      locale="en"
+      mode="production"
+      shell="standalone"
+      settings={{
+        ...settings(),
+        checkUpdate: () => Promise.resolve(offer),
+        installUpdate: () => Promise.reject(new Error('no')),
+      }}
+    />)
+  })
+  await act(async () => { await Promise.resolve() })
+  expect(host.textContent).toContain('Install 1.1.0 and restart the host?')
+  await act(async () => {
+    ;[...host.querySelectorAll('button')].find(button => button.textContent === 'Install update')?.click()
+    await Promise.resolve()
+  })
+  expect(host.textContent).toContain('The update could not be installed.')
+  await act(async () => {
+    ;[...host.querySelectorAll('button')].find(button => button.textContent === 'Cancel')?.click()
+  })
+  expect(host.textContent).not.toContain('Install 1.1.0')
+  expect(sessionStorage.getItem('mini-app.update-dismissed')).toBe('1.1.0')
+  root.unmount()
+  host.remove()
+})
+
 function pending<T>(): Promise<T> {
   return new Promise(() => undefined)
 }

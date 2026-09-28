@@ -64,6 +64,7 @@ export interface LoopbackPorts {
   subscribeFrames(listener: (event: unknown) => void): () => void
   subscribeApp(appId: string, since: number, listener: (event: unknown) => void): () => void
   checkUpdate(): Promise<UpdateCheck>
+  installUpdate?(version: string): Promise<void>
   restart?(): Promise<void>
   authorSkill?: AuthorSkillLayout
   readAuthorSkill?(customDirs?: readonly string[]): Promise<AuthorSkillStatus>

@@ -10,9 +10,9 @@ import { readAppAsset } from './asset.ts'
 import { httpLayout } from './layout.ts'
 import { readVendorFile } from './ports.ts'
 import type { LoopbackPorts } from './ports.ts'
-import { checkPackageUpdate } from './updates.ts'
 import { authoringTokenMatches } from './guard.ts'
 import { probeBrain, type HostPolicy } from '../host/config.ts'
+import { checkPackageUpdate, stagePackageUpdate } from './updates.ts'
 import { McpError } from '@mini-app/mcp-client'
 
 import { admitMcpText } from '../host/mcp-import.ts'
@@ -134,7 +134,15 @@ export function bindLoopback(input: {
     subscribeHost: listener => input.author.hostEvents.subscribe(listener),
     subscribeFrames: listener => forwardFrames(input.author.appEvents, listener),
     subscribeApp: (appId, since, listener) => input.author.appEvents.subscribe(appId, since, listener),
-    checkUpdate: checkPackageUpdate,
+    checkUpdate: () => checkPackageUpdate(),
+    installUpdate: async (version) => {
+      stagePackageUpdate(version)
+      if (input.restart === undefined) return
+      const restart = input.restart
+      setTimeout(() => {
+        void restart()
+      }, 200)
+    },
     ...input.restart === undefined ? {} : { restart: input.restart },
     ...skill === undefined ? {} : {
       authorSkill: skill,

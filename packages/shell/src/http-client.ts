@@ -55,6 +55,7 @@ export function httpPanelClients(origin: string): PanelClient & PanelSettingsCli
     installAuthorMcp: async (agentIds, description) => authorMcpStatus(await sendJson(origin, 'POST', httpLayout.authorMcp, { agentIds, description })),
     revealAuthorMcp: dest => postOk(origin, httpLayout.authorMcpReveal, { dest }),
     checkUpdate: async () => updateCheck(await getJson(origin, httpLayout.updates)),
+    installUpdate: async (version) => { await postOk(origin, httpLayout.updateInstall, { version }) },
     restartHost: () => postOk(origin, httpLayout.restart),
     listRuntimes: async () => arrayOf((await getJson(origin, httpLayout.providers)).providers, runtimeOf),
     listMcp: async () => {
@@ -448,6 +449,7 @@ function authorMcpAgent(value: unknown): PanelAuthorMcpStatus['agents'] {
     homePresent: row.homePresent === true,
     installed: row.installed === true,
     updateAvailable: row.updateAvailable === true,
+    ...typeof row.adapter === 'string' && row.adapter.length > 0 ? { adapter: row.adapter } : {},
   }]
 }
 
@@ -457,6 +459,8 @@ function updateCheck(value: Record<string, unknown>): PanelUpdateCheck {
     current: text(value.current),
     latest: typeof value.latest === 'string' ? value.latest : null,
     updateAvailable: value.updateAvailable === true,
+    ...value.channel === 'registry' || value.channel === 'tarball' ? { channel: value.channel } : {},
+    ...value.installable === true ? { installable: true } : {},
     ...typeof value.error === 'string' ? { error: value.error } : {},
   }
 }

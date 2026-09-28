@@ -48,6 +48,7 @@ export const homeLayout = {
   dir: '.mini-app',
   runtime: 'runtime',
   themes: 'themes',
+  packages: 'packages',
   credentials: 'credentials.json',
 } as const
 
@@ -61,6 +62,11 @@ export function defaultRuntimeRoot(home: string): string {
 
 export function homeThemesDir(home: string): string {
   return path.join(homeDir(home), homeLayout.themes)
+}
+
+/** Drop folder for local tarball updates. Not user data. */
+export function homePackagesDir(home: string): string {
+  return path.join(homeDir(home), homeLayout.packages)
 }
 
 export function homeCredentialsPath(home: string): string {

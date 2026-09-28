@@ -6,7 +6,8 @@ import { PanelGallery } from '../gallery/view.tsx'
 import { PanelHistory } from '../history/view.tsx'
 import type { HistoryClient } from '../history/client.ts'
 import { isPanelLocale, panelText, type PanelLabelMode, type PanelLocale } from '../labels.ts'
-import type { PanelPolicy, PanelSettingsClient } from '../settings/client.ts'
+import type { PanelPolicy, PanelSettingsClient, PanelUpdateCheck } from '../settings/client.ts'
+import { Dialog } from '../ui/dialog.tsx'
 import { PanelSettings } from '../settings/view.tsx'
 import type { StorageClient } from '../storage/client.ts'
 import { PanelStorage } from '../storage/view.tsx'
@@ -46,6 +47,18 @@ export function PanelSurface(props: {
   const [desk, setDesk] = useState<string | undefined>(undefined)
   const [hostPolicy, setHostPolicy] = useState<PanelPolicy | undefined>(undefined)
   const [chromeLocale, setChromeLocale] = useState<PanelLocale>(props.locale)
+  const [updateOffer, setUpdateOffer] = useState<PanelUpdateCheck | undefined>(undefined)
+  const [updateBusy, setUpdateBusy] = useState(false)
+  const [updateFailed, setUpdateFailed] = useState(false)
+  useEffect(() => {
+    const check = props.settings?.checkUpdate
+    if (check === undefined) return
+    void check().then((result) => {
+      if (!result.updateAvailable || result.installable !== true || result.latest === null) return
+      if (sessionStorage.getItem('mini-app.update-dismissed') === result.latest) return
+      setUpdateOffer(result)
+    }, () => undefined)
+  }, [props.settings])
   useEffect(() => {
     setChromeLocale(props.locale)
   }, [props.locale])
@@ -117,7 +130,7 @@ export function PanelSurface(props: {
         <>
           {state.unavailable === undefined ? null : <p className="px-6 py-2 text-sm text-destructive">{label('host-unreachable')}</p>}
           {props.settings === undefined || state.section !== 'settings' ? null : (
-            <div className="absolute inset-0 z-30 flex animate-in flex-col bg-background duration-200 fade-in-0">
+            <div className="mma-pane absolute inset-0 z-30 flex flex-col bg-background">
               <PanelSettings
                 locale={chromeLocale}
                 mode={props.mode}
@@ -126,6 +139,7 @@ export function PanelSurface(props: {
                 onCardStyle={chrome.setCard}
                 client={props.settings}
                 onPreviewLocale={setChromeLocale}
+                onUpdateOffer={setUpdateOffer}
                 onPolicy={(policy) => {
                   setDesk(policy.defaultWorkbenchId)
                   setHostPolicy(policy)
@@ -138,7 +152,7 @@ export function PanelSurface(props: {
             </div>
           )}
           {state.section === 'history' && appId !== undefined ? (
-            <div className="absolute inset-0 z-20 flex min-h-0 animate-in flex-col bg-background duration-200 fade-in-0" data-open="1">
+            <div className="mma-pane absolute inset-0 z-20 flex min-h-0 flex-col bg-background" data-open="1">
               <PanelHistory
                 key={appId}
                 appId={appId}
@@ -150,7 +164,7 @@ export function PanelSurface(props: {
             </div>
           ) : null}
           {state.section === 'storage' && appId !== undefined ? (
-            <div className="absolute inset-0 z-20 flex min-h-0 animate-in flex-col bg-background duration-200 fade-in-0" data-open="1">
+            <div className="mma-pane absolute inset-0 z-20 flex min-h-0 flex-col bg-background" data-open="1">
               <PanelStorage
                 key={appId}
                 appId={appId}
@@ -162,6 +176,36 @@ export function PanelSurface(props: {
               />
             </div>
           ) : null}
+          {updateOffer?.latest == null ? null : (
+            <div className="fixed inset-0 z-50">
+              <Dialog width="sm" onClose={() => {
+                if (updateOffer.latest !== null) sessionStorage.setItem('mini-app.update-dismissed', updateOffer.latest)
+                setUpdateOffer(undefined)
+                setUpdateFailed(false)
+              }}>
+                <h3 className="m-0 text-base font-semibold">{label('update-install')}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{updateBusy ? label('update-installing') : label('update-install-confirm').replace('{n}', updateOffer.latest)}</p>
+                {updateFailed ? <p className="mt-2 text-sm text-destructive">{label('update-install-failed')}</p> : null}
+                <div className="mt-4 flex justify-end gap-2">
+                  <button type="button" className="h-8 rounded-lg border px-3 text-sm" disabled={updateBusy} onClick={() => {
+                    if (updateOffer.latest !== null) sessionStorage.setItem('mini-app.update-dismissed', updateOffer.latest)
+                    setUpdateOffer(undefined)
+                  }}>{label('cancel')}</button>
+                  <button type="button" className="h-8 rounded-lg bg-primary px-3 text-sm font-semibold text-primary-foreground disabled:opacity-60" disabled={updateBusy || props.settings?.installUpdate === undefined} onClick={() => {
+                    const install = props.settings?.installUpdate
+                    const version = updateOffer.latest
+                    if (install === undefined || version === null) return
+                    setUpdateBusy(true)
+                    setUpdateFailed(false)
+                    void install(version).then(() => undefined, () => {
+                      setUpdateFailed(true)
+                      setUpdateBusy(false)
+                    })
+                  }}>{label('update-install')}</button>
+                </div>
+              </Dialog>
+            </div>
+          )}
         </>
       )}
       {...state.focus === undefined ? {} : { focus: state.focus }}

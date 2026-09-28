@@ -32,6 +32,7 @@ export function PanelSettings(props: {
   readonly hostPolicy?: PanelPolicy
   /** Preview chrome locale while the form is open (discard restores the saved locale). */
   readonly onPreviewLocale?: (locale: PanelLocale) => void
+  readonly onUpdateOffer?: (update: PanelUpdateCheck) => void
 }): ReactNode {
   const [state, dispatch] = useReducer(reduceSettings, undefined, settingsState)
   const [saveFeedback, setSaveFeedback] = useState<'idle' | 'saving' | 'saved'>('idle')
@@ -272,7 +273,7 @@ export function PanelSettings(props: {
               update={update}
               label={label}
               {...props.versions === undefined ? {} : { versions: props.versions }}
-              {...client.checkUpdate === undefined ? {} : { onCheck: () => { void readUpdate(client, setUpdate) } }}
+              {...client.checkUpdate === undefined ? {} : { onCheck: () => { void readUpdate(client, setUpdate, props.onUpdateOffer) } }}
             />
           ) : null}
           {section === 'mcp' || section === 'about' ? null : state.saveError ? <p className="text-sm text-destructive">{state.saveMessage !== undefined && state.saveMessage.length > 0 ? state.saveMessage : label('save-failed')}</p> : null}
@@ -630,11 +631,14 @@ async function waitForHostOrigin(origin: string, budgetMs: number): Promise<bool
 async function readUpdate(
   client: PanelSettingsClient,
   setUpdate: (value: PanelUpdateCheck | 'checking' | 'failed') => void,
+  onOffer?: (update: PanelUpdateCheck) => void,
 ): Promise<void> {
   if (client.checkUpdate === undefined) return
   setUpdate('checking')
   try {
-    setUpdate(await client.checkUpdate())
+    const result = await client.checkUpdate()
+    setUpdate(result)
+    if (result.updateAvailable && result.installable === true && result.latest !== null) onOffer?.(result)
   } catch {
     setUpdate('failed')
   }
