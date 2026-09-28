@@ -135,13 +135,14 @@ export function bindLoopback(input: {
     subscribeFrames: listener => forwardFrames(input.author.appEvents, listener),
     subscribeApp: (appId, since, listener) => input.author.appEvents.subscribe(appId, since, listener),
     checkUpdate: () => checkPackageUpdate(),
-    installUpdate: async (version) => {
+    installUpdate: (version) => {
       stagePackageUpdate(version)
-      if (input.restart === undefined) return
+      if (input.restart === undefined) return Promise.resolve()
       const restart = input.restart
       setTimeout(() => {
         void restart()
       }, 200)
+      return Promise.resolve()
     },
     ...input.restart === undefined ? {} : { restart: input.restart },
     ...skill === undefined ? {} : {
