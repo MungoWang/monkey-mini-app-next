@@ -1,11 +1,15 @@
 ---
 status: locked
-updated: 2026-09-28
+updated: 2026-09-29
 ---
 
 # Changelog
 
 This page owns released version notes. The product version is the `version` field of `@mini-app/shell`. `@mini-app/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
+
+## 1.0.5
+
+When a workbench fills the slot, the status row chip names a custom home, more in a tab, and an open-in-new-tab arrow. Clicking current home on a workbench tab writes the builtin library. An MCP reconnect that exhausts its budget leaves the server registered; `mcp-not-connected` is an unknown id only.
 
 ## 1.0.4
 
