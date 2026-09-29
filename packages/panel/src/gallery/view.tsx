@@ -114,6 +114,7 @@ export function GalleryBody(props: {
   const appTab = active?.kind === 'app'
   const openRecord = appTab ? state.apps.find(app => app.id === active.appId) : undefined
   const workbenchTab = openRecord?.kind === 'workbench'
+  const homePinned = openRecord?.kind === 'workbench' && props.defaultWorkbenchId === openRecord.id
   const desk = state.apps.find(app => app.id === props.defaultWorkbenchId && app.kind === 'workbench')
   const desks = workbenchEntries(state.apps, props.defaultWorkbenchId, label('workbench-builtin'))
   const deskId = desks.find(entry => entry.default)?.id ?? 'default'
@@ -179,20 +180,19 @@ export function GalleryBody(props: {
         {appTab ? (
           <div className="mma-toolbar">
             {workbenchTab ? (
-              <button
-                type="button"
-                className="inline-flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] font-semibold hover:bg-muted"
-                data-default-workbench={active.appId}
-                data-current={props.defaultWorkbenchId === active.appId ? '1' : '0'}
-                aria-label={props.defaultWorkbenchId === active.appId ? label('current-default-workbench') : label('set-default-workbench')}
-                onClick={() => {
-                  if (props.defaultWorkbenchId === active.appId) return
-                  props.onSetDefaultWorkbench?.(active.appId)
-                }}
-              >
-                <Pin size={14} strokeWidth={2} fill={props.defaultWorkbenchId === active.appId ? 'currentColor' : 'none'} />
-                <span>{props.defaultWorkbenchId === active.appId ? label('current-default-workbench') : label('set-default-workbench')}</span>
-              </button>
+              <Tooltip text={homePinned ? label('clear-default-workbench') : label('set-default-workbench')}>
+                <button
+                  type="button"
+                  className="inline-flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] leading-none font-semibold hover:bg-muted"
+                  data-default-workbench={active.appId}
+                  data-current={homePinned ? '1' : '0'}
+                  aria-label={homePinned ? label('clear-default-workbench') : label('set-default-workbench')}
+                  onClick={() => props.onSetDefaultWorkbench?.(homePinned ? 'default' : active.appId)}
+                >
+                  <Pin size={14} strokeWidth={2} className="shrink-0" fill={homePinned ? 'currentColor' : 'none'} />
+                  <span className="leading-none">{homePinned ? label('current-default-workbench') : label('set-default-workbench')}</span>
+                </button>
+              </Tooltip>
             ) : null}
             {workbenchTab ? <span className="mma-toolbar-rule" aria-hidden="true" /> : null}
             <Tooltip text={label('delete')}>
@@ -262,8 +262,10 @@ export function GalleryBody(props: {
                   void openApp(props.client, desk.id, desk.name, dispatch, open)
                 }}
               >
-                <span>{desk.name}</span>
-                <ArrowUpRight size={11} strokeWidth={2} />
+                <span>{label('open-workbench-tab-now')}</span>
+                <span className="mma-status-split" aria-hidden="true" />
+                <span className="mma-status-more">{label('open-workbench-tab-more')}</span>
+                <span className="mma-status-go" aria-hidden="true"><ArrowUpRight size={12} strokeWidth={2} /></span>
               </button>
             </Tooltip>
           )}

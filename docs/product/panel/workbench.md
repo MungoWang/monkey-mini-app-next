@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-28
+updated: 2026-09-29
 ---
 
 # Workbench
@@ -50,9 +50,9 @@ The stored id is the optional field `defaultWorkbenchId` on `host.json`. The fie
 
 The builtin library is one grid. Choosing a card opens a tab and does not change the slot. The grid does not put a label or a set-default control above a card. On the list home, a bar to the left of the toolbar lists the builtin library and every workbench app. The builtin tab shows a grid icon. A workbench tab shows that app's acronym. That bar is hidden on an app tab. The slot changes from that bar, from the workbench tab action, or from `setDefaultWorkbench`. Those three write the same field. Saving another setting does not clear the field. Refresh on the list home reloads the workbench in the slot after it refreshes the list. Refresh on an app tab reloads that app and does not reload the slot.
 
-When a workbench fills the slot, the host status row names that workbench on the right. That name opens the same workbench as an app tab. It is not a second toolbar. History, storage, and the app theme pin live on an app tab, not on the slot. The builtin library has no such control. Opening again focuses the existing tab.
+When a workbench fills the slot, the host status row carries a chip on the right: this is a custom home, more lives in a tab, and an arrow opens that workbench as an app tab. It is not a second toolbar. History, storage, and the app theme pin live on an app tab, not on the slot. The builtin library has no such control. Opening again focuses the existing tab.
 
-A workbench tab shows set-as-home (pin plus that label) and delete as an icon in their own toolbar block, with a short rule between them. When that app is already the stored id, the pin is filled, the label names the current home, and the action does not write. A non-workbench app tab shows only the delete icon. The builtin library has no set-as-home action.
+A workbench tab shows set-as-home (pin plus that label) and delete as an icon in their own toolbar block, with a short rule between them. When that app is already the stored id, the pin is filled and the label names the current home. Clicking it writes `default` and the slot returns to the builtin library. A non-workbench app tab shows only the delete icon. The builtin library has no set-as-home action.
 
 The builtin library renders `WorkbenchLibrary` from `@mini-app/app-view`. It takes `apps` and `openApp`. The panel fills those from the owner list. A workbench app does not render that component. It calls `ctx.workbench` and composes its own page. `AppCard` is available. A card does not open an app. [UI kit](../app-contract/ui-kit.md) owns the card props.
 
