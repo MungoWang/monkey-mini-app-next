@@ -556,6 +556,11 @@ pub fn stop_process(pid: u32) {
     });
 }
 
+fn npm_bin(node: &Path) -> PathBuf {
+    let name = if cfg!(windows) { "npm.cmd" } else { "npm" };
+    node.parent().map(|dir| dir.join(name)).unwrap_or_else(|| PathBuf::from(name))
+}
+
 /// Sidecar writes this, then exits 75. Install after it has released native modules.
 fn apply_pending_update(prefix: &Path, gui: bool) {
     let path = prefix.join("update.json");
@@ -574,11 +579,30 @@ fn apply_pending_update(prefix: &Path, gui: bool) {
         return;
     };
     let args: Vec<String> = args.iter().filter_map(|item| item.as_str().map(str::to_string)).collect();
-    let npm = if cfg!(windows) { "npm.cmd" } else { "npm" };
-    let status = Command::new(npm).args(&args).current_dir(prefix).status();
+    let launch = match launch_plan(prefix) {
+        Ok(launch) => launch,
+        Err(message) => {
+            let _ = fs::remove_file(&path);
+            tell_user(&message, gui);
+            return;
+        }
+    };
+    let output = Command::new(npm_bin(&launch.node))
+        .args(&args)
+        .current_dir(prefix)
+        .env("PATH", &launch.path)
+        .output();
     let _ = fs::remove_file(&path);
-    if !status.map(|item| item.success()).unwrap_or(false) {
-        tell_user("Mohou could not install the update.", gui);
+    match output {
+        Ok(output) => {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            let _ = fs::write(prefix.join("update.log"), format!("{stdout}\n{stderr}"));
+            if !output.status.success() {
+                tell_user("Mohou could not install the update.", gui);
+            }
+        }
+        Err(_) => tell_user("Mohou could not install the update.", gui),
     }
 }
 
@@ -684,7 +708,7 @@ pub fn supervise(
 
 #[cfg(test)]
 mod tests {
-    use super::{child_stop, find_node, is_app_bundle, prefix_from_exe, prepend_path, runtime_dir, shell_entry, ChildStop, RESTART_EXIT};
+    use super::{child_stop, find_node, is_app_bundle, npm_bin, prefix_from_exe, prepend_path, runtime_dir, shell_entry, ChildStop, RESTART_EXIT};
     use std::fs;
     use std::path::Path;
 
@@ -694,6 +718,18 @@ mod tests {
         assert!(matches!(child_stop(Some(75)), ChildStop::Restart));
         assert!(matches!(child_stop(Some(0)), ChildStop::Exit(0)));
         assert!(matches!(child_stop(None), ChildStop::Exit(1)));
+    }
+
+    #[test]
+    fn update_npm_sits_beside_node() {
+        let node = if cfg!(windows) {
+            Path::new(r"C:\nvm\v22\node.exe")
+        } else {
+            Path::new("/Users/me/.nvm/versions/node/v22.23.1/bin/node")
+        };
+        let npm = npm_bin(node);
+        assert_eq!(npm.file_name().unwrap(), if cfg!(windows) { "npm.cmd" } else { "npm" });
+        assert_eq!(npm.parent(), node.parent());
     }
 
     #[test]
