@@ -14,7 +14,7 @@ describe('buildPanelPage', () => {
       if (line !== '') expect(page.html).toContain(line)
     }
     expect(page.html).toContain('.bg-background')
-    expect(page.html).toContain('#mma-host{min-height:100%')
+    expect(page.html).toContain('#mma-host{height:100%;min-height:0;overflow:hidden')
     expect(page.script.length).toBeGreaterThan(1000)
   }, 60_000)
 

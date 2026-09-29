@@ -41,12 +41,12 @@ export async function compilePanelStylesheet(panelDir: string): Promise<string> 
 }
 
 const panelLayoutCss = [
-  'html,body,#root{height:100%;margin:0;}',
-  '#root{min-height:100%;}',
-  '#mma-host{min-height:100%;display:flex;flex-direction:column;}',
+  'html,body,#root{height:100%;margin:0;overflow:hidden;}',
+  '#mma-host{height:100%;min-height:0;overflow:hidden;display:flex;flex-direction:column;}',
   '#mma-host.mma-command{background:radial-gradient(circle at 18% 0%,color-mix(in oklch,var(--foreground) 6%,transparent),transparent 32%),radial-gradient(circle at 100% 100%,color-mix(in oklch,var(--foreground) 5%,transparent),transparent 28%),var(--background);}',
   '#mma-host .mma-chrome{position:relative;z-index:40;height:64px;display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid color-mix(in oklch,var(--foreground) 8%,transparent);background:color-mix(in oklch,var(--card) 72%,transparent);backdrop-filter:blur(20px) saturate(160%);}',
-  '#mma-host .mma-pill-rail{position:relative;display:flex;min-width:0;gap:8px;overflow-x:auto;padding:4px;border-radius:999px;border:1px solid color-mix(in oklch,var(--foreground) 8%,transparent);background:color-mix(in oklch,var(--foreground) 4%,transparent);}',
+  '#mma-host .mma-pill-rail{position:relative;display:flex;min-width:0;gap:8px;overflow-x:auto;padding:4px;border-radius:999px;border:1px solid color-mix(in oklch,var(--foreground) 8%,transparent);background:color-mix(in oklch,var(--foreground) 4%,transparent);scrollbar-width:none;}',
+  '#mma-host .mma-pill-rail::-webkit-scrollbar{display:none;height:0;}',
   '#mma-host .mma-pill-glide{position:absolute;top:4px;left:0;height:calc(100% - 8px);border-radius:999px;background:var(--card);box-shadow:0 4px 12px color-mix(in oklch,var(--foreground) 8%,transparent);transition:transform .42s cubic-bezier(.23,1,.32,1),width .42s cubic-bezier(.23,1,.32,1);pointer-events:none;}',
   '#mma-host .mma-pill{position:relative;z-index:1;display:inline-flex;max-width:11rem;shrink:0;align-items:center;gap:6px;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted-foreground);transition:color .22s ease;}',
   '#mma-host .mma-pill[data-active="1"]{color:var(--foreground);}',
@@ -57,7 +57,8 @@ const panelLayoutCss = [
   '#mma-host .mma-tip-label{position:absolute;top:calc(100% + 6px);left:50%;z-index:60;width:max-content;max-width:16rem;transform:translateX(-50%);padding:5px 8px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--card-foreground,var(--foreground));font-size:12px;font-weight:600;letter-spacing:0;line-height:1.3;text-align:center;text-transform:none;white-space:normal;opacity:0;pointer-events:none;box-shadow:var(--shadow);transition:opacity .12s ease;}',
   '#mma-host .mma-tip[data-align="end"] .mma-tip-label{left:auto;right:0;transform:none;}',
   '#mma-host .mma-tip:hover .mma-tip-label,#mma-host .mma-tip:focus-within .mma-tip-label{opacity:1;}',
-  '#mma-host .mma-desk{position:relative;display:flex;max-width:min(28rem,42vw);align-items:center;gap:2px;overflow-x:auto;padding:4px;border-radius:16px;border:1px solid color-mix(in oklch,var(--foreground) 8%,transparent);background:color-mix(in oklch,var(--foreground) 4%,transparent);backdrop-filter:blur(16px) saturate(160%);}',
+  '#mma-host .mma-desk{position:relative;display:flex;max-width:min(28rem,42vw);align-items:center;gap:2px;overflow-x:auto;padding:4px;border-radius:16px;border:1px solid color-mix(in oklch,var(--foreground) 8%,transparent);background:color-mix(in oklch,var(--foreground) 4%,transparent);backdrop-filter:blur(16px) saturate(160%);scrollbar-width:none;}',
+  '#mma-host .mma-desk::-webkit-scrollbar{display:none;height:0;}',
   '#mma-host .mma-desk.mma-desk-fit{max-width:none;}',
   '#mma-host .mma-desk-pill{position:absolute;top:4px;left:0;height:calc(100% - 8px);border-radius:12px;background:var(--card);box-shadow:0 8px 18px -10px color-mix(in oklch,var(--foreground) 28%,transparent);transition:transform .42s cubic-bezier(.23,1,.32,1),width .42s cubic-bezier(.23,1,.32,1);pointer-events:none;}',
   '#mma-host .mma-desk-item{position:relative;z-index:1;display:inline-flex;height:32px;max-width:11rem;flex:0 0 auto;align-items:center;gap:6px;overflow:hidden;border-radius:12px;padding:0 12px;font-size:13px;font-weight:600;color:var(--muted-foreground);transition:color .22s ease;}',

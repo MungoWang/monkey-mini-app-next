@@ -271,7 +271,7 @@ export function GalleryBody(props: {
           )}
         </div>
       )}
-      <div className="relative min-h-0 flex-1">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         {state.tabs.tabs.map(tab => tab.kind === 'app' ? (
           <div key={tab.appId} className={stageClass(active?.kind === 'app' && active.appId === tab.appId, 'flex flex-col')}>
             {active?.kind === 'app' && active.appId === tab.appId && state.frameError !== undefined ? <p className="px-6 py-2 text-sm text-destructive">{state.frameError.length > 0 ? state.frameError : label('reload-failed')}</p> : null}
