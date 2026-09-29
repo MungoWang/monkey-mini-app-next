@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-09-29
 ---
 
 # ctx.mcp
@@ -18,4 +18,4 @@ Layer: [MCP client](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: seam, held by Host. Not the runtime provider. First call opens the server. One session per id. Start failure emits `mcp-start-failed` and drops the session. Unknown id emits `mcp-not-connected`. A tool error emits `mcp-tool-failed`. Secrets in `env` are not copied into the error. Reconnect budget exhaustion unregisters that server and stops. Dispose awaits child exit. Plan: [implementation.md](../implementation.md).
+Role: seam, held by Host. Not the runtime provider. First call opens the server. One session per id. Start failure emits `mcp-start-failed` and drops the session so the next call retries. Unknown id emits `mcp-not-connected`. A tool error emits `mcp-tool-failed`. Secrets in `env` are not copied into the error. Reconnect budget exhaustion fails that call and stops retrying inside it. The server stays registered. Dispose awaits child exit. Plan: [implementation.md](../implementation.md).

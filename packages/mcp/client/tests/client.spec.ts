@@ -69,7 +69,7 @@ describe('McpClient', () => {
     }, process.env, 1)
     try {
       await expect(client.call('echo', 'die')).rejects.toMatchObject({ code: 'mcp-start-failed' })
-      expect(client.serverIds()).not.toContain('echo')
+      expect(client.serverIds()).toContain('echo')
     } finally {
       await client.dispose()
     }
@@ -103,7 +103,7 @@ describe('McpClient', () => {
     }
   })
 
-  it('unregisters a server when the reconnect budget is spent', async () => {
+  it('opens again on the next call after a dropped session', async () => {
     const client = new McpClient({
       echo: { command: 'node', args: ['packages/mcp/client/tests/fixture-server.ts'] },
     }, process.env, 0)
@@ -111,9 +111,9 @@ describe('McpClient', () => {
       const pid = Number(await client.call('echo', 'pid'))
       await client.call('echo', 'exit')
       await waitUntil(() => !processAlive(pid))
-      await expect(client.call('echo', 'pid')).rejects.toMatchObject({ code: 'mcp-start-failed' })
-      expect(client.serverIds()).not.toContain('echo')
-      await expect(client.call('echo', 'pid')).rejects.toMatchObject({ code: 'mcp-not-connected' })
+      const next = Number(await client.call('echo', 'pid'))
+      expect(next).not.toBe(pid)
+      expect(client.serverIds()).toContain('echo')
     } finally {
       await client.dispose()
     }

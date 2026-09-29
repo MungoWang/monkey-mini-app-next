@@ -25,7 +25,8 @@ interface Session {
 
 /**
  * External MCP sessions. The first call opens a server. One session per id.
- * A dropped live session reconnects until the budget is spent, then that server is removed.
+ * A dropped live session reconnects until the budget is spent, then that call fails.
+ * The next call may open the server again.
  * This client does not register tools on a model. It does not unwrap `{ input: string }`.
  */
 export class McpClient {
@@ -61,6 +62,7 @@ export class McpClient {
    * @param args - tool arguments; omitted means an empty object
    */
   async call(serverId: string, toolName: string, args?: Record<string, unknown>): Promise<unknown> {
+    this.beginAttempt(serverId)
     const result = await this.withSession(serverId, client => (
       client.callTool({ name: toolName, arguments: args ?? {} }) as Promise<ToolResult>
     ))
@@ -84,6 +86,7 @@ export class McpClient {
    * @param serverId - key in the resolved config
    */
   async listTools(serverId: string): Promise<Array<{ name: string; description?: string; inputSchema: Record<string, unknown> }>> {
+    this.beginAttempt(serverId)
     return this.withSession(serverId, async (client) => {
       const tools: Array<{ name: string; description?: string; inputSchema: Record<string, unknown> }> = []
       let cursor: string | undefined
@@ -125,7 +128,6 @@ export class McpClient {
         this.recovering.delete(serverId)
         this.dropped.delete(serverId)
         if (isClosed(error) && this.spendReconnect(serverId)) continue
-        if (isClosed(error)) this.unregister(serverId)
         throw new McpError(
           isClosed(error) ? 'mcp-start-failed' : 'mcp-tool-failed',
           this.redact(error instanceof Error ? error.message : 'mcp tool failed', spec),
@@ -135,23 +137,20 @@ export class McpClient {
     }
   }
 
+  private beginAttempt(serverId: string): void {
+    this.reconnects.delete(serverId)
+    this.dropped.delete(serverId)
+  }
+
   private allowReconnect(serverId: string): boolean {
     this.dropped.delete(serverId)
-    if (this.spendReconnect(serverId)) return true
-    this.unregister(serverId)
-    return false
+    return this.spendReconnect(serverId)
   }
 
   private spendReconnect(serverId: string): boolean {
     const used = (this.reconnects.get(serverId) ?? 0) + 1
     this.reconnects.set(serverId, used)
     return used <= this.reconnectBudget
-  }
-
-  private unregister(serverId: string): void {
-    this.servers.delete(serverId)
-    this.reconnects.delete(serverId)
-    this.opening.delete(serverId)
   }
 
   private session(serverId: string, spec: McpServerSpec): Promise<Session> {

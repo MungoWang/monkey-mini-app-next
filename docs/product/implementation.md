@@ -1,6 +1,6 @@
 ---
 status: locked
-updated: 2026-09-21
+updated: 2026-09-29
 ---
 
 # Implementation plan
@@ -121,7 +121,7 @@ HTTP 4xx and 5xx do not throw and have no code. A non-zero bash exit does not th
 
 Host create registers no child. Start opens the HTTP listener and starts the injected runtime provider. The first `ctx.mcp` call opens that server. Dispose stops new work, clears timers, awaits in-flight calls, awaits child exit, then runs stored disposers.
 
-A reconnect has a budget. Exhaustion unregisters that server and stops. It does not restart forever. A generation token ignores a stale close. The replacement child starts only after the previous close is confirmed.
+A reconnect has a budget. Exhaustion fails that call and stops retrying inside it. The server stays registered, so the next call may open it again. It does not retry forever inside one call. A generation token ignores a stale close. The replacement child starts only after the previous close is confirmed.
 
 A registration returns a disposer. A second registration of the same name throws. The live one stays.
 

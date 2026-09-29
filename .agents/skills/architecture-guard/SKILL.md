@@ -35,7 +35,7 @@ Product behavior lives in `docs/product/features.md`. This file does not restate
 
 14. Lifecycle is create, start, request, dispose. Create opens no child. Dispose awaits child exit, then runs disposers. `void child.dispose()` returns too early. [dispose.md](references/dispose.md)
 15. A generation token makes a racing close idempotent. Do not start the replacement until the previous close is confirmed. [dispose.md](references/dispose.md#example)
-16. Reconnect has a budget. Exhaustion unregisters and stops. It does not restart forever. [bounded-recovery.md](references/bounded-recovery.md)
+16. Reconnect has a budget. Exhaustion fails that attempt and stops retrying inside it. The next call may try again. It does not restart forever. [bounded-recovery.md](references/bounded-recovery.md)
 17. Work that outlives `start` returns a handle. Collect and cancel are later calls. [long-running-handle.md](references/long-running-handle.md)
 18. One asynchronous operation has one owner. Recover that owner at the entry. A leaf helper closes over the value it uses. It does not take the process root to hide a parameter. [dispose.md](references/dispose.md#one-owner)
 
