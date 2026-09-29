@@ -203,7 +203,8 @@ fn version_nodes(root: &Path, file_name: &str) -> Vec<PathBuf> {
 
 #[cfg(unix)]
 fn nvm_nodes(home: &Path) -> Vec<PathBuf> {
-    version_nodes(&home.join(".nvm/versions/node"), "node")
+    // nvm-sh keeps the binary at versions/node/v22.x/bin/node, not beside the version directory.
+    version_nodes(&home.join(".nvm/versions/node"), "bin/node")
 }
 
 #[cfg(windows)]
@@ -824,6 +825,20 @@ mod tests {
         .unwrap();
         let path = format!("{}:{}", plain.display(), with_pi.display());
         assert_eq!(find_node(&path, &root).unwrap(), pi_node);
+
+        #[cfg(unix)]
+        {
+            let nvm = root.join(".nvm/versions/node/v22.23.1/bin");
+            fs::create_dir_all(&nvm).unwrap();
+            let nvm_node = nvm.join("node");
+            fs::write(&nvm_node, "").unwrap();
+            use std::os::unix::fs::PermissionsExt;
+            let mut permissions = fs::metadata(&nvm_node).unwrap().permissions();
+            permissions.set_mode(0o755);
+            fs::set_permissions(&nvm_node, permissions).unwrap();
+            fs::create_dir_all(root.join(".nvm/versions/node/v22.23.1/lib/node_modules/@earendil-works/pi-coding-agent")).unwrap();
+            assert_eq!(find_node(&plain.display().to_string(), &root).unwrap(), nvm_node);
+        }
         let _ = fs::remove_dir_all(&root);
     }
 

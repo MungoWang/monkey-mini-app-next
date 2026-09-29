@@ -9,7 +9,7 @@ This page owns released version notes. The product version is the `version` fiel
 
 ## 1.0.5
 
-When a workbench fills the slot, the status row chip names a custom home, more in a tab, and an open-in-new-tab arrow. Clicking current home on a workbench tab writes the builtin library. Opening settings, history, or storage, and closing a tab, no longer flash a window scrollbar. An in-app update runs the same Node's npm that boots the sidecar. An MCP reconnect that exhausts its budget leaves the server registered; `mcp-not-connected` is an unknown id only.
+When a workbench fills the slot, the status row chip names a custom home, more in a tab, and an open-in-new-tab arrow. Clicking current home on a workbench tab writes the builtin library. Opening settings, history, or storage, and closing a tab, no longer flash a window scrollbar. An in-app update runs the same Node's npm that boots the sidecar. Dock launch uses the nvm Node under `bin/node` when that Node has Pi, not the first Node on `PATH`. An MCP reconnect that exhausts its budget leaves the server registered; `mcp-not-connected` is an unknown id only.
 
 ## 1.0.4
 
