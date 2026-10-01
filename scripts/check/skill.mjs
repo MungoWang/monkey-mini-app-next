@@ -45,6 +45,7 @@ const ctxText = fs.readFileSync(ctxMd, "utf8")
 
 const banned = [
   "@monkey-mini-app/sdk",
+  "@mini-app/",
   "@monkeyagent/",
   "defineDashboard",
   "history_revert",
@@ -64,6 +65,7 @@ for (const file of allFiles) {
   for (const [i, line] of text.split("\n").entries()) {
     for (const item of banned) {
       if (item === "@monkey-mini-app/sdk" && line.includes("`@monkey-mini-app/*`")) continue
+      if (item === "@mini-app/" && line.includes("`@mini-app/*`")) continue
       if (line.includes(item)) fail("banned", file, `line ${i + 1}: ${item}`)
     }
   }

@@ -86,7 +86,7 @@ Match `code`. The message is for a person.
 
 ## Forbidden
 
-- Old package names (`@monkey-mini-app/*`) — they fail. Use `@mohou/ui` and `@mohou/contract`
+- Old package names (`@monkey-mini-app/*`, `@mini-app/*`) — they fail. Use `@mohou/ui` and `@mohou/contract`
 - npm packages in `ui.tsx` except the allowlist
 - Node builtins in the UI or in `shared`
 - `../` out of the app dir
