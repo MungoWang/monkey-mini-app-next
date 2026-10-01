@@ -182,6 +182,7 @@ export function mountOwner(app: Hono<HostEnv>, ports: LoopbackPorts): void {
   app.get(`${httpLayout.apps}/:appId/${httpLayout.theme}`, c => ok(c, async () => ({
     pin: await ports.readPin(c.req.param('appId')),
     appFile: await ports.appFile(c.req.param('appId')),
+    appTheme: await ports.readAppTheme(c.req.param('appId')),
   })))
   app.post(`${httpLayout.apps}/:appId/${httpLayout.theme}`, async (c) => {
     const body = await readBody(c)

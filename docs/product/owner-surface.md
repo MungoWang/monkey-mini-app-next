@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-09-29
 ---
 
 # Owner surface
@@ -89,7 +89,7 @@ Owner `restoreStorage` closes the live storage handle, then calls `restoreStorag
 
 ## listPalettes
 
-- Output: theme files, each `{ id, name, swatch, style }`, and ignored files with a reason. `swatch` is that file's light `--primary`. `style` is the first-paint CSS for both modes, so the picker can apply it without reloading a document. A shipped file and a user file with the same id appear once. The user file wins. The panel refetches when the picker opens.
+- Output: theme files, each `{ id, name, swatch, style, origin }`, and ignored files with a reason. `origin` is `builtin` or `custom`. `swatch` is that file's light `--primary`. `style` is the first-paint CSS for both modes, so the picker can apply it without reloading a document. A shipped file and a user file with the same id appear once. The user file wins, and that row is `custom`. The panel refetches when the picker opens.
 - An ignored file is not a selectable chip.
 
 ## reloadView

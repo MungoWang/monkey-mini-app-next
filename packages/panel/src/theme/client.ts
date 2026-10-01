@@ -7,6 +7,8 @@ export interface PaletteChip {
   readonly nameZh?: string
   readonly swatch?: string
   readonly style?: string
+  /** Shipped file, or a file from the themes directory. A user file that replaces a shipped id is custom. */
+  readonly origin?: 'builtin' | 'custom'
 }
 
 export interface IgnoredPalette {
@@ -27,4 +29,6 @@ export interface ThemeClient {
   readPin?(appId: string): Promise<ThemePin>
   setPin(appId: string, pin: ThemePin): Promise<ThemePin>
   appFile?(appId: string): Promise<boolean>
+  /** Parsed `theme.css` for this app. Null when the file is missing or ignored. */
+  readAppTheme?(appId: string): Promise<{ name?: string; nameZh?: string; swatch?: string; style?: string } | null>
 }

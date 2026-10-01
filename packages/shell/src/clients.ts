@@ -49,6 +49,7 @@ export function ownerClients(host: HostSession) {
       listPalettes: () => host.owner.themes.listPalettes(),
       readPin: (appId: string) => host.owner.themes.readPin(appId),
       appFile: (appId: string) => host.owner.themes.appFile(appId),
+      readAppTheme: (appId: string) => host.owner.themes.readAppTheme(appId),
       setPin: (appId: string, pin: Parameters<HostSession['owner']['themes']['setPin']>[1]) => host.owner.themes.setPin(appId, pin),
     },
   }

@@ -42,6 +42,7 @@ function basePorts(extra: Record<string, unknown> = {}): LoopbackPorts {
     readPin: async () => ({ kind: 'default' }),
     setPin: async (_appId: string, pin: unknown) => pin,
     appFile: async () => false,
+    readAppTheme: async () => null,
     readHistory: async () => [],
     readCommit: async () => ({}),
     readStorage: async () => ({ bytes: 0, tables: [] }),

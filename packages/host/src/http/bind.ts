@@ -108,6 +108,7 @@ export function bindLoopback(input: {
     readPin: appId => input.owner.themes.readPin(appId),
     setPin: (appId, pin) => input.owner.themes.setPin(appId, pin),
     appFile: appId => input.owner.themes.appFile(appId),
+    readAppTheme: appId => input.owner.themes.readAppTheme(appId),
     readHistory: appId => input.owner.readHistory(appId),
     readCommit: (appId, commitId) => input.owner.readCommit(appId, commitId),
     readStorage: appId => input.owner.readStorage(appId),

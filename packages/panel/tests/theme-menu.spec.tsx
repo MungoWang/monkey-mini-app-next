@@ -29,14 +29,15 @@ function theme(extra: Partial<ThemeClient> = {}): ThemeClient {
   return {
     listPalettes: () => Promise.resolve({
       palettes: [
-        { id: 'ink', name: 'Ink', swatch: '#111', style: ':root{--primary:1}' },
-        { id: 'plain', name: 'Plain' },
+        { id: 'ink', name: 'Ink', swatch: '#111', style: ':root{--primary:1}', origin: 'builtin' },
+        { id: 'plain', name: 'Plain', origin: 'custom' },
       ],
       ignored: [],
     }),
     setPin: (_appId, pin) => Promise.resolve(pin),
     readPin: () => Promise.resolve({ kind: 'default' }),
     appFile: () => Promise.resolve(true),
+    readAppTheme: () => Promise.resolve({ name: 'Inkstone', nameZh: '砚台', swatch: '#345', style: ':root{--primary:2}' }),
     ...extra,
   }
 }
@@ -83,6 +84,9 @@ describe('ThemeMenu', () => {
     )
     expect(host.textContent).toContain('Radar')
     expect(host.textContent).toContain('Plain')
+    expect(host.textContent).toContain('Custom')
+    expect(host.textContent).toContain('System')
+    expect(button(host, 'App file')).toBeUndefined()
     await act(async () => {
       button(host, 'Dark')?.click()
       await Promise.resolve()
@@ -91,6 +95,8 @@ describe('ThemeMenu', () => {
     await act(async () => {
       button(host, 'Radar')?.click()
     })
+    expect(host.textContent).toContain('Inkstone')
+    expect(host.textContent).toContain('App')
     await act(async () => {
       button(host, 'Ink')?.click()
       await Promise.resolve()

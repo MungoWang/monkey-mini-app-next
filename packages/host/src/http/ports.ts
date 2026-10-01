@@ -42,6 +42,7 @@ export interface LoopbackPorts {
   readPin(appId: string): Promise<AppPin>
   setPin(appId: string, pin: AppPin): Promise<AppPin>
   appFile(appId: string): Promise<boolean>
+  readAppTheme(appId: string): Promise<{ name?: string; nameZh?: string; swatch: string; style: string } | null>
   readHistory(appId: string): Promise<readonly unknown[]>
   readCommit(appId: string, commitId: string): Promise<unknown>
   readStorage(appId: string): Promise<unknown>

@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-28
+updated: 2026-09-29
 ---
 
 # HTTP surface
@@ -29,13 +29,13 @@ Layer: [Host](README.md). Index: [features.md](../features.md).
 | `POST /api/call` | iframe, authoring tool | `{ ok, value }` or `{ ok: false, error }`. `Accept: text/event-stream` writes each method yield as `{ value }`, then `{ return }` or `{ error }` |
 | `GET /api/host-config` | Panel | public config fields |
 | `POST /api/host-config` | Panel | writes a valid config, or 400 with the field error |
-| `GET /api/palettes` | Panel | custom palettes plus `ignored[]` |
+| `GET /api/palettes` | Panel | shipped and custom palettes, each with `origin`, plus `ignored[]` |
 | `GET /api/apps/:appId/history` | Panel | commit list, limit default 50, max 200 |
 | `GET /api/apps/:appId/history/:commitId` | Panel | message, time, files, per-file add/del and preview |
 | `GET /api/apps/:appId/storage` | Panel | file size, table names, size notices |
 | `GET /api/apps/:appId/storage/:table` | Panel | exported rows of that table |
 | `POST /api/apps/:appId/storage/restore` | Panel | restores the storage backup |
-| `GET /api/apps/:appId/theme` | Panel | current pin |
+| `GET /api/apps/:appId/theme` | Panel | current pin, whether `theme.css` parsed, and that file's name and swatch when it did |
 | `POST /api/apps/:appId/theme` | Panel | saves or clears the pin |
 | `GET /api/about` | Panel | process name, environment, package versions, and the authoring MCP url plus token |
 | `GET /api/updates` | Panel | `{ name, current, latest, updateAvailable, channel?, installable?, error? }` |

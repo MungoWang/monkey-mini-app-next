@@ -76,6 +76,7 @@ describe('httpPanelClients', () => {
     expect((await client.readTable('com.example.app', 'kv')).rows).toEqual([{ k: 1 }])
     expect((await client.listPalettes()).ignored[0]?.file).toBe('nope.css')
     expect((await client.readPin?.('com.example.app'))?.kind).toBe('palette')
+    expect(await client.readAppTheme?.('com.example.app')).toBeNull()
     const policy = await client.readPolicy()
     expect(policy.llm?.model).toBe('echo')
     expect(policy.theme).toBe('dark')
@@ -143,8 +144,9 @@ describe('httpPanelClients', () => {
       activity: { openCount: 2 },
       updatedAt: '2026-01-02T00:00:00.000Z',
     })
-    expect((await client.listPalettes()).palettes[0]).toMatchObject({ swatch: '#111', style: ':root{}' })
+    expect((await client.listPalettes()).palettes[0]).toMatchObject({ swatch: '#111', style: ':root{}', origin: 'custom' })
     expect((await client.readPin?.('com.example.app'))?.kind).toBe('app-file')
+    expect(await client.readAppTheme?.('com.example.app')).toEqual({ name: 'Moss', nameZh: '苔', swatch: '#111', style: ':root{}' })
     const policy = await client.readPolicy()
     expect(policy.defaultWorkbenchId).toBe('com.example.desk')
     expect(policy.theme).toBe('light')
@@ -152,6 +154,26 @@ describe('httpPanelClients', () => {
     const written = await client.writePolicy(policy)
     expect(written.restartRequired).toBe(true)
     expect(written.policy.theme).toBe('system')
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      json: async () => ({ ok: true, result: { appTheme: null } }),
+    })))
+    expect(await client.readAppTheme?.('com.example.app')).toBeNull()
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      json: async () => ({ ok: true, result: { appTheme: { name: '', swatch: 1, style: ':root{}' } } }),
+    })))
+    expect(await client.readAppTheme?.('com.example.app')).toBeNull()
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      json: async () => ({ ok: true, result: { appTheme: { swatch: '#111', style: ':root{}' } } }),
+    })))
+    expect(await client.readAppTheme?.('com.example.app')).toEqual({ swatch: '#111', style: ':root{}' })
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      json: async () => ({ ok: true, result: { appTheme: { name: 'Moss', nameZh: '', swatch: '#111', style: ':root{}' } } }),
+    })))
+    expect(await client.readAppTheme?.('com.example.app')).toEqual({ name: 'Moss', swatch: '#111', style: ':root{}' })
 
     vi.stubGlobal('fetch', vi.fn(async (input: string) => ({
       ok: true,
@@ -241,10 +263,10 @@ function wire(url: string): unknown {
 }
 
 function rich(url: string): unknown {
-  if (url.includes('/theme')) return { ok: true, result: { pin: { kind: 'app-file' }, appFile: true } }
+  if (url.includes('/theme')) return { ok: true, result: { pin: { kind: 'app-file' }, appFile: true, appTheme: { name: 'Moss', nameZh: '苔', swatch: '#111', style: ':root{}' } } }
   if (url.endsWith('/api/palettes')) {
     return {
-      palettes: [{ id: 'slate', name: 'Slate', swatch: '#111', style: ':root{}' }],
+      palettes: [{ id: 'slate', name: 'Slate', swatch: '#111', style: ':root{}', origin: 'custom' }],
       ignored: [],
     }
   }

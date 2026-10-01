@@ -28,6 +28,7 @@ export function ThemeMenu(props: {
   const [paletteId, setPaletteId] = useState('')
   const [pin, setPin] = useState<ThemePin>({ kind: 'default' })
   const [appFile, setAppFile] = useState(false)
+  const [appTheme, setAppTheme] = useState<{ name?: string; nameZh?: string; swatch?: string; style?: string } | null>(null)
   const label = (key: string) => panelText(props.locale, key, props.mode)
   const appScope = props.appId !== undefined && scope === 'app'
   useEffect(() => {
@@ -59,6 +60,9 @@ export function ThemeMenu(props: {
     }
     if (props.theme.appFile !== undefined) {
       void props.theme.appFile(appId).then(setAppFile).catch(() => setAppFile(false))
+    }
+    if (props.theme.readAppTheme !== undefined) {
+      void props.theme.readAppTheme(appId).then(setAppTheme).catch(() => setAppTheme(null))
     }
   }, [props.theme, props.appId])
   return (
@@ -103,17 +107,18 @@ export function ThemeMenu(props: {
             key={palette.id}
             label={paletteLabel(props.locale, palette)}
             swatch={palette.swatch ?? `hsl(${galleryHue(palette.id)} 55% 48%)`}
-            badge={label('chip-system')}
+            badge={label(palette.origin === 'custom' ? 'chip-custom' : 'chip-system')}
             on={paletteOn(appScope, pin, paletteId, palette.id)}
             onClick={() => { void choosePalette(props, appScope, palette, setPaletteId, setPin, setFailed, label) }}
           />
         ))}
-        {appScope && appFile ? (
+        {appScope && (appFile || appTheme !== null) ? (
           <Swatch
-            label={label('app-file')}
-            swatch="linear-gradient(135deg,var(--primary),var(--muted))"
+            label={appTheme?.name !== undefined && appTheme.name.length > 0 ? paletteLabel(props.locale, { id: 'app', name: appTheme.name, ...appTheme.nameZh === undefined ? {} : { nameZh: appTheme.nameZh } }) : label('app-file')}
+            swatch={appTheme?.swatch ?? 'linear-gradient(135deg,var(--primary),var(--muted))'}
+            badge={label('chip-app')}
             on={pin.kind === 'app-file'}
-            onClick={() => { void writePin(props.theme, props.appId, { kind: 'app-file' }, setPin, setFailed, label) }}
+            onClick={() => { void writePin(props.theme, props.appId, { kind: 'app-file' }, setPin, setFailed, label, appTheme?.style) }}
           />
         ) : null}
       </div>

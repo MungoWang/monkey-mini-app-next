@@ -46,13 +46,20 @@ describe('theme pin', () => {
     await writeFile(join(themes, 'theme-plain.css'), good.replace('/* name: Moss */', '/* name: */'))
     const pins = createThemePins(registry, themes)
     expect(await pins.appFile('com.example.app')).toBe(false)
+    expect(await pins.readAppTheme('com.example.app')).toBeNull()
     await writeFile(appThemeCss(app.directory), good)
     expect(await pins.appFile('com.example.app')).toBe(true)
+    expect(await pins.readAppTheme('com.example.app')).toEqual(expect.objectContaining({ name: 'Moss', swatch: 'blue' }))
     await writeFile(appThemeCss(app.directory), ':root { }')
     expect(await pins.appFile('com.example.app')).toBe(false)
+    expect(await pins.readAppTheme('com.example.app')).toBeNull()
+    await writeFile(appThemeCss(app.directory), good.replace('/* name: Moss */', '/* name: Moss */\n/* name-zh-CN: 苔 */'))
+    expect(await pins.readAppTheme('com.example.app')).toEqual(expect.objectContaining({ name: 'Moss', nameZh: '苔' }))
+    await writeFile(appThemeCss(app.directory), good.replace('/* name: Moss */\n', ''))
+    expect((await pins.readAppTheme('com.example.app'))?.name).toBeUndefined()
     await writeFile(appThemeCss(app.directory), good)
     const listed = await pins.listPalettes()
-    expect(listed.palettes).toContainEqual(expect.objectContaining({ id: 'moss', name: 'Moss', swatch: 'blue' }))
+    expect(listed.palettes).toContainEqual(expect.objectContaining({ id: 'moss', name: 'Moss', swatch: 'blue', origin: 'custom' }))
     expect(listed.palettes.find(item => item.id === 'moss')?.style).toContain('--primary:blue')
     expect(listed.palettes).toContainEqual(expect.objectContaining({ id: 'plain', name: 'plain', swatch: 'blue' }))
     expect(listed.palettes).toContainEqual(expect.objectContaining({
@@ -60,9 +67,10 @@ describe('theme pin', () => {
       name: 'Graphite',
       nameZh: '石墨',
       swatch: '#27272a',
+      origin: 'builtin',
     }))
     await writeFile(join(themes, 'theme-tokyo.css'), good.replace('Moss', 'Night'))
-    expect((await pins.listPalettes()).palettes).toContainEqual(expect.objectContaining({ id: 'tokyo', name: 'Night', swatch: 'blue' }))
+    expect((await pins.listPalettes()).palettes).toContainEqual(expect.objectContaining({ id: 'tokyo', name: 'Night', swatch: 'blue', origin: 'custom' }))
     expect(listed.ignored.map(item => item.file).sort()).toEqual(['notes.txt', 'theme-bad.css', 'theme-no_good.css'])
     await writeFile(appThemeCss(app.directory), good)
     expect(await pins.setPin('com.example.app', { kind: 'follow-host' })).toEqual({ kind: 'follow-host' })

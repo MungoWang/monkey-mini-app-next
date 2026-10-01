@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-09-29
 ---
 
 # Theme
@@ -9,7 +9,7 @@ updated: 2026-09-23
 Layer: [Panel](README.md). Index: [features.md](../features.md).
 
 - Owner: Panel.
-- Operations: [setAppPin](../owner-surface.md#setapppin), [listPalettes](../owner-surface.md#listpalettes), and [writePolicy](../owner-surface.md#writepolicy) for global appearance. The app-local row appears only in app scope and only when `theme.css` parsed.
+- Operations: [setAppPin](../owner-surface.md#setapppin), [listPalettes](../owner-surface.md#listpalettes), and [writePolicy](../owner-surface.md#writepolicy) for global appearance. The app-local row appears only in app scope and only when `theme.css` parsed. A shipped palette is marked system. A file from the themes directory is marked custom. The app file is marked app. Its label is the file's name when the header has one.
 - Failure: a failed save shows the host error and leaves the previous pin. No message uses the panel label. An ignored theme file does not appear as a selectable chip; its reason is available from the palette response.
 - Non-goals: editing theme CSS in the picker; a disabled "custom palettes are unavailable" row.
 

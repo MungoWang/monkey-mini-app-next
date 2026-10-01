@@ -107,6 +107,10 @@ export function httpPanelClients(origin: string): PanelClient & PanelSettingsCli
       const body = await getJson(origin, appsResource(appId, httpLayout.theme))
       return resultOf(body).appFile === true
     },
+    readAppTheme: async (appId) => {
+      const body = await getJson(origin, appsResource(appId, httpLayout.theme))
+      return appThemeOf(resultOf(body).appTheme)
+    },
     setPin: async (appId, pin) => {
       const body = await sendJson(origin, 'POST', appsResource(appId, httpLayout.theme), pin)
       return themePin(resultOf(body))
@@ -168,7 +172,7 @@ function storageSummary(value: unknown): { bytes: number; tables: readonly strin
   return { bytes: row.bytes, tables: arrayOf(row.tables, text) }
 }
 
-function paletteChip(value: unknown): { id: string; name: string; nameZh?: string; swatch?: string; style?: string } {
+function paletteChip(value: unknown): { id: string; name: string; nameZh?: string; swatch?: string; style?: string; origin?: 'builtin' | 'custom' } {
   const row = record(value)
   if (typeof row.id !== 'string' || typeof row.name !== 'string') {
     throw new PanelClientError('failed', 'palette row is invalid')
@@ -179,6 +183,19 @@ function paletteChip(value: unknown): { id: string; name: string; nameZh?: strin
     ...typeof row.nameZh === 'string' && row.nameZh.length > 0 ? { nameZh: row.nameZh } : {},
     ...typeof row.swatch === 'string' && row.swatch.length > 0 ? { swatch: row.swatch } : {},
     ...typeof row.style === 'string' && row.style.length > 0 ? { style: row.style } : {},
+    ...row.origin === 'builtin' || row.origin === 'custom' ? { origin: row.origin } : {},
+  }
+}
+
+function appThemeOf(value: unknown): { name?: string; nameZh?: string; swatch?: string; style?: string } | null {
+  if (value === null || value === undefined) return null
+  const row = record(value)
+  if (typeof row.swatch !== 'string' || typeof row.style !== 'string') return null
+  return {
+    ...typeof row.name === 'string' && row.name.length > 0 ? { name: row.name } : {},
+    ...typeof row.nameZh === 'string' && row.nameZh.length > 0 ? { nameZh: row.nameZh } : {},
+    swatch: row.swatch,
+    style: row.style,
   }
 }
 

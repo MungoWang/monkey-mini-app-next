@@ -13,7 +13,7 @@ export type AppPin =
   | { kind: 'palette'; id: string }
 
 export interface PaletteList {
-  palettes: Array<{ id: string; name: string; nameZh?: string; swatch: string; style: string }>
+  palettes: Array<{ id: string; name: string; nameZh?: string; swatch: string; style: string; origin: 'builtin' | 'custom' }>
   ignored: Array<{ file: string; reason: string }>
 }
 
@@ -31,6 +31,7 @@ export function createThemePins(registry: Registry, themesDir: string) {
     listPalettes: () => listPalettes(themesDir),
     readPin: (appId: string) => readPin(registry, appId),
     appFile: (appId: string) => appFileParsed(registry, appId),
+    readAppTheme: (appId: string) => readAppTheme(registry, appId),
     setPin: (appId: string, pin: AppPin) => setPin(registry, themesDir, appId, pin),
   }
 }
@@ -57,7 +58,7 @@ async function listPalettes(themesDir: string): Promise<PaletteList> {
     }
     const at = palettes.findIndex(item => item.id === id)
     if (at >= 0) palettes.splice(at, 1)
-    palettes.push(paletteRow(id, parsed.theme, text))
+    palettes.push(paletteRow(id, parsed.theme, text, 'custom'))
   }
   return { palettes, ignored }
 }
@@ -75,7 +76,7 @@ async function readThemeDir(dir: string, ignored: PaletteList['ignored']): Promi
       ignored.push({ file, reason: parsed.reason })
       continue
     }
-    palettes.push(paletteRow(id, parsed.theme, text))
+    palettes.push(paletteRow(id, parsed.theme, text, 'builtin'))
   }
   return palettes
 }
@@ -84,6 +85,7 @@ function paletteRow(
   id: string,
   theme: { name: string; nameZh?: string },
   text: string,
+  origin: 'builtin' | 'custom',
 ): PaletteList['palettes'][number] {
   return {
     id,
@@ -91,6 +93,7 @@ function paletteRow(
     ...theme.nameZh === undefined ? {} : { nameZh: theme.nameZh },
     swatch: swatchOf(text),
     style: styleFromThemeCss(text),
+    origin,
   }
 }
 
@@ -144,6 +147,26 @@ async function appFileParsed(registry: Registry, appId: string): Promise<boolean
   const app = await registry.get(appId)
   const parsed = await readAppFile(app.directory)
   return parsed?.ok === true
+}
+
+async function readAppTheme(registry: Registry, appId: string): Promise<{
+  name?: string
+  nameZh?: string
+  swatch: string
+  style: string
+} | null> {
+  const app = await registry.get(appId)
+  const text = await readFile(appThemeCss(app.directory), 'utf8').catch(() => undefined)
+  if (text === undefined) return null
+  const parsed = parseThemeCss(text, 'app')
+  if (!parsed.ok) return null
+  const named = parsed.theme.name !== 'app'
+  return {
+    ...named ? { name: parsed.theme.name } : {},
+    ...parsed.theme.nameZh === undefined ? {} : { nameZh: parsed.theme.nameZh },
+    swatch: swatchOf(text),
+    style: styleFromThemeCss(text),
+  }
 }
 
 async function readAppFile(appDir: string) {
