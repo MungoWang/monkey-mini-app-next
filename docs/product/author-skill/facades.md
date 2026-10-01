@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-10-01
+updated: 2026-10-02
 ---
 
 # Facades and looks

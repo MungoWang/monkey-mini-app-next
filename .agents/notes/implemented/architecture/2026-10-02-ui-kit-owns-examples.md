@@ -8,7 +8,7 @@ Status: implemented
 
 ## Decision
 
-The examples and their shared helpers are `packages/app/ui/examples/`, beside `tests/`. The root [tsconfig.json](../../../../tsconfig.json) typechecks that directory, so `pnpm typecheck` covers every example. `pnpm gen:skill` reads them there and publishes them into `skills/mohou-mini-app/references/examples/`. The look specs stay with the generator at `scripts/gen/skill/looks/`. [Package architecture](../../../docs/architecture/packages.md) owns the package cut.
+The examples and their shared helpers are `packages/app/ui/examples/`, beside `tests/`. The root [tsconfig.json](../../../../tsconfig.json) typechecks that directory, so `pnpm typecheck` covers every example. `pnpm gen:skill` reads them there and publishes them into `skills/mohou-mini-app/references/examples/`. The look pages are hand-written under `skills/mohou-mini-app/references/looks/`. [Package architecture](../../../docs/architecture/packages.md) owns the package cut.
 
 ## Alternatives considered
 
