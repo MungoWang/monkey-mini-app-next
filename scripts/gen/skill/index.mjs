@@ -4,13 +4,14 @@
  * → skills/mohou-mini-app/references/{catalog.md,contracts/*.md} + packages/app/ui/ai/catalog.json.
  *
  * Inputs: packages/app/ui/src/**, packages/app/ui/catalog-families.json,
- *         packages/app/ui/examples/**, scripts/gen/skill/looks/**
+ *         packages/app/ui/examples/**
  * Writes: skills/mohou-mini-app/references/**, packages/app/ui/ai/catalog.json,
  *         skills/mohou-mini-app/templates/** (copied from packages/app/templates/src)
  * Side effects: repo tracked files — commit the regenerated diff
  * Run as: pnpm gen:skill
  *
  * Discovery is from source: blocks/composites/products from index.ts, L1 primitives from components/.
+ * The look pages are hand-written and outside this generator.
  */
 import fs from "node:fs"
 import path from "node:path"
@@ -19,7 +20,6 @@ import { fileURLToPath } from "node:url"
 import { loadFamilies } from "./families.mjs"
 import { buildRecords } from "./extract.mjs"
 import { loadExamples, writeSkillExamples } from "./examples.mjs"
-import { writeSkillLooks } from "./looks.mjs"
 import { renderCatalog, renderCatalogJson, renderContract, renderFamilyContract } from "./render.mjs"
 import { generateThemeDoc } from "./theme.mjs"
 import { copyTemplates } from "./templates.mjs"
@@ -29,7 +29,6 @@ const uiRoot = path.join(repoRoot, "packages/app/ui")
 const srcRoot = path.join(uiRoot, "src")
 const skillRef = path.join(repoRoot, "skills/mohou-mini-app/references")
 const examplesRoot = path.join(uiRoot, "examples")
-const looksRoot = path.join(repoRoot, "scripts/gen/skill/looks")
 const contractsDir = path.join(skillRef, "contracts")
 const catalogMdPath = path.join(skillRef, "catalog.md")
 const catalogJsonPath = path.join(uiRoot, "ai/catalog.json")
@@ -127,7 +126,6 @@ async function main() {
  JSON.stringify(renderCatalogJson(entries, families), null, 2) + "\n"
 )
 
- writeSkillLooks({ looksRoot, skillRef })
  const tokenCount = generateThemeDoc()
  const templateCount = copyTemplates(repoRoot)
  const { syncSkillIntoShell } = await import("../../sync/skill-into-shell.mjs")

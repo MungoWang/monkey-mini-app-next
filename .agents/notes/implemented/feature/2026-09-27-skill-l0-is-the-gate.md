@@ -8,7 +8,7 @@ Status: implemented
 
 ## Decision
 
-L0 is the confirm, the write loop, the MCP tool table, the facade index, and the open-when table. Hand guides live in `references/guide/`. The short `kv()` sample is `guide/skeleton.md`. Reload codes, layout, and allowlists stay in `guide/loader.md`. Generated catalog, contracts, examples, looks, and theme stay in `references/` beside `guide/`. One need opens one file. The tree is not renamed into `core/` and `ui/`.
+L0 is the confirm, the write loop, the MCP tool table, the facade index, and the open-when table. Hand guides live in `references/guide/`. The short `kv()` sample is `guide/skeleton.md`. Reload codes, layout, and allowlists stay in `guide/loader.md`. Generated catalog, contracts, examples, and theme stay in `references/` beside `guide/`, as do the hand-written look pages. One need opens one file. The tree is not renamed into `core/` and `ui/`.
 
 Byte-tool names stay out of the skill tree. `bin/diagnose.mjs` stays the helper when authoring tools fail. `check:skill` keeps both checks. Packaging and sidecar update policy stay out of this cut.
 

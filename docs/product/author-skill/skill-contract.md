@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: open
-updated: 2026-10-01
+updated: 2026-10-02
 ---
 
 # What the skill must keep true
@@ -10,7 +10,7 @@ Layer: [Author skill](README.md). Index: [features.md](../features.md).
 
 - Owner: Author skill, generated where the UI kit can generate it.
 - The skill is the whole authoring system: the write loop, the facades, the component contracts, the loader notes, the troubleshoot notes, and the diagnose helper. The source of that set is the previous product's authoring skill. A sentence may be shortened. A capability is not dropped from the system; L0 may point at L1 instead of inlining it.
-- Load structure: **L0** is `SKILL.md` (short: confirm before register, write loop, MCP tool table, facade index, open-when table). **L1** is one reference doc when needed. Hand guides live in `references/guide/` (`choices.md` holds option consequences and red flags). Generated catalog, contracts, examples, looks, and theme stay in `references/`. **L2** is one facade directory after the loop for that region is chosen. The agent is not required to read the whole tree up front. The UI kit is a shortcut for SaaS-shaped screens. A beautiful app may use native elements and Tailwind, kit parts, or both. Using no kit component is valid.
+- Load structure: **L0** is `SKILL.md` (short: confirm before register, write loop, MCP tool table, facade index, open-when table). **L1** is one reference doc when needed. Hand guides live in `references/guide/` (`choices.md` holds option consequences and red flags). Generated catalog, contracts, examples, and theme stay in `references/`, as do the hand-written look pages. **L2** is one facade directory after the loop for that region is chosen. The agent is not required to read the whole tree up front. The UI kit is a shortcut for SaaS-shaped screens. A beautiful app may use native elements and Tailwind, kit parts, or both. Using no kit component is valid.
 - The component catalog, prop lists, and part names are generated from the UI kit. Inherited HTML attributes are not dumped row by row. Every component has a family and a when-to-use line. Examples are portable: `react`, the UI kit, and relative imports only.
 - The skill names every **MCP-mounted** authoring tool and no invented tool. It does **not** name `mini_app_write`, `mini_app_edit`, or `mini_app_delete`. Those remain on the HTTP invoke projection only; [author surface](../author-surface.md) owns that full catalog. Source edits in the skill narrative use the agent's own file tools. It names every `ctx` member in [§1](../app-contract/README.md) and no invented member. `ctx.llm` and `ctx.agent` are documented as returning string. MCP args are documented as the tool's own object.
 - `check:skill` requires the MCP tool set in the skill, forbids invented `mini_app_*` names, and fails if a byte-tool name appears under the skill tree.
@@ -24,4 +24,4 @@ Layer: [Author skill](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: generated where the kit can generate it. `pnpm gen:skill` writes catalog, contracts, examples, looks, and theme tokens from the UI kit — its `packages/app/ui/examples/` and `scripts/gen/skill/looks/` included. A hand-edited catalog is not the contract. Diagnose is hand-maintained under the skill `bin/` and stays in the tree Panel copies. When this page and the skill disagree, this page wins and the skill is corrected. Plan: [implementation.md](../implementation.md).
+Role: generated where the kit can generate it. `pnpm gen:skill` writes catalog, contracts, examples, and theme tokens from the UI kit, `packages/app/ui/examples/` included. The look pages under `references/looks/` are hand-written. A hand-edited catalog is not the contract. Diagnose is hand-maintained under the skill `bin/` and stays in the tree Panel copies. When this page and the skill disagree, this page wins and the skill is corrected. Plan: [implementation.md](../implementation.md).

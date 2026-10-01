@@ -40,7 +40,7 @@ function walkTs(dir, out = []) {
 
 /**
  * Parse every example under packages/app/ui/examples/components.
- * Looks live under scripts/gen/skill/looks and are not copied here — looks.mjs writes markdown specs.
+ * Looks are hand-written pages in the skill and are not copied here.
  */
 export function loadExamples(examplesRoot) {
   const out = []
