@@ -10,5 +10,5 @@ import { MiniCalendar } from "@mohou/ui";
 export default function MiniCalendar01Example() {
   const [mini, setMini] = React.useState<Date | undefined>(new Date());
 
-  return <MiniCalendar value={mini} onChange={setMini} />;
+  return <MiniCalendar {...mini === undefined ? {} : { value: mini }} onChange={setMini} />;
 }

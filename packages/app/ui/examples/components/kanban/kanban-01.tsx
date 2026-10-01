@@ -36,6 +36,7 @@ export default function Kanban01Example() {
     },
   ]);
   const [issue, setIssue] = React.useState<KanbanCard | null>(null);
+  const columnTitle = cards.find((c) => c.id === issue?.id)?.columnId;
 
   return (
     <>
@@ -53,7 +54,7 @@ export default function Kanban01Example() {
         card={issue}
         open={issue != null}
         onOpenChange={(open) => !open && setIssue(null)}
-        columnTitle={cards.find((c) => c.id === issue?.id)?.columnId}
+        {...columnTitle === undefined ? {} : { columnTitle }}
       />
     </>
   );

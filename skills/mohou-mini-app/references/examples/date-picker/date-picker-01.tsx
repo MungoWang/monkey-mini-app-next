@@ -10,5 +10,5 @@ import { DatePicker } from "@mohou/ui";
 export default function DatePicker01Example() {
   const [date, setDate] = React.useState<Date | undefined>(new Date("2026-08-26"));
 
-  return <DatePicker value={date} onChange={setDate} />;
+  return <DatePicker {...date === undefined ? {} : { value: date }} onChange={setDate} />;
 }

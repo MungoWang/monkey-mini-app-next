@@ -1,5 +1,5 @@
 /**
- * Read portable examples from scripts/gen/skill/fixtures and publish them into
+ * Read portable examples from packages/app/ui/examples and publish them into
  * the skill: `references/examples/<component>/<name>-NN.tsx`, plus one index doc
  * per `@group`. Contracts link the files and quote `@title` + `@scenario`.
  *
@@ -39,8 +39,8 @@ function walkTs(dir, out = []) {
 }
 
 /**
- * Parse every example under scripts/gen/skill/fixtures/components.
- * Looks live under fixtures/looks and are not copied here — looks.mjs writes markdown specs.
+ * Parse every example under packages/app/ui/examples/components.
+ * Looks live under scripts/gen/skill/looks and are not copied here — looks.mjs writes markdown specs.
  */
 export function loadExamples(examplesRoot) {
   const out = []

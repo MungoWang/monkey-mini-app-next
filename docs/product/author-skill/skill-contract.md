@@ -24,4 +24,4 @@ Layer: [Author skill](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: generated where the kit can generate it. `pnpm gen:skill` writes catalog, contracts, examples, looks, and theme tokens from the UI kit and `scripts/gen/skill/fixtures`. A hand-edited catalog is not the contract. Diagnose is hand-maintained under the skill `bin/` and stays in the tree Panel copies. When this page and the skill disagree, this page wins and the skill is corrected. Plan: [implementation.md](../implementation.md).
+Role: generated where the kit can generate it. `pnpm gen:skill` writes catalog, contracts, examples, looks, and theme tokens from the UI kit — its `packages/app/ui/examples/` and `scripts/gen/skill/looks/` included. A hand-edited catalog is not the contract. Diagnose is hand-maintained under the skill `bin/` and stays in the tree Panel copies. When this page and the skill disagree, this page wins and the skill is corrected. Plan: [implementation.md](../implementation.md).

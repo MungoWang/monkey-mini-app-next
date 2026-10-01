@@ -16,17 +16,21 @@ type Ticket = {
   updated: string;
 };
 
+const TITLES = [
+  "Nightly export drops the last sheet",
+  "Queue depth alarm fires on restart",
+  "Retry button re-sends twice",
+  "Timezone shifts in the weekly digest",
+  "Attachment preview stalls on large PDFs",
+] as const;
+const STATUSES = ["Open", "InProgress", "Blocked"] as const;
+const OWNERS = ["amy", "bo", "cy", "dee"] as const;
+
 const TICKETS: Ticket[] = Array.from({ length: 40 }, (_, i) => ({
   id: `OPS-${1040 - i}`,
-  title: [
-    "Nightly export drops the last sheet",
-    "Queue depth alarm fires on restart",
-    "Retry button re-sends twice",
-    "Timezone shifts in the weekly digest",
-    "Attachment preview stalls on large PDFs",
-  ][i % 5],
-  status: (["Open", "InProgress", "Blocked"] as const)[i % 3],
-  owner: ["amy", "bo", "cy", "dee"][i % 4],
+  title: TITLES[i % TITLES.length] ?? TITLES[0],
+  status: STATUSES[i % STATUSES.length] ?? STATUSES[0],
+  owner: OWNERS[i % OWNERS.length] ?? OWNERS[0],
   updated: `${(i % 9) + 1}h ago`,
 }));
 

@@ -77,7 +77,7 @@ const DIFFS = {
 };
 
 function DiffPlayground() {
-  const files = Object.keys(DIFFS) as (keyof typeof DIFFS)[];
+  const files = Object.keys(DIFFS) as [keyof typeof DIFFS, ...(keyof typeof DIFFS)[]];
   const [file, setFile] = React.useState<(typeof files)[number]>(files[0]);
   const [mode, setMode] = React.useState<"unified" | "split">("unified");
   const current = DIFFS[file];

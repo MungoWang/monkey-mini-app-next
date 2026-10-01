@@ -27,6 +27,8 @@
     "packages/*/*/src/**/*.tsx",
     "packages/*/*/tests/**/*.ts",
     "packages/*/*/tests/**/*.tsx",
+    "packages/app/ui/examples/**/*.ts",
+    "packages/app/ui/examples/**/*.tsx",
     "packages/host/src/**/*.ts",
     "packages/host/tests/**/*.ts",
     "packages/panel/src/**/*.ts",

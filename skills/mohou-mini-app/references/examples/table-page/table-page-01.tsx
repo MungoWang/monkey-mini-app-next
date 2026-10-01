@@ -10,15 +10,17 @@ import { Checkbox, type ColumnDef, DataGrid, Input, TablePage } from "@mohou/ui"
 
 type Part = { sku: string; name: string; bin: string; qty: number };
 
+const NAMES = [
+  "Bracket, left-hand",
+  "Seal kit, 40 mm",
+  "Harness, 2 m shielded",
+  "Bearing, sealed 6204",
+  "Label cartridge, black",
+] as const;
+
 const PARTS: Part[] = Array.from({ length: 60 }, (_, i) => ({
   sku: `SKU-${2400 - i}`,
-  name: [
-    "Bracket, left-hand",
-    "Seal kit, 40 mm",
-    "Harness, 2 m shielded",
-    "Bearing, sealed 6204",
-    "Label cartridge, black",
-  ][i % 5],
+  name: NAMES[i % NAMES.length] ?? NAMES[0],
   bin: `${String.fromCharCode(65 + (i % 6))}-${(i % 24) + 1}`,
   qty: ((i * 37) % 480) + 4,
 }));

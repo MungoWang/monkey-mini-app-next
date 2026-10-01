@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-27
+updated: 2026-10-01
 ---
 
 # Facades and looks
@@ -26,7 +26,7 @@ Layer: [Author skill](README.md). Index: [features.md](../features.md).
 - `chores` stays buttons. A prompt box would make it `runner`.
 - One app may lift one facade per region. A workbench is a homepage the author designs. It shows what this person wants first, and it arranges other apps and their entry points in any layout. The sample rail is one sketch. `ctx.workbench` supplies the apps and the open. It does not require that sketch.
 - The UI kit is a shortcut for SaaS-shaped screens. A facade may use it, mix it with native elements and Tailwind, or use none of it. Using no kit component is valid.
-- Looks are optional recipes. The confirm asks once. A named style is used as named. A skip, or "you decide", uses the default pairing and the skill says which. The names are `glass-island`, `aurora-bento`, `desk-split`, `editorial`, `tape`, `void`, `signage`, `terminal`. Each has a light and a dark pair. The skill does not copy look fixtures into every generation. Conventional kit chrome is not a Look. `minimal` and `workbench` have no Look.
+- Looks are optional recipes. The confirm asks once. A named style is used as named. A skip, or "you decide", uses the default pairing and the skill says which. The names are `glass-island`, `aurora-bento`, `desk-split`, `editorial`, `tape`, `void`, `signage`, `terminal`. Each has a light and a dark pair. The skill does not copy look files into every generation. Conventional kit chrome is not a Look. `minimal` and `workbench` have no Look.
 - Default pairings: `today`/`glass-island`, `board`/`aurora-bento`, `sheets`/`desk-split`, `radar`/`editorial`, `watch`/`tape`, `runner`/`terminal`, `chores`/`terminal`. `void` and `signage` are opt-in. `minimal` and `workbench` have no Look.
 - Failure: two facades that teach the same loop are a skill defect. A Look is not required for an app to be valid.
 - Non-goals: a runtime `data-look` attribute; a Look component; a cartesian product of palettes and layouts; a ninth facade without a new loop.
@@ -34,4 +34,4 @@ Layer: [Author skill](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: recipes, not a runtime attribute. A facade is one interaction loop. A Look is opt-in. The skill does not copy look fixtures into every generation. Plan: [implementation.md](../implementation.md).
+Role: recipes, not a runtime attribute. A facade is one interaction loop. A Look is opt-in. The skill does not copy look files into every generation. Plan: [implementation.md](../implementation.md).

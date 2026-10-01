@@ -4,7 +4,7 @@
  * → skills/mohou-mini-app/references/{catalog.md,contracts/*.md} + packages/app/ui/ai/catalog.json.
  *
  * Inputs: packages/app/ui/src/**, packages/app/ui/catalog-families.json,
- *         scripts/gen/skill/fixtures/**
+ *         packages/app/ui/examples/**, scripts/gen/skill/looks/**
  * Writes: skills/mohou-mini-app/references/**, packages/app/ui/ai/catalog.json,
  *         skills/mohou-mini-app/templates/** (copied from packages/app/templates/src)
  * Side effects: repo tracked files — commit the regenerated diff
@@ -28,7 +28,8 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."
 const uiRoot = path.join(repoRoot, "packages/app/ui")
 const srcRoot = path.join(uiRoot, "src")
 const skillRef = path.join(repoRoot, "skills/mohou-mini-app/references")
-const fixturesRoot = path.join(repoRoot, "scripts/gen/skill/fixtures")
+const examplesRoot = path.join(uiRoot, "examples")
+const looksRoot = path.join(repoRoot, "scripts/gen/skill/looks")
 const contractsDir = path.join(skillRef, "contracts")
 const catalogMdPath = path.join(skillRef, "catalog.md")
 const catalogJsonPath = path.join(uiRoot, "ai/catalog.json")
@@ -45,7 +46,7 @@ async function main() {
  used.add(f.slug)
  }
 
- const examples = loadExamples(fixturesRoot)
+ const examples = loadExamples(examplesRoot)
  const subjects = new Map()
  for (const c of components) {
  subjects.set(c.name, c.slug)
@@ -59,8 +60,8 @@ async function main() {
  const { bySubject, missingSubject } = writeSkillExamples({
  skillRef,
  examples,
- sharedRoot: path.join(fixturesRoot, "shared"),
- examplesRoot: fixturesRoot,
+ sharedRoot: path.join(examplesRoot, "shared"),
+ examplesRoot,
  subjectSlugs: new Set(subjects.keys()),
  })
  // resolve each record's examples through its slug
@@ -126,7 +127,7 @@ async function main() {
  JSON.stringify(renderCatalogJson(entries, families), null, 2) + "\n"
 )
 
- writeSkillLooks({ fixturesRoot, skillRef })
+ writeSkillLooks({ looksRoot, skillRef })
  const tokenCount = generateThemeDoc()
  const templateCount = copyTemplates(repoRoot)
  const { syncSkillIntoShell } = await import("../../sync/skill-into-shell.mjs")

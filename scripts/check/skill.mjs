@@ -59,8 +59,6 @@ const banned = [
   "mini_app_delete",
 ]
 for (const file of allFiles) {
-  const rel = path.relative(root, file)
-  if (rel.includes("fixtures/")) continue
   const text = fs.readFileSync(file, "utf8")
   for (const [i, line] of text.split("\n").entries()) {
     for (const item of banned) {

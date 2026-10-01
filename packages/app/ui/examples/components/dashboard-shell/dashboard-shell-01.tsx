@@ -21,15 +21,17 @@ const series = (seed: number, n = 24) =>
     value: 40 + Math.round(28 * Math.abs(Math.sin((i + seed) / 3))),
   }));
 
+const FEED_TITLES = [
+  "node-3 restarted by scheduler",
+  "p95 back under 120 ms",
+  "queue depth 1.2k → 300",
+  "nightly export finished",
+  "certificate renews in 6 days",
+] as const;
+
 const FEED = Array.from({ length: 14 }, (_, i) => ({
   id: `e${i}`,
-  title: [
-    "node-3 restarted by scheduler",
-    "p95 back under 120 ms",
-    "queue depth 1.2k → 300",
-    "nightly export finished",
-    "certificate renews in 6 days",
-  ][i % 5],
+  title: FEED_TITLES[i % FEED_TITLES.length] ?? FEED_TITLES[0],
   time: `${String(23 - (i % 12)).padStart(2, "0")}:${String((i * 7) % 60).padStart(2, "0")}`,
 }));
 

@@ -5,12 +5,14 @@
  */
 import { LogViewer } from "@mohou/ui";
 
+const LEVELS = ["info", "warn", "error", "debug", "verbose"] as const;
+
 export default function LogViewer01Example() {
   return (
     <>
       <LogViewer
         entries={Array.from({ length: 40 }, (_, i) => ({
-          level: (["info", "warn", "error", "debug", "verbose"] as const)[i % 5],
+          level: LEVELS[i % LEVELS.length] ?? LEVELS[0],
           message: `line ${i}`,
           timestamp: new Date(2026, 0, 1, 12, 0, i % 60).toISOString(),
         }))}
