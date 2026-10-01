@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Button, FormSheet, Input, NativeSelect, StatusBadge } from "@monkey-mini-app/ui";
+import { Button, FormSheet, Input, NativeSelect, StatusBadge } from "@mohou/ui";
 
 export default function FormSheet01Example() {
   const [open, setOpen] = React.useState(true);

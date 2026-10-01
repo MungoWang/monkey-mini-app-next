@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Button, Input, WizardShell } from "@monkey-mini-app/ui";
+import { Button, Input, WizardShell } from "@mohou/ui";
 
 export default function WizardShell01Example() {
   const [step, setStep] = React.useState(0);

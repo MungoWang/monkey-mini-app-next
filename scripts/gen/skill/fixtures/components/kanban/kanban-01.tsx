@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Kanban, type KanbanCard, KanbanIssuePanel } from "@monkey-mini-app/ui";
+import { Kanban, type KanbanCard, KanbanIssuePanel } from "@mohou/ui";
 
 export default function Kanban01Example() {
   const [cards, setCards] = React.useState<KanbanCard[]>([

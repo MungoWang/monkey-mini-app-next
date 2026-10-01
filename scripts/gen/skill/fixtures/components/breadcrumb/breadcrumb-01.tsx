@@ -10,7 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@monkey-mini-app/ui";
+} from "@mohou/ui";
 
 export default function Breadcrumb01Example() {
   return (

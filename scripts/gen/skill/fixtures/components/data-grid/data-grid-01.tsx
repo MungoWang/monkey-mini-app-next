@@ -4,7 +4,7 @@
  * @scenario The default table for anything bigger than a static list: column sort (asc→desc→off), global search box, pagination — all from props, no external state library.
  * @hint Sort cycles asc → desc → none
  */
-import { type ColumnDef, DataGrid, StatusBadge } from "@monkey-mini-app/ui";
+import { type ColumnDef, DataGrid, StatusBadge } from "@mohou/ui";
 
 type Run = { id: string; name: string; owner: string; duration: string; status: string };
 

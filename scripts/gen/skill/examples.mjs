@@ -65,9 +65,7 @@ export function writeSkillExamples({ skillRef, examples, sharedRoot, subjectSlug
   const missingSubject = []
 
   for (const ex of examples) {
-    const code = ex.src
-      .replace(/(["'])\.\.\/\.\.\/shared\//g, "$1../shared/")
-      .replaceAll("@monkey-mini-app/ui", "@mohou/ui")
+    const code = ex.src.replace(/(["'])\.\.\/\.\.\/shared\//g, "$1../shared/")
     const dest = path.join(outRoot, ex.dir, ex.base)
     fs.mkdirSync(path.dirname(dest), { recursive: true })
     fs.writeFileSync(dest, code)

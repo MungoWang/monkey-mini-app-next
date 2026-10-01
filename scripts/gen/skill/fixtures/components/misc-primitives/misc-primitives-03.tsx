@@ -14,7 +14,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
   ScrollArea,
-} from "@monkey-mini-app/ui";
+} from "@mohou/ui";
 
 export default function MiscPrimitives03Example() {
   return (

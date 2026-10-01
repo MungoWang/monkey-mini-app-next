@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { TimePicker } from "@monkey-mini-app/ui";
+import { TimePicker } from "@mohou/ui";
 
 export default function TimePicker01Example() {
   const [time, setTime] = React.useState("09:30");

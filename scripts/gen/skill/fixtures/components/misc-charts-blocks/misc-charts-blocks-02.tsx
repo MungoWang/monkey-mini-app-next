@@ -3,7 +3,7 @@
  * @title StatCard / TrendCard / Sparkline / Gauge / ProgressRing
  * @scenario KPI strip: StatCard for numbers with delta, TrendCard adding a sparkline, plus Sparkline/Gauge/ProgressRing for compact meters in one row.
  */
-import { Gauge, ProgressRing, Sparkline, StatCard, TrendCard } from "@monkey-mini-app/ui";
+import { Gauge, ProgressRing, Sparkline, StatCard, TrendCard } from "@mohou/ui";
 
 const trend = [
   { label: "Mon", value: 12 },

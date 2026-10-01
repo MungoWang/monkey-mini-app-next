@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { DurationInput } from "@monkey-mini-app/ui";
+import { DurationInput } from "@mohou/ui";
 
 export default function DurationInput01Example() {
   const [duration, setDuration] = React.useState("2h 30m");

@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@monkey-mini-app/ui";
+} from "@mohou/ui";
 
 export default function DropdownMenu01Example() {
   return (

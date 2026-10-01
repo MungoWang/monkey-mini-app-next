@@ -3,7 +3,7 @@
  * @title Button / ButtonGroup
  * @scenario Related buttons fused into one visual unit (joined borders/radius) — e.g. Save + dropdown Split action; distinct from Toolbar/ToggleGroup because there is no pressed state.
  */
-import { Button, ButtonGroup } from "@monkey-mini-app/ui";
+import { Button, ButtonGroup } from "@mohou/ui";
 
 export default function ButtonGroup01Example() {
   return (

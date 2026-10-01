@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Slider, SliderRange } from "@monkey-mini-app/ui";
+import { Slider, SliderRange } from "@mohou/ui";
 
 export default function Slider01Example() {
   const [range, setRange] = React.useState([20, 80]);

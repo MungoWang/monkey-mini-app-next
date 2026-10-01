@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { MarkdownEditor } from "@monkey-mini-app/ui";
+import { MarkdownEditor } from "@mohou/ui";
 
 export default function MarkdownEditor01Example() {
   const [md, setMd] = React.useState(

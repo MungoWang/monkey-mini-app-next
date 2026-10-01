@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Checkbox, type ColumnDef, DataGrid, Input, TablePage } from "@monkey-mini-app/ui";
+import { Checkbox, type ColumnDef, DataGrid, Input, TablePage } from "@mohou/ui";
 
 type Part = { sku: string; name: string; bin: string; qty: number };
 

@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Toggle } from "@monkey-mini-app/ui";
+import { Toggle } from "@mohou/ui";
 
 export default function Toggle01Example() {
   const [pressed, setPressed] = React.useState(false);

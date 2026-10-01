@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { ToggleGroup, ToggleGroupItem } from "@monkey-mini-app/ui";
+import { ToggleGroup, ToggleGroupItem } from "@mohou/ui";
 
 export default function ToggleGroup01Example() {
   const [align, setAlign] = React.useState("left");

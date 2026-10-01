@@ -3,7 +3,7 @@
  * @title Attachment
  * @scenario A file chip in a list — icon, name, meta line and a remove affordance; the shape used for uploaded files or chat attachments.
  */
-import { Attachment, AttachmentContent, AttachmentDescription, AttachmentTitle } from "@monkey-mini-app/ui";
+import { Attachment, AttachmentContent, AttachmentDescription, AttachmentTitle } from "@mohou/ui";
 
 export default function Attachment01Example() {
   return (

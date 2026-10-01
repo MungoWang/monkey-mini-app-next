@@ -3,7 +3,7 @@
  * @title ActivityFeed / NotificationCenter / CommentThread / TestStepList
  * @scenario Feed-style blocks: ActivityFeed, NotificationCenter and CommentThread share an items-in / rows-out shape; TestStepList shows pass/fail steps per case.
  */
-import { ActivityFeed, CommentThread, NotificationCenter, TestStepList } from "@monkey-mini-app/ui";
+import { ActivityFeed, CommentThread, NotificationCenter, TestStepList } from "@mohou/ui";
 
 export default function MiscChartsBlocks05Example() {
   return (

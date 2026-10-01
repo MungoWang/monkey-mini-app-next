@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { DateTimeRangePicker } from "@monkey-mini-app/ui";
+import { DateTimeRangePicker } from "@mohou/ui";
 
 export default function DateTimeRangePicker01Example() {
   const [dtRange, setDtRange] = React.useState<{ start?: Date; end?: Date }>({});

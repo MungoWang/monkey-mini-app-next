@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Button, DiffViewer } from "@monkey-mini-app/ui";
+import { Button, DiffViewer } from "@mohou/ui";
 
 const DIFFS = {
   "src/products/data-grid.tsx": {

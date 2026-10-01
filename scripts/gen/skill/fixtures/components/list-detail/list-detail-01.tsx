@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Badge, Button, Input, ListDetail } from "@monkey-mini-app/ui";
+import { Badge, Button, Input, ListDetail } from "@mohou/ui";
 
 type Ticket = {
   id: string;

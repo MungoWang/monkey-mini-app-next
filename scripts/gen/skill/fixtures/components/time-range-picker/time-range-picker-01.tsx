@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { TimeRangePicker } from "@monkey-mini-app/ui";
+import { TimeRangePicker } from "@mohou/ui";
 
 export default function TimeRangePicker01Example() {
   const [timeRange, setTimeRange] = React.useState({ start: "09:00", end: "18:00" });

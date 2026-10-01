@@ -15,7 +15,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@monkey-mini-app/ui";
+} from "@mohou/ui";
 
 export default function MiscOverlays01Example() {
   return (

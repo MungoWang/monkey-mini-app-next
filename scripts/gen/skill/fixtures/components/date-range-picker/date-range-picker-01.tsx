@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { type DateRange, DateRangePicker } from "@monkey-mini-app/ui";
+import { type DateRange, DateRangePicker } from "@mohou/ui";
 
 export default function DateRangePicker01Example() {
   const [range, setRange] = React.useState<DateRange | undefined>();

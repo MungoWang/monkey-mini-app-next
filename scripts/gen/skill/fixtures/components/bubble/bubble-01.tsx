@@ -3,7 +3,7 @@
  * @title Bubble
  * @scenario One side of a chat transcript — agent vs user bubble without hand-rolling alignment or spacing.
  */
-import { Bubble, BubbleContent } from "@monkey-mini-app/ui";
+import { Bubble, BubbleContent } from "@mohou/ui";
 
 export default function Bubble01Example() {
   return (

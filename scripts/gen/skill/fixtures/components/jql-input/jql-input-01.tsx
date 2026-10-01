@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { JqlInput } from "@monkey-mini-app/ui";
+import { JqlInput } from "@mohou/ui";
 
 const FIELDS = [
   { name: "project", type: "project" },

@@ -3,7 +3,7 @@
  * @title Marker
  * @scenario Small inline marker (icon + text) used to annotate a list row or timeline step with its state/file type.
  */
-import { Marker, MarkerContent } from "@monkey-mini-app/ui";
+import { Marker, MarkerContent } from "@mohou/ui";
 
 export default function Marker01Example() {
   return (

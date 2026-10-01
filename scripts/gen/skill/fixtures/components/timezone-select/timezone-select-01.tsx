@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { TimezoneSelect } from "@monkey-mini-app/ui";
+import { TimezoneSelect } from "@mohou/ui";
 
 export default function TimezoneSelect01Example() {
   const [zone, setZone] = React.useState("Asia/Shanghai");

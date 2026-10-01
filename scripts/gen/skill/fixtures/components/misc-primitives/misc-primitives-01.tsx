@@ -3,7 +3,7 @@
  * @title Badge / Avatar / Kbd
  * @scenario Inline identity atoms: Badge for labels/counts, Avatar with initials fallback when a picture is missing, Kbd for shortcuts.
  */
-import { Avatar, AvatarFallback, Badge, Kbd } from "@monkey-mini-app/ui";
+import { Avatar, AvatarFallback, Badge, Kbd } from "@mohou/ui";
 
 export default function MiscPrimitives01Example() {
   return (

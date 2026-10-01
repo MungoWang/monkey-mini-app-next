@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { JiraWiki, Textarea } from "@monkey-mini-app/ui";
+import { JiraWiki, Textarea } from "@mohou/ui";
 
 import { JIRA_WIKI_SAMPLE } from "../../shared/jira-wiki-sample";
 

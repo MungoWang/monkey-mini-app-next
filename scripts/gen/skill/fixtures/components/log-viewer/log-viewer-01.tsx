@@ -3,7 +3,7 @@
  * @title LogViewer
  * @scenario Thousands of streamed log lines: virtualised rows with level colouring and auto-follow; never render logs with a plain map.
  */
-import { LogViewer } from "@monkey-mini-app/ui";
+import { LogViewer } from "@mohou/ui";
 
 export default function LogViewer01Example() {
   return (

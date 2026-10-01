@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { type CalendarEvent, EventCalendar } from "@monkey-mini-app/ui";
+import { type CalendarEvent, EventCalendar } from "@mohou/ui";
 
 const calUser = { id: "u1", name: "Ada", picturePath: null };
 
