@@ -67,7 +67,7 @@ export function writeSkillExamples({ skillRef, examples, sharedRoot, subjectSlug
   for (const ex of examples) {
     const code = ex.src
       .replace(/(["'])\.\.\/\.\.\/shared\//g, "$1../shared/")
-      .replaceAll("@monkey-mini-app/ui", "@mini-app/ui")
+      .replaceAll("@monkey-mini-app/ui", "@mohou/ui")
     const dest = path.join(outRoot, ex.dir, ex.base)
     fs.mkdirSync(path.dirname(dest), { recursive: true })
     fs.writeFileSync(dest, code)
@@ -110,7 +110,7 @@ export function writeSkillExamples({ skillRef, examples, sharedRoot, subjectSlug
       `# Examples · ${group}`,
       "",
       "Multi-component demos: layout/pattern recipes with no single subject component.",
-      "Copy the whole file into `ui.tsx` (or split it) — imports are `react` + `@mini-app/ui` only.",
+      "Copy the whole file into `ui.tsx` (or split it) — imports are `react` + `@mohou/ui` only.",
       "",
       "| example | what it shows | scenario |",
       "|---|---|---|",

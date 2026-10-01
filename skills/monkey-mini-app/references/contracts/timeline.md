@@ -6,7 +6,7 @@ Vertical ordered events.
 
 **when** Statuses/history without durations. Durations → `RunTimeline`.
 
-`import { Timeline, TimelineItem } from "@mini-app/ui"`
+`import { Timeline, TimelineItem } from "@mohou/ui"`
 
 `packages/app/ui/src/products/timeline.tsx` · family: Realtime · type: product
 
@@ -36,7 +36,7 @@ Vertical ordered events.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[timeline-01.tsx](../examples/timeline/timeline-01.tsx)** — Timeline — Chronological feed of events with actor + timestamp — deploy history, audit trail (compare RunTimeline for one job's steps).

@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Button, DetailPanel } from "@mini-app/ui";
+import { Button, DetailPanel } from "@mohou/ui";
 
 export default function DetailPanel01Example() {
   const [open, setOpen] = React.useState(false);

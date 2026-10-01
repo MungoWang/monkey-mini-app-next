@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import type { RuntimeProvider } from '@mini-app/runtime-provider'
+import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import { bindBrain, type ModelPolicy } from '../src/index.ts'
 

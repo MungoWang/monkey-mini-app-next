@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
   useApp,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 type Snapshot = {
   hostname?: string

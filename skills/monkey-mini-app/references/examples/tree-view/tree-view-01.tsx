@@ -3,7 +3,7 @@
  * @title TreeView
  * @scenario Nested hierarchy with expand/collapse and selection — file tree, org chart, category taxonomy.
  */
-import { TreeView } from "@mini-app/ui";
+import { TreeView } from "@mohou/ui";
 
 export default function TreeView01Example() {
   return (

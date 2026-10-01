@@ -3,7 +3,7 @@ import { dirname } from 'node:path'
 
 import Database from 'better-sqlite3'
 
-import type { AppKeyValueTable, AppStorage, SqlParams, SqlRow, SqlValue } from '@mini-app/contract'
+import type { AppKeyValueTable, AppStorage, SqlParams, SqlRow, SqlValue } from '@mohou/contract'
 
 import { StorageError } from './codes.ts'
 import { storageDatabase, storageQuarantine } from './layout.ts'

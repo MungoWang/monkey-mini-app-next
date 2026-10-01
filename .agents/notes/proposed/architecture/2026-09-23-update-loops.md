@@ -15,22 +15,22 @@ Without one picture of version lines, agents and pack scripts disagree on what a
 | Line | Meaning |
 | --- | --- |
 | **L** | Shell **launcher** (Tauri first). Rare. |
-| **S** | `@mini-app/shell` npm version. Daily hot-update unit. |
+| **S** | `@mohou/shell` npm version. Daily hot-update unit. |
 | **K** | Writing skill `SKILL.md` `version`. **Always equals S.** |
-| **U** | `@mini-app/ui` (and the rest of shell’s dependency tree). Moves when S’s lock says so. |
+| **U** | `@mohou/ui` (and the rest of shell’s dependency tree). Moves when S’s lock says so. |
 | **B** | `~/.mini-app/runtime` user data. Survives updates. |
 
 ### Skill lives in the shell package
 
 - Source of truth in the monorepo remains `skills/monkey-mini-app/` (gen:skill, check:skill).
-- Release/pack **copies** that tree into `packages/shell/skill/monkey-mini-app/` and packs it with `@mini-app/shell`.
-- There is **no** separate `@mini-app/author-skill` npm package.
+- Release/pack **copies** that tree into `packages/shell/skill/monkey-mini-app/` and packs it with `@mohou/shell`.
+- There is **no** separate `@mohou/author-skill` npm package.
 - `bootHost` resolves author skill source from the shell package (`skill/monkey-mini-app` next to package root). Monorepo dev may fall back to repo `skills/monkey-mini-app` when the copy is absent.
-- **K is set from S by script** (`scripts/sync/skill-into-shell.mjs`). `check:skill` fails if `SKILL.md` version ≠ `@mini-app/shell` version. Shipping shell always ships a skill whose version string matches that shell.
+- **K is set from S by script** (`scripts/sync/skill-into-shell.mjs`). `check:skill` fails if `SKILL.md` version ≠ `@mohou/shell` version. Shipping shell always ships a skill whose version string matches that shell.
 
 ### Package update loop (product)
 
-1. Publish/pack `@mini-app/shell@S` (deps rewritten from `workspace:` to version range) plus the other workspace tarballs.
+1. Publish/pack `@mohou/shell@S` (deps rewritten from `workspace:` to version range) plus the other workspace tarballs.
 2. Install prefix installs those tarballs (registry or **local file tarballs**).
 3. Launcher (or `run` script) starts shell **sidecar** from that prefix and opens the loopback origin.
 4. Future Settings: check registry for S → package-manager update in the prefix → restart sidecar. New **L** only when launcher code changes.
@@ -44,12 +44,12 @@ Without one picture of version lines, agents and pack scripts disagree on what a
 ### UI kit vs skill vs vendor
 
 - **U** changes in-repo → `pnpm gen:skill` → K content updates → S bump (K string follows S) → pack shell with new skill copy.
-- Host **vendor** (`sdk.js` etc.) is built under the host package directory when missing at Host start. Replacing the whole `@mini-app/host` install directory drops old vendor; the next start rebuilds against the ui then on disk. Monorepo-only ui edits without replacing host may leave a stale vendor until delete/rebuild — dev concern, not the tarball replace path.
+- Host **vendor** (`sdk.js` etc.) is built under the host package directory when missing at Host start. Replacing the whole `@mohou/host` install directory drops old vendor; the next start rebuilds against the ui then on disk. Monorepo-only ui edits without replacing host may leave a stale vendor until delete/rebuild — dev concern, not the tarball replace path.
 - Agent skill text tracks U via gen:skill on the release train; runtime kit tracks U via host’s dependency + vendor build.
 
 ### Local distribution proof
 
-`pnpm dist:local` packs workspace tarballs into `artifacts/npm/`, installs them into `artifacts/local-app/prefix` from **file:** tarballs only for `@mini-app/*` (public deps still come from the registry), copies the window binary, and writes `artifacts/local-app/run`. The run script starts shell via `node --import tsx` because Node refuses `--experimental-strip-types` under `node_modules`. Proved: installed shell resolves skill from `…/shell/skill/monkey-mini-app`, Host boots, `/api/about` and `/api/author-skill` answer with skill version === shell version.
+`pnpm dist:local` packs workspace tarballs into `artifacts/npm/`, installs them into `artifacts/local-app/prefix` from **file:** tarballs only for `@mohou/*` (public deps still come from the registry), copies the window binary, and writes `artifacts/local-app/run`. The run script starts shell via `node --import tsx` because Node refuses `--experimental-strip-types` under `node_modules`. Proved: installed shell resolves skill from `…/shell/skill/monkey-mini-app`, Host boots, `/api/about` and `/api/author-skill` answer with skill version === shell version.
 
 ## Alternatives considered
 
@@ -59,6 +59,6 @@ Without one picture of version lines, agents and pack scripts disagree on what a
 
 ## Consequences
 
-- Bump `@mini-app/shell` version ⇒ run skill sync before check/pack.
+- Bump `@mohou/shell` version ⇒ run skill sync before check/pack.
 - `packages/shell/skill/` is generated; do not hand-edit; gitignore the copy if the repo keeps `skills/` as source.
 - Local app install must not rely on monorepo `skills/` path at runtime.

@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { ScrollArea, ScrollBar } from "@mini-app/ui"`
+`import { ScrollArea, ScrollBar } from "@mohou/ui"`
 
 `packages/app/ui/src/components/scroll-area.tsx` · family: Layout & structure · type: component · primitive
 

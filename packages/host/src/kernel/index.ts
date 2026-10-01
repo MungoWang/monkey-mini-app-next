@@ -1,4 +1,4 @@
-/** Call loop. @module @mini-app/host */
+/** Call loop. @module @mohou/host */
 
 export { HostError, hostCodes, type HostCode } from './codes.ts'
 export { resolveWorkingDirectory, type WorkingDirectoryInput } from './working-directory.ts'

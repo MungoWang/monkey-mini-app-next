@@ -4,7 +4,7 @@
 
 **when** One numeric value. Range → `SliderRange`.
 
-`import { Slider } from "@mini-app/ui"`
+`import { Slider } from "@mohou/ui"`
 
 `packages/app/ui/src/components/slider.tsx` · family: Form · type: component · primitive
 
@@ -19,7 +19,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[slider-01.tsx](../examples/slider/slider-01.tsx)** — Slider / SliderRange — One-handle range for 'pick a value' (thresholds, limits); SliderRange beside it for min–max filter pairs.

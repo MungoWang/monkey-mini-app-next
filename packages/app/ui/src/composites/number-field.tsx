@@ -1,8 +1,8 @@
 
-import { Button } from '@mini-app/ui/components/button'
-import { Input } from '@mini-app/ui/components/input'
+import { Button } from '@mohou/ui/components/button'
+import { Input } from '@mohou/ui/components/input'
 import { Minus, Plus } from 'lucide-react'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 /**
  * Numeric input with min/max/step + steppers.

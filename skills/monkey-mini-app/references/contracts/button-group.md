@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants } from "@mini-app/ui"`
+`import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants } from "@mohou/ui"`
 
 `packages/app/ui/src/components/button-group.tsx` · family: Form · type: component · primitive
 
@@ -30,7 +30,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[button-group-01.tsx](../examples/button-group/button-group-01.tsx)** — Button / ButtonGroup — Related buttons fused into one visual unit (joined borders/radius) — e.g. Save + dropdown Split action; distinct from Toolbar/ToggleGroup because there is no pressed state.

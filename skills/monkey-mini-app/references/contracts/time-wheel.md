@@ -6,7 +6,7 @@ Column wheel for picking a time value.
 
 **when** Inside a time picker where tapping a list beats typing. Prefer `TimePicker` for a normal field.
 
-`import { TimeWheel, TimePickerProps } from "@mini-app/ui"`
+`import { TimeWheel, TimePickerProps } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/time-picker.tsx` · family: Calendar & date · type: composite
 

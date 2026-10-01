@@ -35,8 +35,8 @@ Effect: replacing the socket provider does not change this file. A consumer and 
 ## Composition wires the provider
 
 ```ts
-import { port, type Port } from '@mini-app/ports'
-import { openSocket } from '@mini-app/socket-local'
+import { port, type Port } from '@mohou/ports'
+import { openSocket } from '@mohou/socket-local'
 
 export async function boot(raw: unknown): Promise<{ port: Port, close(): Promise<void> }> {
   const resolved = port(resolvePort(raw, 'port'))
@@ -46,14 +46,14 @@ export async function boot(raw: unknown): Promise<{ port: Port, close(): Promise
 }
 ```
 
-`resolvePort` is the boundary function from [resolve-at-boundary.md](resolve-at-boundary.md). `openSocket` lives in the provider package. The consumer receives the started value. It does not import `@mini-app/socket-local`.
+`resolvePort` is the boundary function from [resolve-at-boundary.md](resolve-at-boundary.md). `openSocket` lives in the provider package. The consumer receives the started value. It does not import `@mohou/socket-local`.
 
 Effect: a request handler cannot construct a second socket stack. Tests replace `openSocket` at the composition root, not inside the consumer.
 
 ## Deep import
 
 ```ts
-import { hidden } from '@mini-app/socket-local/src/private.ts'
+import { hidden } from '@mohou/socket-local/src/private.ts'
 ```
 
 Effect of the mistake: callers depend on a file the package did not export. Moving that file breaks them even when the package name and the public entry stay the same.
@@ -61,7 +61,7 @@ Effect of the mistake: callers depend on a file the package did not export. Movi
 ## Provider does not import a consumer
 
 ```ts
-import { Panel } from '@mini-app/panel'
+import { Panel } from '@mohou/panel'
 
 export function paint(panel: Panel): Panel {
   return panel
@@ -73,7 +73,7 @@ Effect of the mistake: the socket provider cannot load without the panel package
 ## Consumer does not construct a provider
 
 ```ts
-import { openSocket } from '@mini-app/socket-local'
+import { openSocket } from '@mohou/socket-local'
 
 export function onRequest(): void {
   void openSocket(port(8080)).start()
@@ -85,7 +85,7 @@ Effect of the mistake: the request path builds a second socket stack beside the 
 ## Not this
 
 ```ts
-import type { Socket } from '@mini-app/socket-local'
+import type { Socket } from '@mohou/socket-local'
 
 export type Port = Socket['port']
 ```

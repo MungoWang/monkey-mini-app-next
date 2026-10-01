@@ -1,8 +1,8 @@
 
 import * as React from 'react'
 
-import { useHtmlDark } from '@mini-app/ui/hooks/use-html-dark'
-import { cn } from '@mini-app/ui/lib/utils'
+import { useHtmlDark } from '@mohou/ui/hooks/use-html-dark'
+import { cn } from '@mohou/ui/lib/utils'
 
 const aliases: Record<string, string> = {
   typescript: 'ts',

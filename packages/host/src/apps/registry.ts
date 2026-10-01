@@ -2,7 +2,7 @@ import { randomBytes } from 'node:crypto'
 import { mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
-import { ContractError, appEntries, parseAppId, resolveManifest, type AppId, type AppListItem } from '@mini-app/contract'
+import { ContractError, appEntries, parseAppId, resolveManifest, type AppId, type AppListItem } from '@mohou/contract'
 
 import { resolveAppPath } from '../files/tools.ts'
 import { hostAppsDir, hostLayout, hostTrashDir } from '../host/layout.ts'

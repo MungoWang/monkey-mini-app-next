@@ -6,9 +6,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from '@mini-app/ui/components/chart'
+} from '@mohou/ui/components/chart'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 export type Slice = { name: string; value: number; fill: string }
 

@@ -233,7 +233,7 @@ it('asks to install an update found on open', async () => {
   document.body.append(host)
   const root = createRoot(host)
   const offer = {
-    name: '@mini-app/shell',
+    name: '@mohou/shell',
     current: '1.0.0',
     latest: '1.1.0',
     updateAvailable: true,

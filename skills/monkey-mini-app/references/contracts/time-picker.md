@@ -6,7 +6,7 @@
 
 **when** Clock-only fields. `value` is a string, not a Date.
 
-`import { TimePicker } from "@mini-app/ui"`
+`import { TimePicker } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/time-picker.tsx` · family: Calendar & date · type: composite
 
@@ -28,7 +28,7 @@
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[time-picker-01.tsx](../examples/time-picker/time-picker-01.tsx)** — TimePicker — Time-of-day only (no date) for windows like a daily cron or shift start.

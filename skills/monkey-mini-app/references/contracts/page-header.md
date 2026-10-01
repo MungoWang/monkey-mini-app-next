@@ -6,7 +6,7 @@ Page title row with optional description and right-side actions.
 
 **when** Top of a page inside AppShell main
 
-`import { PageHeader } from "@mini-app/ui"`
+`import { PageHeader } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/page-header.tsx` · family: Layout & structure · type: block
 

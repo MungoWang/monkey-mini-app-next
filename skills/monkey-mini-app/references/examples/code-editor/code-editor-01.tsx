@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { CodeEditor } from "@mini-app/ui";
+import { CodeEditor } from "@mohou/ui";
 
 export default function CodeEditor01Example() {
   const [code, setCode] = React.useState("export const n = 1\n");

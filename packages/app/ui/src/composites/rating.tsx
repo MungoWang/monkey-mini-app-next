@@ -1,7 +1,7 @@
 
 import { Star } from 'lucide-react'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Star rating.

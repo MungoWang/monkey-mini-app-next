@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # HTTP surface
@@ -77,4 +77,4 @@ Layer: [Host](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: provider of the loopback surface, consumer of nothing in Panel. Authoring routes require the token. App and panel data routes do not. `GET /api/app/:appId/errors` is an authoring read and requires the token. The server library is Hono on a loopback Node listener. `Accept: text/event-stream` on `POST /api/call` writes method yields, then the return value. A plain call stays JSON. Author, owner, and iframe routes are separate mounts. History list limits are host policy in `historyListBound`. `POST /api/apps/:appId/storage/restore` is owner `restoreStorage`. Tailwind compiles the classes. Host does not. The kit file is `/mma/sdk.js`. The kit specifier is `@mini-app/ui`. Plan: [implementation.md](../implementation.md).
+Role: provider of the loopback surface, consumer of nothing in Panel. Authoring routes require the token. App and panel data routes do not. `GET /api/app/:appId/errors` is an authoring read and requires the token. The server library is Hono on a loopback Node listener. `Accept: text/event-stream` on `POST /api/call` writes method yields, then the return value. A plain call stays JSON. Author, owner, and iframe routes are separate mounts. History list limits are host policy in `historyListBound`. `POST /api/apps/:appId/storage/restore` is owner `restoreStorage`. Tailwind compiles the classes. Host does not. The kit file is `/mma/sdk.js`. The kit specifier is `@mohou/ui`. Plan: [implementation.md](../implementation.md).

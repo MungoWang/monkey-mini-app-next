@@ -1,10 +1,10 @@
 
 import type { ReactNode } from 'react';
 
-import { Button } from '@mini-app/ui/components/button';
-import { Stepper, StepperItem } from '@mini-app/ui/products/stepper';
-import { useLabels } from '@mini-app/ui/i18n/context';
-import { cn } from '@mini-app/ui/lib/utils';
+import { Button } from '@mohou/ui/components/button';
+import { Stepper, StepperItem } from '@mohou/ui/products/stepper';
+import { useLabels } from '@mohou/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type WizardStep = {
   id: string

@@ -1,7 +1,7 @@
 
 import * as React from 'react'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Accessible field label.

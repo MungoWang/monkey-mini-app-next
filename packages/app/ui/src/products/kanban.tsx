@@ -13,9 +13,9 @@ import {
 } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 
-import { Badge } from '@mini-app/ui/components/badge'
-import { Avatar, AvatarFallback } from '@mini-app/ui/components/avatar'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Badge } from '@mohou/ui/components/badge'
+import { Avatar, AvatarFallback } from '@mohou/ui/components/avatar'
+import { cn } from '@mohou/ui/lib/utils'
 
 export type KanbanComment = {
   id: string

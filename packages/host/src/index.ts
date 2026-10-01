@@ -1,6 +1,6 @@
-/** Host package. Kernel is the call loop. @module @mini-app/host */
+/** Host package. Kernel is the call loop. @module @mohou/host */
 
-export const packageId = '@mini-app/host' as const
+export const packageId = '@mohou/host' as const
 
 export {
   HostError,

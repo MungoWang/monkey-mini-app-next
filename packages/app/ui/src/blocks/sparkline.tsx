@@ -1,8 +1,8 @@
 
 import { Line, LineChart, YAxis } from 'recharts'
 
-import { ChartContainer, type ChartConfig } from '@mini-app/ui/components/chart'
-import { cn } from '@mini-app/ui/lib/utils'
+import { ChartContainer, type ChartConfig } from '@mohou/ui/components/chart'
+import { cn } from '@mohou/ui/lib/utils'
 
 const config = {
   value: { label: 'Value', color: 'var(--primary)' },

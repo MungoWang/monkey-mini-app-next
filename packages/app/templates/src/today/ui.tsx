@@ -12,7 +12,7 @@ import {
   Input,
   ListDetail,
   useApp,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 import { ItemRow, type Item } from './ui/item-row.tsx'
 

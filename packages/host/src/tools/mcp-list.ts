@@ -1,4 +1,4 @@
-import { McpClient, McpError } from '@mini-app/mcp-client'
+import { McpClient, McpError } from '@mohou/mcp-client'
 
 import { AuthorError } from './codes.ts'
 

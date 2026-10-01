@@ -1,4 +1,4 @@
-import type { HostEvent } from '@mini-app/host'
+import type { HostEvent } from '@mohou/host'
 
 /** Parent frame poster. The target origin is explicit. Shell does not read the frame. */
 export interface FramePoster {

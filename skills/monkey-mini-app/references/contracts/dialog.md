@@ -8,7 +8,7 @@ Modal overlay: Trigger + Content(+Header/Footer).
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from "@mini-app/ui"`
+`import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from "@mohou/ui"`
 
 `packages/app/ui/src/components/dialog.tsx` · family: Surface · type: component · primitive
 
@@ -38,7 +38,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[dialog-01.tsx](../examples/dialog/dialog-01.tsx)** — Dialog — Modal flow with trigger/content/header/footer composition and focus trapping; the base for forms that must interrupt the page.

@@ -10,7 +10,7 @@ import {
   Icon,
   PageHeader,
   useApp,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 type Ping = { appId: string; theme: string; now: number }
 

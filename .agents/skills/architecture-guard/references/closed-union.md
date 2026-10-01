@@ -2,12 +2,12 @@
 
 Read this when switching on a tag that the type already lists in full.
 
-The last arm is `assertNever` from `@mini-app/values`. A merge-extensible tag is not closed. It falls through a documented default and does not call `assertNever`.
+The last arm is `assertNever` from `@mohou/values`. A merge-extensible tag is not closed. It falls through a documented default and does not call `assertNever`.
 
 ## Example
 
 ```ts
-import { assertNever } from '@mini-app/values'
+import { assertNever } from '@mohou/values'
 
 type Kind = 'open' | 'closed'
 

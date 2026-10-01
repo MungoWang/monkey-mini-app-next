@@ -3,7 +3,7 @@
  * @title CodeBlock
  * @scenario Read-only highlighted source with filename, language badge and copy button (shiki via CDN); use when the code is shown, not edited.
  */
-import { CodeBlock } from "@mini-app/ui";
+import { CodeBlock } from "@mohou/ui";
 
 export default function CodeBlock01Example() {
   return (

@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup, MessageHeader } from "@mini-app/ui"`
+`import { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup, MessageHeader } from "@mohou/ui"`
 
 `packages/app/ui/src/components/message.tsx` · family: Surface · type: component · primitive
 

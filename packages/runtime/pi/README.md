@@ -1,9 +1,9 @@
 ---
 status: locked
-updated: 2026-09-19
+updated: 2026-10-01
 ---
 
-# @mini-app/runtime-pi
+# @mohou/runtime-pi
 
 Role: `provider`.
 

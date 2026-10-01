@@ -23,9 +23,9 @@ export const SKIP_FILES = new Set([
 
 /**
  * Specifier generated into UI component contracts (ui.tsx authors).
- * Backend authors use `@mini-app/contract` (not emitted into UI contracts).
+ * Backend authors use `@mohou/contract` (not emitted into UI contracts).
  */
-export const AUTHOR_IMPORT = "@mini-app/ui"
+export const AUTHOR_IMPORT = "@mohou/ui"
 
 /** Types we never expand (stdlib / react noise). */
 export const SKIP_TYPE_NAMES = new Set([

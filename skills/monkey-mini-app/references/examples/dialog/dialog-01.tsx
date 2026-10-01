@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function Dialog01Example() {
   return (

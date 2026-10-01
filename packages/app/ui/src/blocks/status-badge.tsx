@@ -1,5 +1,5 @@
-import { Badge } from '@mini-app/ui/components/badge'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Badge } from '@mohou/ui/components/badge'
+import { cn } from '@mohou/ui/lib/utils'
 
 export const statusTone = {
   pass: 'border-transparent bg-emerald-600/15 text-emerald-700 dark:text-emerald-400',

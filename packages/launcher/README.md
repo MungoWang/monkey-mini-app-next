@@ -1,11 +1,11 @@
 ---
 status: locked
-updated: 2026-09-23
+updated: 2026-10-01
 ---
 
 # Launcher
 
-Group directory (no `package.json`). GUI launchers live here. Composition stays in `@mini-app/shell`.
+Group directory (no `package.json`). GUI launchers live here. Composition stays in `@mohou/shell`.
 
 | Path | Role |
 | --- | --- |

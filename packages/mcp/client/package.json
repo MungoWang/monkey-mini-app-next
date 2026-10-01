@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/mcp-client",
+  "name": "@mohou/mcp-client",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",

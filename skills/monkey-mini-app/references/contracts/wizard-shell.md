@@ -6,7 +6,7 @@ Multi-step flow: step rail on top, scrolling body, action row that never moves. 
 
 **when** Page shape: create / import / onboarding, one step at a time with validation per step
 
-`import { WizardShell, WizardStep } from "@mini-app/ui"`
+`import { WizardShell, WizardStep } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/wizard-shell.tsx` · family: Layout & structure · type: block
 
@@ -50,7 +50,7 @@ Multi-step flow: step rail on top, scrolling body, action row that never moves. 
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[wizard-shell-01.tsx](../examples/wizard-shell/wizard-shell-01.tsx)** — WizardShell — Three-step import in a fixed-height panel: the step rail tracks progress, the body scrolls, and Back/Next stay exactly where they were across every step change. — _*Step 2 starts invalid — Next is disabled until the mapping is filled in*_

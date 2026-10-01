@@ -11,7 +11,7 @@ import type {
   AppStorage,
   AppSystemMetrics,
   AppWorkbench,
-} from '@mini-app/contract'
+} from '@mohou/contract'
 
 import type { CredentialProvider } from '../credentials/provider.ts'
 import type { BoundBrain } from './bind-brain.ts'

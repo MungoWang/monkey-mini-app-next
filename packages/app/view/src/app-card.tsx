@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { assertNever } from '@mini-app/values'
-import type { AppListItem } from '@mini-app/contract'
+import { assertNever } from '@mohou/values'
+import type { AppListItem } from '@mohou/contract'
 
 /** Card styles. The same six the panel library offers. */
 export const appCardStyles = ['glass', 'stamp', 'etch', 'hero', 'pulse', 'list'] as const

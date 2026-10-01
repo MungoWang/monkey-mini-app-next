@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-10-01
 ---
 
 # Import allowlists
@@ -23,4 +23,4 @@ The allowlist is one Host table. The UI compiler, the backend loader, and the ve
 ## Implementation
 
 
-Role: definition for the allowlist types, provider for enforcement. One Host table, `platformModules`. Authors import `defineApp` from `@mini-app/contract`. Reload and the backend loader both call `importDecision`. Escape is decided from the importing file, so `../shared` from `api/` stays inside the app. A UI-only module on the backend is `import-forbidden`, not an install hint. A Node built-in is allowed on the backend and forbidden in the UI and in `shared`. A missing installed library still names `mini_app_install`. The vendor route is mounted. Adding a platform library is one row, including its served file. The iframe import map is derived from those rows. A second table is a defect. Plan: [implementation.md](../implementation.md).
+Role: definition for the allowlist types, provider for enforcement. One Host table, `platformModules`. Authors import `defineApp` from `@mohou/contract`. Reload and the backend loader both call `importDecision`. Escape is decided from the importing file, so `../shared` from `api/` stays inside the app. A UI-only module on the backend is `import-forbidden`, not an install hint. A Node built-in is allowed on the backend and forbidden in the UI and in `shared`. A missing installed library still names `mini_app_install`. The vendor route is mounted. Adding a platform library is one row, including its served file. The iframe import map is derived from those rows. A second table is a defect. Plan: [implementation.md](../implementation.md).

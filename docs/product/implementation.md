@@ -1,6 +1,6 @@
 ---
 status: locked
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Implementation plan
@@ -42,7 +42,7 @@ Implement macOS and Windows in the same change. A full run on a Windows machine 
 
 A caller that branches on a failure matches a closed `code`. The message is for a person. A message prefix is not the contract.
 
-The package that emits a code declares that code. There is no single list imported by every surface. `@mini-app/contract` declares only the codes it throws. Host, the brain, and the MCP client declare theirs when those packages exist.
+The package that emits a code declares that code. There is no single list imported by every surface. `@mohou/contract` declares only the codes it throws. Host, the brain, and the MCP client declare theirs when those packages exist.
 
 The code is a stable literal. The page that emits it names it. Wrapping passes the original error as `cause`.
 

@@ -8,7 +8,7 @@ Recharts container + theme CSS vars + tooltip/legend parts.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { ChartContainer, ChartLegend, ChartLegendContent, ChartStyle, ChartTooltip, ChartTooltipContent } from "@mini-app/ui"`
+`import { ChartContainer, ChartLegend, ChartLegendContent, ChartStyle, ChartTooltip, ChartTooltipContent } from "@mohou/ui"`
 
 `packages/app/ui/src/components/chart.tsx` · family: Chart & data · type: component · primitive
 

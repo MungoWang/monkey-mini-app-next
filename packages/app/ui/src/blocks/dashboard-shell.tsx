@@ -1,8 +1,8 @@
 
 import type { ReactNode } from 'react';
 
-import { useIsMobile } from '@mini-app/ui/hooks/use-mobile';
-import { cn } from '@mini-app/ui/lib/utils';
+import { useIsMobile } from '@mohou/ui/hooks/use-mobile';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type DashboardShellProps = {
   /** Title row / `PageHeader`. Pinned: it stays while the content scrolls under it. */

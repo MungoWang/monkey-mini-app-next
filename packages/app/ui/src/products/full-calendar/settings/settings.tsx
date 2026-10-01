@@ -9,10 +9,10 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@mini-app/ui/components/dropdown-menu'
-import { Input } from '@mini-app/ui/components/input'
-import { Switch } from '@mini-app/ui/components/switch'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/dropdown-menu'
+import { Input } from '@mohou/ui/components/input'
+import { Switch } from '@mohou/ui/components/switch'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 import { MAX_SCROLL_HOUR, MIN_SCROLL_HOUR, useCalendar } from '../contexts/calendar-context'
 

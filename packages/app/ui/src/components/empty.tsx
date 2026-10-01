@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Empty-state block: media + title + description + action.

@@ -2,8 +2,8 @@ import { format, isWithinInterval, parseISO } from 'date-fns';
 import { Calendar, Clock, User } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { DayPicker } from '../../shims/day-picker';
-import { ScrollArea } from '@mini-app/ui/components/scroll-area';
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context';
+import { ScrollArea } from '@mohou/ui/components/scroll-area';
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context';
 import { useCalendar } from '../../contexts/calendar-context';
 
 import { AddEditEventDialog } from '../../dialogs/add-edit-event-dialog';

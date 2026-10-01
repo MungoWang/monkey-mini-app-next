@@ -1,6 +1,6 @@
 import { addDays, format, isSameDay, parseISO, startOfWeek } from 'date-fns';
 import { motion } from '../../shims/motion';
-import { ScrollArea } from '@mini-app/ui/components/scroll-area';
+import { ScrollArea } from '@mohou/ui/components/scroll-area';
 import {
   fadeIn,
   staggerContainer,

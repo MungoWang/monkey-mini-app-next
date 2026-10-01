@@ -1,5 +1,5 @@
-import { httpLayout, runnerPath } from '@mini-app/host/http'
-import { PanelSurface, isPanelLocale, type PanelControls } from '@mini-app/panel'
+import { httpLayout, runnerPath } from '@mohou/host/http'
+import { PanelSurface, isPanelLocale, type PanelControls } from '@mohou/panel'
 import { createRoot } from 'react-dom/client'
 
 import { createFrameBus } from './frame-bus.ts'

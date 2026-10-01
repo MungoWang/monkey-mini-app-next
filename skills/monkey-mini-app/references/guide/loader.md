@@ -34,12 +34,12 @@ Enforced:
 ## Backend
 
 ```ts
-import { defineApp } from "@mini-app/contract"
+import { defineApp } from "@mohou/contract"
 import { groupBy } from "lodash"
 import { readFile } from "node:fs/promises"
 ```
 
-The host injects `defineApp`. Allowlist: `@mini-app/contract`, `lodash` / `lodash-es`, Node built-ins, one library installed into this app, and relative paths that are not under `ui/` or `assets/`. A UI-only module on the backend is `import-forbidden`, not an install hint.
+The host injects `defineApp`. Allowlist: `@mohou/contract`, `lodash` / `lodash-es`, Node built-ins, one library installed into this app, and relative paths that are not under `ui/` or `assets/`. A UI-only module on the backend is `import-forbidden`, not an install hint.
 
 A real Node library: `mini_app_install({ appId, packages: [{ name: "exceljs" }] })`, then `import ExcelJS from "exceljs"`. Do not hand-write `package.json`. `sheets` teaches install and ships without `package.json`.
 
@@ -49,12 +49,12 @@ A real Node library: `mini_app_install({ appId, packages: [{ name: "exceljs" }] 
 
 ```ts
 import { useState } from "react"
-import { useApp, Button, cn } from "@mini-app/ui"
+import { useApp, Button, cn } from "@mohou/ui"
 import { groupBy } from "lodash"
 import { motion } from "motion/react"
 ```
 
-Allowlist: `react`, `@mini-app/ui`, `lodash`, `lodash-es`, `motion`, `motion/react`, and relative paths that are not under `api/` or `assets/` and are not `main.api.ts`. Hooks from `react`. Components, `useApp`, and `cn` from the kit. A file under `assets/` is `resolveAssetUrl("./assets/mark.svg")`, then `<img src={url} />`. Never import `recharts`, `lucide-react`, `@codemirror/*`, `shiki`, or a second React.
+Allowlist: `react`, `@mohou/ui`, `lodash`, `lodash-es`, `motion`, `motion/react`, and relative paths that are not under `api/` or `assets/` and are not `main.api.ts`. Hooks from `react`. Components, `useApp`, and `cn` from the kit. A file under `assets/` is `resolveAssetUrl("./assets/mark.svg")`, then `<img src={url} />`. Never import `recharts`, `lucide-react`, `@codemirror/*`, `shiki`, or a second React.
 
 `motion` is UI only. Node built-ins are backend only.
 
@@ -86,7 +86,7 @@ Match `code`. The message is for a person.
 
 ## Forbidden
 
-- Old package names (`@monkey-mini-app/*`) — they fail. Use `@mini-app/ui` and `@mini-app/contract`
+- Old package names (`@monkey-mini-app/*`) — they fail. Use `@mohou/ui` and `@mohou/contract`
 - npm packages in `ui.tsx` except the allowlist
 - Node builtins in the UI or in `shared`
 - `../` out of the app dir

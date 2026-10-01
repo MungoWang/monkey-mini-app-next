@@ -1,4 +1,4 @@
-import { WorkbenchLibrary, workbenchEntries } from '@mini-app/app-view'
+import { WorkbenchLibrary, workbenchEntries } from '@mohou/app-view'
 import { ArrowUpRight, Palette, Pin, RefreshCw, Search, Settings, Trash2 } from 'lucide-react'
 import { cloneElement, isValidElement, useEffect, useLayoutEffect, useReducer, useRef, useState, type ReactElement, type ReactNode } from 'react'
 

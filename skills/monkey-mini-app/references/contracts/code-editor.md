@@ -6,7 +6,7 @@ Vanilla CodeMirror 6 loaded on demand from `esm.sh` (not npm, not a React wrappe
 
 **when** Editing config/scripts in-app. Do not `import @codemirror/*` or add it to package.json.
 
-`import { CodeEditor, LangS } from "@mini-app/ui"`
+`import { CodeEditor, LangS } from "@mohou/ui"`
 
 `packages/app/ui/src/products/code-editor.tsx` · family: Discovery & inspect · type: product
 
@@ -37,7 +37,7 @@ Vanilla CodeMirror 6 loaded on demand from `esm.sh` (not npm, not a React wrappe
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[code-editor-01.tsx](../examples/code-editor/code-editor-01.tsx)** — CodeEditor — Editable source with syntax highlighting and line numbers (CodeMirror 6 via CDN). Reach for it when the user changes config/scripts in-app; degrade to Textarea if the network blocks the CDN. — _*CodeMirror 6*_

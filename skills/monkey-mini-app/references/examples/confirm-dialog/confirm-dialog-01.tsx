@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Button, ConfirmDialog, toast } from "@mini-app/ui";
+import { Button, ConfirmDialog, toast } from "@mohou/ui";
 
 export default function ConfirmDialog01Example() {
   const [confirm, setConfirm] = React.useState(false);

@@ -1,4 +1,4 @@
-import { builtinWorkbenchId, workbenchEntries, type AppListItem, type AppWorkbench } from '@mini-app/contract'
+import { builtinWorkbenchId, workbenchEntries, type AppListItem, type AppWorkbench } from '@mohou/contract'
 
 /**
  * Backend desk for one workbench app.

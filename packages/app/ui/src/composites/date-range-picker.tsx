@@ -4,19 +4,19 @@ import { format, isSameMonth, isSameYear, type Locale } from 'date-fns'
 import type { DateRange } from 'react-day-picker'
 import { ChevronDown } from 'lucide-react'
 
-// Re-exported so mini-app authors (bare `@mini-app/ui` only) can type the value.
+// Re-exported so mini-app authors (bare `@mohou/ui` only) can type the value.
 export type { DateRange }
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context'
-import { Button } from '@mini-app/ui/components/button'
-import { Calendar } from '@mini-app/ui/components/calendar'
+import { cn } from '@mohou/ui/lib/utils'
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context'
+import { Button } from '@mohou/ui/components/button'
+import { Calendar } from '@mohou/ui/components/calendar'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@mini-app/ui/components/popover'
-import { DateChrome } from '@mini-app/ui/composites/date-chrome'
+} from '@mohou/ui/components/popover'
+import { DateChrome } from '@mohou/ui/composites/date-chrome'
 
 export type DateRangePickerProps = {
   value?: DateRange | undefined

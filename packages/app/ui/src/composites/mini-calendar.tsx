@@ -1,6 +1,6 @@
 
-import { Calendar } from '@mini-app/ui/components/calendar'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Calendar } from '@mohou/ui/components/calendar'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Compact month grid, day cell only.

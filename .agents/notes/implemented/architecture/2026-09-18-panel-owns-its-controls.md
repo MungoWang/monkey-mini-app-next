@@ -4,15 +4,15 @@ Status: implemented
 
 ## Problem
 
-The panel document had no stylesheet, then a partial chrome port. Importing `@mini-app/ui` would put author products, `useApp`, and the iframe vendor on the window. The author kit and the panel chrome change for different reasons.
+The panel document had no stylesheet, then a partial chrome port. Importing `@mohou/ui` would put author products, `useApp`, and the iframe vendor on the window. The author kit and the panel chrome change for different reasons.
 
 ## Decision
 
-Panel copies the button and the input it renders. It does not import `@mini-app/ui`. Tailwind for the panel scans panel source only. Host injects the current palette into `GET /` so those utilities resolve `--background` and the other theme tokens. Reducers and HTTP clients stay.
+Panel copies the button and the input it renders. It does not import `@mohou/ui`. Tailwind for the panel scans panel source only. Host injects the current palette into `GET /` so those utilities resolve `--background` and the other theme tokens. Reducers and HTTP clients stay.
 
 ## Alternatives considered
 
-- Import leaf components from `@mini-app/ui`. Lost because the kit is the author surface, and a panel bundle should not follow kit products.
+- Import leaf components from `@mohou/ui`. Lost because the kit is the author surface, and a panel bundle should not follow kit products.
 - A shared primitives package. Lost because only the panel needs this copy. The kit keeps its own components for authors.
 
 ## Consequences

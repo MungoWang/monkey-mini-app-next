@@ -1,6 +1,6 @@
-/** Composition root. Constructs Host and may open the panel origin. @module @mini-app/shell */
+/** Composition root. Constructs Host and may open the panel origin. @module @mohou/shell */
 
-export const packageId = '@mini-app/shell' as const
+export const packageId = '@mohou/shell' as const
 
 export { bootHost, resolveAuthorSkillSource, shellSeed } from './boot.ts'
 export { resolvePortConflict, type PortConflictDecision, type PortConflictMode } from './port-conflict.ts'

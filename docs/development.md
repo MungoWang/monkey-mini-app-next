@@ -1,13 +1,13 @@
 ---
 status: locked
-updated: 2026-09-28
+updated: 2026-10-01
 ---
 
 # Development
 
 This repository has one TypeScript compiler face for packages: `tsconfig.json` typechecks every package from `src`, except author templates. There is no host/client split. `packages/app/templates/tsconfig.json` typechecks the templates and allows an unannotated parameter. `defineApp` still infers `ctx` and a named `args` object.
 
-Author templates are edited in `packages/app/templates/src`. `pnpm gen:skill` copies that directory to `skills/monkey-mini-app/templates`. An edit under the skill directory is replaced by the next copy. `check:skill` fails while the two trees differ. Skill `version` **equals** `@mini-app/shell` version: run `pnpm sync:skill` (also at the end of `gen:skill` and before pack). That script copies `skills/monkey-mini-app` into `packages/shell/skill/monkey-mini-app` for the shell npm package. Do not hand-edit the shell copy.
+Author templates are edited in `packages/app/templates/src`. `pnpm gen:skill` copies that directory to `skills/monkey-mini-app/templates`. An edit under the skill directory is replaced by the next copy. `check:skill` fails while the two trees differ. Skill `version` **equals** `@mohou/shell` version: run `pnpm sync:skill` (also at the end of `gen:skill` and before pack). That script copies `skills/monkey-mini-app` into `packages/shell/skill/monkey-mini-app` for the shell npm package. Do not hand-edit the shell copy.
 
 ## Commands
 
@@ -39,7 +39,7 @@ Node.js `^22.19.0 || >=24.0.0`. The root `package.json` pins `pnpm@11.7.0`.
 
 GitHub Actions runs `pnpm build:panel`, `pnpm build:window`, then `pnpm run check` on macOS for every push and pull request. The workflow file is `.github/workflows/check.yml`.
 
-`.github/workflows/release.yml` runs `pnpm dist:app:release` on `macos-14` (arm64) and `windows-latest` (x64). It runs on `workflow_dispatch` and on a `v*` tag. A tag must match the `@mini-app/shell` version without the `v`, and that version must already be on the npm registry. The tag run also publishes those zip and dmg files on the GitHub Release. The bundles are unsigned. Local install tests use `pnpm dist:app:local`.
+`.github/workflows/release.yml` runs `pnpm dist:app:release` on `macos-14` (arm64) and `windows-latest` (x64). It runs on `workflow_dispatch` and on a `v*` tag. A tag must match the `@mohou/shell` version without the `v`, and that version must already be on the npm registry. The tag run also publishes those zip and dmg files on the GitHub Release. The bundles are unsigned. Local install tests use `pnpm dist:app:local`.
 
 `pnpm install` runs `scripts/install-lefthook.mjs`. That script exits 0 when git hooks cannot be installed. Run it again with `node scripts/install-lefthook.mjs` after git metadata is present.
 

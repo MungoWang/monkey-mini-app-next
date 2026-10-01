@@ -6,7 +6,7 @@ Multi-level drill-down picker.
 
 **when** Hierarchical codes (region → site → line). Flat tree → `TreeView`.
 
-`import { Cascader, CascaderNode } from "@mini-app/ui"`
+`import { Cascader, CascaderNode } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/cascader.tsx` · family: Form · type: composite
 

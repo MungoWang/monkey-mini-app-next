@@ -3,7 +3,7 @@
  * @title Item
  * @scenario A uniform row (title + description + trailing actions) inside menus, lists and cards, with an outline variant for grouping.
  */
-import { Item, ItemContent, ItemDescription, ItemTitle } from "@mini-app/ui";
+import { Item, ItemContent, ItemDescription, ItemTitle } from "@mohou/ui";
 
 export default function Item01Example() {
   return (

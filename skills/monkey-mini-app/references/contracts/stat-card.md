@@ -6,7 +6,7 @@ KPI card: title, value, optional delta/trend.
 
 **when** Dashboard metric strip
 
-`import { StatCard } from "@mini-app/ui"`
+`import { StatCard } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/stat-card.tsx` · family: Chart & data · type: block
 

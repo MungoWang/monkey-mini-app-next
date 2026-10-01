@@ -1,9 +1,9 @@
 
 import { Minus, Plus } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { Input } from '@mini-app/ui/components/input'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Button } from '@mohou/ui/components/button'
+import { Input } from '@mohou/ui/components/input'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 export function parseDuration(input: string): number {
   const hours = Number(/(\d+)\s*h/i.exec(input)?.[1] ?? 0)

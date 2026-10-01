@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { Combobox as ComboboxPrimitive } from '@base-ui/react'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { Button } from '@mini-app/ui/components/button'
+import { cn } from '@mohou/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from '@mini-app/ui/components/input-group'
+} from '@mohou/ui/components/input-group'
 import { ChevronDownIcon, XIcon, CheckIcon } from 'lucide-react'
 
 /**

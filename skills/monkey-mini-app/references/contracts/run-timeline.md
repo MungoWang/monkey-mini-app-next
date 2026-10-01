@@ -6,7 +6,7 @@ Timeline of run phases with duration + status.
 
 **when** CI/agent/job phases on a time axis. Plain ordered events → `Timeline`.
 
-`import { RunTimeline, TimelineItem } from "@mini-app/ui"`
+`import { RunTimeline, TimelineItem } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/run-timeline.tsx` · family: Realtime · type: block
 
@@ -36,7 +36,7 @@ Timeline of run phases with duration + status.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[run-timeline-01.tsx](../examples/run-timeline/run-timeline-01.tsx)** — RunTimeline — Ordered steps of one job (queued → running → done) with per-step status; denser than a Table when the story is sequence.

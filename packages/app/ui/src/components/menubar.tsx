@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Menu as MenuPrimitive } from '@base-ui/react/menu'
 import { Menubar as MenubarPrimitive } from '@base-ui/react/menubar'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@mini-app/ui/components/dropdown-menu'
+} from '@mohou/ui/components/dropdown-menu'
 import { CheckIcon } from 'lucide-react'
 
 /**

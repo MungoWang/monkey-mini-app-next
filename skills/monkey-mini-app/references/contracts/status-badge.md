@@ -6,7 +6,7 @@ Toned badge for run/test status.
 
 **when** pass | fail | blocked | flaky | running | pending cells and chips
 
-`import { StatusBadge } from "@mini-app/ui"`
+`import { StatusBadge } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/status-badge.tsx` · family: Feedback & status · type: block
 

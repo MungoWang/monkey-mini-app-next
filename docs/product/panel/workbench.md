@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Workbench
@@ -54,8 +54,8 @@ When a workbench fills the slot, the host status row carries a chip on the right
 
 A workbench tab shows set-as-home (pin plus that label) and delete as an icon in their own toolbar block, with a short rule between them. When that app is already the stored id, the pin is filled and the label names the current home. Clicking it writes `default` and the slot returns to the builtin library. A non-workbench app tab shows only the delete icon. The builtin library has no set-as-home action.
 
-The builtin library renders `WorkbenchLibrary` from `@mini-app/app-view`. It takes `apps` and `openApp`. The panel fills those from the owner list. A workbench app does not render that component. It calls `ctx.workbench` and composes its own page. `AppCard` is available. A card does not open an app. [UI kit](../app-contract/ui-kit.md) owns the card props.
+The builtin library renders `WorkbenchLibrary` from `@mohou/app-view`. It takes `apps` and `openApp`. The panel fills those from the owner list. A workbench app does not render that component. It calls `ctx.workbench` and composes its own page. `AppCard` is available. A card does not open an app. [UI kit](../app-contract/ui-kit.md) owns the card props.
 
 ## Implementation
 
-Role: definition in `@mini-app/contract`. `createAppWorkbench` in the host attaches `ctx.workbench` only for a live workbench app, and publishes `workbench:default` after a write. The panel renders `WorkbenchLibrary` for the builtin slot and that app's iframe when the stored id names a workbench. The home bar and the workbench-tab action write the same `host.json` field. The status-row control opens the slot workbench through the same open path as a library card. The panel imports `@mini-app/app-view` and does not import the UI kit. Plan: [implementation.md](../implementation.md).
+Role: definition in `@mohou/contract`. `createAppWorkbench` in the host attaches `ctx.workbench` only for a live workbench app, and publishes `workbench:default` after a write. The panel renders `WorkbenchLibrary` for the builtin slot and that app's iframe when the stored id names a workbench. The home bar and the workbench-tab action write the same `host.json` field. The status-row control opens the slot workbench through the same open path as a library card. The panel imports `@mohou/app-view` and does not import the UI kit. Plan: [implementation.md](../implementation.md).

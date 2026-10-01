@@ -4,7 +4,7 @@ import {
   staggerContainer,
   transition,
 } from '../../animations';
-import { useLabels } from '@mini-app/ui/i18n/context';
+import { useLabels } from '@mohou/ui/i18n/context';
 import { useCalendar } from '../../contexts/calendar-context';
 
 import {

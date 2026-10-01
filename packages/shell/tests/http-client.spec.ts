@@ -2,8 +2,8 @@ import { mkdtemp } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { createHost } from '@mini-app/host'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { createHost } from '@mohou/host'
+import { createEchoProvider } from '@mohou/runtime-provider'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { registerWithFiles } from '../../host/tests/author-seed.ts'

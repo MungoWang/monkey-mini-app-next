@@ -23,7 +23,7 @@ import {
   TabsList,
   TabsTrigger,
   useApp,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 type ColumnStat = {
   header: string

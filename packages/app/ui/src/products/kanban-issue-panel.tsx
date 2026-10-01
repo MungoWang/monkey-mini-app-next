@@ -1,20 +1,20 @@
 
-import { Avatar, AvatarFallback } from '@mini-app/ui/components/avatar'
-import { Badge } from '@mini-app/ui/components/badge'
-import { Separator } from '@mini-app/ui/components/separator'
+import { Avatar, AvatarFallback } from '@mohou/ui/components/avatar'
+import { Badge } from '@mohou/ui/components/badge'
+import { Separator } from '@mohou/ui/components/separator'
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@mini-app/ui/components/sheet'
-import { CommentThread } from '@mini-app/ui/blocks/comment-thread'
-import { DescriptionList } from '@mini-app/ui/blocks/description-list'
-import { SeverityChip } from '@mini-app/ui/blocks/severity-chip'
-import { StatusBadge } from '@mini-app/ui/blocks/status-badge'
-import type { KanbanCard } from '@mini-app/ui/products/kanban'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/sheet'
+import { CommentThread } from '@mohou/ui/blocks/comment-thread'
+import { DescriptionList } from '@mohou/ui/blocks/description-list'
+import { SeverityChip } from '@mohou/ui/blocks/severity-chip'
+import { StatusBadge } from '@mohou/ui/blocks/status-badge'
+import type { KanbanCard } from '@mohou/ui/products/kanban'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 /**
  * Slide-over detail panel for a `Kanban` card.

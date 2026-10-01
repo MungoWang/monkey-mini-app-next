@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { AppListItem } from '@mini-app/contract'
+import type { AppListItem } from '@mohou/contract'
 
 import { AppCard, type AppCardStyle } from './app-card.tsx'
 

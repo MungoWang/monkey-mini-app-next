@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 import { diffLines } from 'diff'
 
-import { useHtmlDark } from '@mini-app/ui/hooks/use-html-dark'
-import { cn } from '@mini-app/ui/lib/utils'
+import { useHtmlDark } from '@mohou/ui/hooks/use-html-dark'
+import { cn } from '@mohou/ui/lib/utils'
 
 type Row = {
   type: 'equal' | 'add' | 'del'

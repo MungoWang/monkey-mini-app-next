@@ -6,7 +6,7 @@ Overview page with a pinned header + KPI strip and exactly one scrolling body. T
 
 **when** Page shape: metrics up top, charts below, optional activity rail — ops overviews, monitor walls
 
-`import { DashboardShell } from "@mini-app/ui"`
+`import { DashboardShell } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/dashboard-shell.tsx` · family: Layout & structure · type: block
 
@@ -35,7 +35,7 @@ Overview page with a pinned header + KPI strip and exactly one scrolling body. T
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[dashboard-shell-01.tsx](../examples/dashboard-shell/dashboard-shell-01.tsx)** — DashboardShell — Ops overview in a fixed-height panel: the header and KPI strip stay pinned while the charts scroll, and the activity rail scrolls on its own beside them. — _*Scroll the chart column — the numbers stay; narrow the panel and the rail folds underneath*_

@@ -4,7 +4,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
   InputGroupText,
-} from '@mini-app/ui/components/input-group'
+} from '@mohou/ui/components/input-group'
 
 /**
  * Amount input with grouping + currency prefix.

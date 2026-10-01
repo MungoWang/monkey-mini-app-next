@@ -6,7 +6,7 @@ Static read-only code with highlighting (shiki via CDN).
 
 **when** Showing a snippet/command. Editable → `CodeEditor`.
 
-`import { CodeBlock } from "@mini-app/ui"`
+`import { CodeBlock } from "@mohou/ui"`
 
 `packages/app/ui/src/products/code-block.tsx` · family: Discovery & inspect · type: product
 
@@ -27,7 +27,7 @@ Static read-only code with highlighting (shiki via CDN).
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[code-block-01.tsx](../examples/code-block/code-block-01.tsx)** — CodeBlock — Read-only highlighted source with filename, language badge and copy button (shiki via CDN); use when the code is shown, not edited.

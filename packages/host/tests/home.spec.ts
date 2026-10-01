@@ -2,8 +2,8 @@ import { mkdtemp } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { appEntries } from '@mini-app/contract'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { appEntries } from '@mohou/contract'
+import { createEchoProvider } from '@mohou/runtime-provider'
 import { describe, expect, it } from 'vitest'
 
 import { registerWithFiles } from './author-seed.ts'
@@ -45,7 +45,7 @@ describe('home layout', () => {
         }),
         [appEntries.ui]: 'export default function Card() { return null }\n',
         [appEntries.backend]: `
-          import { defineApp } from '@mini-app/contract'
+          import { defineApp } from '@mohou/contract'
           export default defineApp({
             name: 'Example',
             description: 'One line',

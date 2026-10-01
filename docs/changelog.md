@@ -1,13 +1,15 @@
 ---
 status: locked
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Changelog
 
-This page owns released version notes. The product version is the `version` field of `@mini-app/shell`. `@mini-app/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
+This page owns released version notes. The product version is the `version` field of `@mohou/shell`. `@mohou/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
 
 ## 1.0.9
+
+The publish set moves to the `@mohou` npm scope. [Package architecture](architecture/packages.md) owns the set.
 
 The palette list kept `origin`, but the panel client dropped it. Every row stayed marked system. The client now keeps `builtin` and `custom`.
 

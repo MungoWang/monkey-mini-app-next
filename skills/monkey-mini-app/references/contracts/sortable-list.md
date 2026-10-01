@@ -6,7 +6,7 @@ Drag-to-reorder list.
 
 **when** Priority queues / column order. Read-only ordered events → `Timeline`.
 
-`import { SortableList, SortableItem } from "@mini-app/ui"`
+`import { SortableList, SortableItem } from "@mohou/ui"`
 
 `packages/app/ui/src/products/sortable-list.tsx` · family: Data & tables · type: product
 
@@ -35,7 +35,7 @@ Drag-to-reorder list.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[sortable-list-01.tsx](../examples/sortable-list/sortable-list-01.tsx)** — SortableList — Reorder by drag with the new order pushed back to state — priorities, playbooks, column order.

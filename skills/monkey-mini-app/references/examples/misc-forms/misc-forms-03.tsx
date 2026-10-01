@@ -13,7 +13,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function MiscForms03Example() {
   const [select, setSelect] = React.useState("stg");

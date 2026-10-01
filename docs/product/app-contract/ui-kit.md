@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-27
+updated: 2026-10-01
 ---
 
 # UI kit
@@ -20,7 +20,7 @@ Kit capabilities an author can call:
 - Page skeleton: `AppShell`, `PageHeader`, `FilterBar`, `DetailPanel`.
 - Layout presets: `ListDetail` (`list`, `detail`, `empty?`, `toolbar?`), `TablePage` (`toolbar`, `grid`, `pagination?`, `bulk?`, `empty?`), `DashboardShell` (`header`, `kpis?`, `main`, `aside?`), `SettingsSplit` (`nav`, `sections`, `footer?`), `WizardShell` (`stepper`, `body`, `footer`), `FormSheet` (`header`, `body`, `footer`). Each encodes independent scroll, sticky chrome, and responsive collapse. Slots are nodes. `className` is accepted. Semantic HTML is the output.
 - Data and status: `StatCard`, `TrendCard`, `StatusBadge`, `SeverityChip`, `DataGrid`.
-- `AppCard` draws one app in `glass`, `stamp`, `etch`, `hero`, `pulse`, or `list`. The props are `type`, `app`, `open?`, `openLabel?`, `extra?`, and `onOpen`. `extra.featured` spans two columns on `glass` and is ignored by the other styles. The card calls `onOpen` and does not open the app. `app` is the owner list item. The component lives in `@mini-app/app-view`. This package re-exports it.
+- `AppCard` draws one app in `glass`, `stamp`, `etch`, `hero`, `pulse`, or `list`. The props are `type`, `app`, `open?`, `openLabel?`, `extra?`, and `onOpen`. `extra.featured` spans two columns on `glass` and is ignored by the other styles. The card calls `onOpen` and does not open the app. `app` is the owner list item. The component lives in `@mohou/app-view`. This package re-exports it.
 - Date and time: `DatePicker`, `DateRangePicker`, `DateTimePicker`, `TimePicker`, `DurationInput`, `RelativeDatePicker`. Dates use the active locale, not a hard-coded locale string.
 - Boards and plans: `Kanban`, `EventCalendar`, `Gantt`, `Timeline`, `Stepper`.
 - Trees and lists: `TreeView`, `SortableList`, `FileTree`.
@@ -45,4 +45,4 @@ Custom `@keyframes` are allowed under a name the app owns. Names already defined
 ## Implementation
 
 
-Role: definition of the author UI package `@mini-app/ui`. Host vendor-builds that package into `/mma/sdk.js` the same way it builds lodash. Tailwind `@source` includes the kit source so kit classes appear in the app sheet. Host does not write components. Overlay and chart classes use the existing theme tokens, not extra names. On-demand engines are not app dependencies. A failed fetch degrades that widget. The component catalog is generated. This page does not freeze a second catalog. Plan: [implementation.md](../implementation.md).
+Role: definition of the author UI package `@mohou/ui`. Host vendor-builds that package into `/mma/sdk.js` the same way it builds lodash. Tailwind `@source` includes the kit source so kit classes appear in the app sheet. Host does not write components. Overlay and chart classes use the existing theme tokens, not extra names. On-demand engines are not app dependencies. A failed fetch degrades that widget. The component catalog is generated. This page does not freeze a second catalog. Plan: [implementation.md](../implementation.md).

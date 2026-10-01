@@ -1,7 +1,7 @@
 {
-  "package": "@mini-app/ui",
+  "package": "@mohou/ui",
   "css": "injected by the host (do not import)",
-  "import": "import { Button, DataGrid, DatePicker, useApp, Icon } from \"@mini-app/ui\"",
+  "import": "import { Button, DataGrid, DatePicker, useApp, Icon } from \"@mohou/ui\"",
   "generated": true,
   "families": [
     {

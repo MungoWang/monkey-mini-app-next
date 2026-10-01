@@ -1,5 +1,5 @@
 import type { ModelRuntime } from '@earendil-works/pi-coding-agent'
-import { ProviderError, type RuntimeAgentOptions, type RuntimeProviderConfig } from '@mini-app/runtime-provider'
+import { ProviderError, type RuntimeAgentOptions, type RuntimeProviderConfig } from '@mohou/runtime-provider'
 
 /**
  * One Pi coding-agent run. The session is in memory. The conversation is not written.

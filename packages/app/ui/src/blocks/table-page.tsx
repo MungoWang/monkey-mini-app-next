@@ -1,7 +1,7 @@
 
 import type { ReactNode } from 'react';
 
-import { cn } from '@mini-app/ui/lib/utils';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type TablePageProps = {
   /** Page-level actions above the table: search, filters, "New". Pinned; it never scrolls away. */

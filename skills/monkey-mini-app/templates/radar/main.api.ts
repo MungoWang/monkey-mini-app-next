@@ -1,4 +1,4 @@
-import { defineApp } from '@mini-app/contract'
+import { defineApp } from '@mohou/contract'
 
 import { runRefresh } from './api/scan'
 import { type Payload, type Progress } from './shared/events'

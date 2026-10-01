@@ -3,14 +3,14 @@ import { format, parseISO } from 'date-fns'
 import { Calendar, Clock, Text, User } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@mini-app/ui/components/dialog'
-import { ScrollArea } from '@mini-app/ui/components/scroll-area'
+} from '@mohou/ui/components/dialog'
+import { ScrollArea } from '@mohou/ui/components/scroll-area'
 
 import { useCalendar } from '../contexts/calendar-context'
 import { formatTime } from '../helpers'

@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Autocomplete, SearchInput } from "@mini-app/ui";
+import { Autocomplete, SearchInput } from "@mohou/ui";
 
 export default function MiscForms05Example() {
   const [search, setSearch] = React.useState("");

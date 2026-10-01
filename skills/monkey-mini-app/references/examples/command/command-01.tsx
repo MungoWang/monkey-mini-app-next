@@ -10,7 +10,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function Command01Example() {
   return (

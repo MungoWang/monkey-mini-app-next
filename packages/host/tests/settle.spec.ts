@@ -3,8 +3,8 @@ import { mkdtemp, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { McpClient } from '@mini-app/mcp-client'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { McpClient } from '@mohou/mcp-client'
+import { createEchoProvider } from '@mohou/runtime-provider'
 import { describe, expect, it } from 'vitest'
 
 import { registerWithFiles } from './author-seed.ts'
@@ -31,7 +31,7 @@ describe('author settle', () => {
       'main.api.ts': `
         import { existsSync } from 'node:fs'
         import { join } from 'node:path'
-        import { defineApp } from '@mini-app/contract'
+        import { defineApp } from '@mohou/contract'
         export default defineApp({
           name: 'Example',
           description: 'One line',

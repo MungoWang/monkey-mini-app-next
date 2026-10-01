@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import type { AppListItem } from '@mini-app/contract'
+import type { AppListItem } from '@mohou/contract'
 
 import { createAppWorkbench } from '../src/host/workbench.ts'
 

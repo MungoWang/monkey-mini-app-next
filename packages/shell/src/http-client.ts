@@ -1,4 +1,4 @@
-import { appsResource, httpLayout } from '@mini-app/host/http'
+import { appsResource, httpLayout } from '@mohou/host/http'
 import {
   PanelClientError,
   type GalleryApp,
@@ -20,7 +20,7 @@ import {
   type StorageClient,
   type ThemeClient,
   type ThemePin,
-} from '@mini-app/panel'
+} from '@mohou/panel'
 
 /** Panel calls over the loopback origin. Route strings stay in the host path table. */
 export function httpPanelClients(origin: string): PanelClient & PanelSettingsClient & HistoryClient & StorageClient & ThemeClient {

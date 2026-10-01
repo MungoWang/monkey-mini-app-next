@@ -1,7 +1,7 @@
 
 import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 import { CheckIcon } from 'lucide-react'
 
 /**

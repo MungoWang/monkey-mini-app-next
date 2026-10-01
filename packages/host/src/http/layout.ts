@@ -1,4 +1,4 @@
-import { appEntries } from '@mini-app/contract'
+import { appEntries } from '@mohou/contract'
 
 /** Loopback paths. Spell them here. Call sites use these helpers. */
 

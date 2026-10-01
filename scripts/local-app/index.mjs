@@ -48,7 +48,7 @@ run('pnpm', ['build:panel'])
 // 3. pack all workspace publishable packages → artifacts/npm
 run('pnpm', ['publish:check'])
 
-// 4. install prefix from local tarballs only for @mini-app/*
+// 4. install prefix from local tarballs only for @mohou/*
 rmSync(outDir, { recursive: true, force: true })
 mkdirSync(prefix, { recursive: true })
 
@@ -72,7 +72,7 @@ writeFileSync(join(prefix, 'package.json'), `${JSON.stringify(appPkg, null, 2)}\
 // Prefer npm so file: tarballs resolve like a registry consumer
 run('npm', ['install', '--no-fund', '--no-audit'], { cwd: prefix })
 
-const shellRoot = join(prefix, 'node_modules', '@mini-app', 'shell')
+const shellRoot = join(prefix, 'node_modules', '@mohou', 'shell')
 const skillInShell = join(shellRoot, 'skill', 'monkey-mini-app', 'SKILL.md')
 if (!existsSync(skillInShell)) throw new Error(`installed shell missing skill: ${skillInShell}`)
 const distPanel = join(shellRoot, 'dist', 'panel.html')
@@ -107,12 +107,12 @@ writeFileSync(
   join(outDir, 'README.md'),
   `# Mohou local app (${version})
 
-Installed from workspace tarballs under \`artifacts/npm/\` (file: deps only for \`@mini-app/*\`).
+Installed from workspace tarballs under \`artifacts/npm/\` (file: deps only for \`@mohou/*\`).
 
 ## Layout
 
-- \`prefix/\` — npm install tree (\`@mini-app/shell\` + deps)
-- \`prefix/node_modules/@mini-app/shell/skill/\` — writing skill source (K≡S)
+- \`prefix/\` — npm install tree (\`@mohou/shell\` + deps)
+- \`prefix/node_modules/@mohou/shell/skill/\` — writing skill source (K≡S)
 - \`Mohou\` — app executable. It spawns the shell sidecar and opens the window
 - \`runtime/\` — created on first run (\`MINI_APP_RUNTIME\`)
 - \`run\` — execs \`Mohou\` (Windows: \`run.cmd\` execs \`Mohou.exe\`)
@@ -126,7 +126,7 @@ Installed from workspace tarballs under \`artifacts/npm/\` (file: deps only for 
 ## Prove skill path
 
 \`\`\`sh
-cd prefix && node --import tsx -e "import { resolveAuthorSkillSource } from '@mini-app/shell/src/boot.ts'; console.log(resolveAuthorSkillSource())"
+cd prefix && node --import tsx -e "import { resolveAuthorSkillSource } from '@mohou/shell/src/boot.ts'; console.log(resolveAuthorSkillSource())"
 \`\`\`
 `,
 )
@@ -139,7 +139,7 @@ const probe = spawnSync(
     'tsx',
     '--input-type=module',
     '-e',
-    "import { resolveAuthorSkillSource } from '@mini-app/shell/src/boot.ts'; import { accessSync } from 'node:fs'; const s = resolveAuthorSkillSource(); accessSync(s + '/SKILL.md'); console.log(s)",
+    "import { resolveAuthorSkillSource } from '@mohou/shell/src/boot.ts'; import { accessSync } from 'node:fs'; const s = resolveAuthorSkillSource(); accessSync(s + '/SKILL.md'); console.log(s)",
   ],
   { encoding: 'utf8', cwd: prefix },
 )

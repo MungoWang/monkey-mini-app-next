@@ -1,7 +1,7 @@
 
 import * as React from 'react'
 
-import { Input } from '@mini-app/ui/components/input'
+import { Input } from '@mohou/ui/components/input'
 
 /**
  * Text input with filtered suggestions.

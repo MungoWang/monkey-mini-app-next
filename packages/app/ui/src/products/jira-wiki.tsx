@@ -2,9 +2,9 @@
 import * as React from 'react'
 import { Paperclip } from 'lucide-react'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { skipUndef } from '@mini-app/ui/lib/defined'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
+import { skipUndef } from '@mohou/ui/lib/defined'
+import { useLabels } from '@mohou/ui/i18n/context'
 import {
   parseJiraWiki,
   type WikiBlock,

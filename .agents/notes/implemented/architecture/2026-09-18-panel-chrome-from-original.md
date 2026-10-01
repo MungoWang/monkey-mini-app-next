@@ -8,7 +8,7 @@ Status: implemented
 
 ## Decision
 
-`@mini-app/panel` owns the original chrome stylesheet, with `--dsw-alias-*` mapped onto the host theme tokens. Shell inlines that CSS in the panel document. Gallery markup uses the original `mma-*` classes. Reducers and injected clients stay. The first card style is `hero`.
+`@mohou/panel` owns the original chrome stylesheet, with `--dsw-alias-*` mapped onto the host theme tokens. Shell inlines that CSS in the panel document. Gallery markup uses the original `mma-*` classes. Reducers and injected clients stay. The first card style is `hero`.
 
 ## Alternatives considered
 
@@ -17,6 +17,6 @@ Status: implemented
 
 ## Consequences
 
-Empty gallery still has chrome. Shell loads the stylesheet from `@mini-app/panel/chrome`, a `.ts` entry, because Node type stripping cannot import `.tsx`. A later change can pin host theme values onto the same tokens. Card-style switching in the theme pop is not wired yet.
+Empty gallery still has chrome. Shell loads the stylesheet from `@mohou/panel/chrome`, a `.ts` entry, because Node type stripping cannot import `.tsx`. A later change can pin host theme values onto the same tokens. Card-style switching in the theme pop is not wired yet.
 
 Superseded for the control source by [2026-09-18-panel-owns-its-controls.md](2026-09-18-panel-owns-its-controls.md). Panel copies button and input. It does not import the author kit.

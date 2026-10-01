@@ -11,16 +11,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@mini-app/ui/components/alert-dialog';
+} from '@mohou/ui/components/alert-dialog';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@mini-app/ui/components/sheet';
-import { useLabels } from '@mini-app/ui/i18n/context';
-import { cn } from '@mini-app/ui/lib/utils';
+} from '@mohou/ui/components/sheet';
+import { useLabels } from '@mohou/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type FormSheetProps = {
   open: boolean

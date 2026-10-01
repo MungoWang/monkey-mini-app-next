@@ -6,7 +6,7 @@ Full-height table page: toolbar pinned, one scrolling band for the grid, bulk ba
 
 **when** Page shape: one wide filterable table is the product — inventories, ledgers, saved views
 
-`import { TablePage } from "@mini-app/ui"`
+`import { TablePage } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/table-page.tsx` · family: Layout & structure · type: block
 
@@ -35,7 +35,7 @@ Full-height table page: toolbar pinned, one scrolling band for the grid, bulk ba
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[table-page-01.tsx](../examples/table-page/table-page-01.tsx)** — TablePage — A wide table as the whole product: the filter bar stays pinned, only the grid scrolls, and ticking rows floats a bulk bar over the bottom without moving a single row. — _*Scroll the table — the toolbar stays put; select rows — the bar floats over the grid, it never pushes rows down*_

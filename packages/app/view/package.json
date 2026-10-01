@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/app-view",
+  "name": "@mohou/app-view",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",
@@ -29,8 +29,8 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@mini-app/contract": "workspace:^",
-    "@mini-app/values": "workspace:^",
+    "@mohou/contract": "workspace:^",
+    "@mohou/values": "workspace:^",
     "react": "^19.2.0"
   },
   "devDependencies": {

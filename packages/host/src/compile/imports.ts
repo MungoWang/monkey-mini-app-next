@@ -1,6 +1,6 @@
 import { builtinModules } from 'node:module'
 
-import { appEntries, appTrees, classifyImport, type DefinitionCode, type ImportSide } from '@mini-app/contract'
+import { appEntries, appTrees, classifyImport, type DefinitionCode, type ImportSide } from '@mohou/contract'
 
 import { platformModuleAllowed } from './allowlist.ts'
 

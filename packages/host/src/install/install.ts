@@ -17,7 +17,7 @@ const DENIED: Record<string, string> = {
 }
 
 /** Platform scope. These packages are already provided. */
-const PLATFORM_SCOPE = '@mini-app/'
+const PLATFORM_SCOPE = '@mohou/'
 
 const NAME = /^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/
 const VERSION = /^[0-9A-Za-z.^~=*-]+$/

@@ -6,7 +6,7 @@ Circular determinate progress.
 
 **when** One percent-done value in a tight space (card corner, table cell).
 
-`import { ProgressRing } from "@mini-app/ui"`
+`import { ProgressRing } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/progress-ring.tsx` · family: Feedback & status · type: block
 

@@ -6,7 +6,7 @@ Amount input with grouping + currency prefix.
 
 **when** Money fields; keeps the raw string out of your state.
 
-`import { CurrencyInput } from "@mini-app/ui"`
+`import { CurrencyInput } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/currency-input.tsx` · family: Form · type: composite
 

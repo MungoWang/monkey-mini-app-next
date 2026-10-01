@@ -6,7 +6,7 @@ Preset ranges (today / last 7 days) → a concrete date range.
 
 **when** Dashboard filters where “last 7 days” beats two calendars.
 
-`import { RelativeDatePicker, RelativePreset } from "@mini-app/ui"`
+`import { RelativeDatePicker, RelativePreset } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/relative-date-picker.tsx` · family: Calendar & date · type: composite
 
@@ -36,7 +36,7 @@ Preset ranges (today / last 7 days) → a concrete date range.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[relative-date-picker-01.tsx](../examples/relative-date-picker/relative-date-picker-01.tsx)** — RelativeDatePicker — Preset ranges ('last 7 days', 'this month') that resolve to absolute timestamps on submit — the usual filter on dashboards and log screens.

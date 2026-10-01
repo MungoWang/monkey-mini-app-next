@@ -6,7 +6,7 @@ Two-pane record browser: the list holds its place while the selected record scro
 
 **when** Page shape: click a row, then read or edit that one record beside the list — orders, tickets, contacts, log lines
 
-`import { ListDetail } from "@mini-app/ui"`
+`import { ListDetail } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/list-detail.tsx` · family: Layout & structure · type: block
 
@@ -40,7 +40,7 @@ Two-pane record browser: the list holds its place while the selected record scro
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[list-detail-01.tsx](../examples/list-detail/list-detail-01.tsx)** — ListDetail — Records browser at a fixed height: a long ticket list on the left, the selected ticket on the right, each pane scrolling on its own. — _*Scroll either pane — the toolbar and the other pane stay put*_

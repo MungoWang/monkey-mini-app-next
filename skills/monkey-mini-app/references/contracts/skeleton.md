@@ -6,7 +6,7 @@ Pulse placeholder block.
 
 **when** First paint while `call()` is pending — match the real layout's size.
 
-`import { Skeleton } from "@mini-app/ui"`
+`import { Skeleton } from "@mohou/ui"`
 
 `packages/app/ui/src/components/skeleton.tsx` · family: Feedback & status · type: component · primitive
 
@@ -27,7 +27,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[skeleton-01.tsx](../examples/skeleton/skeleton-01.tsx)** — Skeleton — Loading placeholder shaped like the content that will replace it (cards/rows), avoiding layout jump on first paint.

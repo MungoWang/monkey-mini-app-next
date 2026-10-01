@@ -1,6 +1,6 @@
 ---
 status: locked
-updated: 2026-09-20
+updated: 2026-10-01
 ---
 
 # AGENTS.md
@@ -24,11 +24,11 @@ Quote style and semicolons belong to the linter.
 
 ```
 packages/               packages/<group>/<pkg>
-  util/values/          @mini-app/values
-  app/contract/         @mini-app/contract
-  runtime/provider/     @mini-app/runtime-provider
-  host/                 @mini-app/host
-  mcp/client/           @mini-app/mcp-client
+  util/values/          @mohou/values
+  app/contract/         @mohou/contract
+  runtime/provider/     @mohou/runtime-provider
+  host/                 @mohou/host
+  mcp/client/           @mohou/mcp-client
 apps/                   process entries, added with the process
 docs/                   documentation (docs/AGENTS.md)
 .agents/                agent workflows and notes
@@ -52,7 +52,7 @@ pnpm run check
 ## Conventions
 
 - ESM (`"type": "module"`). Import other packages by package name. Local relative imports use a `.ts` specifier.
-- Closed unions end in `assertNever` from `@mini-app/values`.
+- Closed unions end in `assertNever` from `@mohou/values`.
 - Exported type names spell their words. [packages/AGENTS.md](packages/AGENTS.md) owns the abbreviation rule.
 - Explicit resolution at a package boundary is a named `resolve` step in the owning module, not a hidden default inside the operation that consumes the result.
 - Every implementation targets macOS and Windows. [implementation.md](docs/product/implementation.md) owns the rule. [decisions.md](docs/architecture/decisions.md) owns the platform set.

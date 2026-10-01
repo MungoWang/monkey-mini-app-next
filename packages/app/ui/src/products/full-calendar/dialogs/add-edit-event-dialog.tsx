@@ -2,20 +2,20 @@
 import { addMinutes, format, set } from 'date-fns'
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@mini-app/ui/components/dialog'
-import { Input } from '@mini-app/ui/components/input'
-import { Label } from '@mini-app/ui/components/label'
-import { Textarea } from '@mini-app/ui/components/textarea'
-import { DateTimePicker } from '@mini-app/ui/composites/date-time-picker'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { cn } from '@mini-app/ui/lib/utils'
+} from '@mohou/ui/components/dialog'
+import { Input } from '@mohou/ui/components/input'
+import { Label } from '@mohou/ui/components/label'
+import { Textarea } from '@mohou/ui/components/textarea'
+import { DateTimePicker } from '@mohou/ui/composites/date-time-picker'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
 
 import { COLORS } from '../constants'
 import { useCalendar } from '../contexts/calendar-context'

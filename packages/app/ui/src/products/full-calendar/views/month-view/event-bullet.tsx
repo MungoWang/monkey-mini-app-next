@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 import { motion } from '../../shims/motion';
-import { cn } from '@mini-app/ui/lib/utils';
+import { cn } from '@mohou/ui/lib/utils';
 import { transition } from '../../animations';
 import type { TEventColor } from '../../types';
 

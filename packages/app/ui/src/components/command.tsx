@@ -2,18 +2,18 @@
 import * as React from 'react'
 import { Command as CommandPrimitive } from 'cmdk'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@mini-app/ui/components/dialog'
+} from '@mohou/ui/components/dialog'
 import {
   InputGroup,
   InputGroupAddon,
-} from '@mini-app/ui/components/input-group'
+} from '@mohou/ui/components/input-group'
 import { SearchIcon, CheckIcon } from 'lucide-react'
 
 /**

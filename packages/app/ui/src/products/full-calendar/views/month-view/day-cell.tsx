@@ -4,7 +4,7 @@ import { isToday, startOfDay, isSunday, isSameMonth } from 'date-fns';
 import { motion } from '../../shims/motion';
 import { useMemo, useCallback } from 'react';
 
-import { cn } from '@mini-app/ui/lib/utils';
+import { cn } from '@mohou/ui/lib/utils';
 import { transition } from '../../animations';
 import { EventListDialog } from '../../dialogs/events-list-dialog';
 import { DroppableArea } from '../../dnd/droppable-area';
@@ -13,7 +13,7 @@ import { useMediaQuery } from '../../hooks';
 import type { ICalendarCell, IEvent } from '../../interfaces';
 import { EventBullet } from './event-bullet';
 import { MonthEventBadge } from './month-event-badge';
-import { Button } from '@mini-app/ui/components/button';
+import { Button } from '@mohou/ui/components/button';
 import { Plus } from 'lucide-react';
 import { AddEditEventDialog } from '../../dialogs/add-edit-event-dialog';
 

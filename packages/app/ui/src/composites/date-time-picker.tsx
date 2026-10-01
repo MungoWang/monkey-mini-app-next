@@ -3,18 +3,18 @@ import * as React from 'react'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { Calendar } from '@mini-app/ui/components/calendar'
+import { Button } from '@mohou/ui/components/button'
+import { Calendar } from '@mohou/ui/components/calendar'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@mini-app/ui/components/popover'
-import { DateChrome } from '@mini-app/ui/composites/date-chrome'
-import { TimeWheel } from '@mini-app/ui/composites/time-picker'
-import { TimezoneSelect } from '@mini-app/ui/composites/timezone-select'
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context'
-import { cn } from '@mini-app/ui/lib/utils'
+} from '@mohou/ui/components/popover'
+import { DateChrome } from '@mohou/ui/composites/date-chrome'
+import { TimeWheel } from '@mohou/ui/composites/time-picker'
+import { TimezoneSelect } from '@mohou/ui/composites/timezone-select'
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
 
 function merge(date: Date | undefined, hours: number, minutes: number): Date {
   const next = new Date(date ?? new Date())

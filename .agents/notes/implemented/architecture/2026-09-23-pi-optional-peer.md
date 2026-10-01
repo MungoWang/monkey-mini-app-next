@@ -6,7 +6,7 @@ status: implemented
 
 ## Decision
 
-`@mini-app/runtime-pi` declares `@earendil-works/pi-coding-agent` and `pi-ai` as **optional peerDependencies**. Shell registers `createPiProvider()` only when `probePiRuntime()` can resolve those packages via normal Node resolution. Distributed `dist:app` does not embed Pi.
+`@mohou/runtime-pi` declares `@earendil-works/pi-coding-agent` and `pi-ai` as **optional peerDependencies**. Shell registers `createPiProvider()` only when `probePiRuntime()` can resolve those packages via normal Node resolution. Distributed `dist:app` does not embed Pi.
 
 ## Why
 

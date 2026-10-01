@@ -41,16 +41,16 @@ importers:
 
   packages/app/contract:
     dependencies:
-      '@mini-app/values':
+      '@mohou/values':
         specifier: workspace:^
         version: link:../../util/values
 
   packages/app/templates:
     dependencies:
-      '@mini-app/contract':
+      '@mohou/contract':
         specifier: workspace:^
         version: link:../contract
-      '@mini-app/ui':
+      '@mohou/ui':
         specifier: workspace:^
         version: link:../ui
       '@types/lodash':
@@ -89,10 +89,10 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.2
         version: 3.2.2(react@19.3.0)
-      '@mini-app/app-view':
+      '@mohou/app-view':
         specifier: workspace:^
         version: link:../view
-      '@mini-app/contract':
+      '@mohou/contract':
         specifier: workspace:^
         version: link:../contract
       '@shadcn/react':
@@ -183,10 +183,10 @@ importers:
 
   packages/app/view:
     dependencies:
-      '@mini-app/contract':
+      '@mohou/contract':
         specifier: workspace:^
         version: link:../contract
-      '@mini-app/values':
+      '@mohou/values':
         specifier: workspace:^
         version: link:../../util/values
       react:
@@ -208,19 +208,19 @@ importers:
       '@hono/node-server':
         specifier: ^2.1.1
         version: 2.1.1(hono@4.13.8)
-      '@mini-app/app-view':
+      '@mohou/app-view':
         specifier: workspace:^
         version: link:../app/view
-      '@mini-app/contract':
+      '@mohou/contract':
         specifier: workspace:^
         version: link:../app/contract
-      '@mini-app/mcp-client':
+      '@mohou/mcp-client':
         specifier: workspace:^
         version: link:../mcp/client
-      '@mini-app/runtime-provider':
+      '@mohou/runtime-provider':
         specifier: workspace:^
         version: link:../runtime/provider
-      '@mini-app/ui':
+      '@mohou/ui':
         specifier: workspace:^
         version: link:../app/ui
       '@modelcontextprotocol/sdk':
@@ -281,7 +281,7 @@ importers:
 
   packages/panel:
     dependencies:
-      '@mini-app/app-view':
+      '@mohou/app-view':
         specifier: workspace:^
         version: link:../app/view
       lucide-react:
@@ -303,10 +303,10 @@ importers:
 
   packages/runtime/pi:
     dependencies:
-      '@mini-app/contract':
+      '@mohou/contract':
         specifier: workspace:^
         version: link:../../app/contract
-      '@mini-app/runtime-provider':
+      '@mohou/runtime-provider':
         specifier: workspace:^
         version: link:../provider
     devDependencies:
@@ -319,22 +319,22 @@ importers:
 
   packages/runtime/provider:
     dependencies:
-      '@mini-app/contract':
+      '@mohou/contract':
         specifier: workspace:^
         version: link:../../app/contract
 
   packages/shell:
     dependencies:
-      '@mini-app/host':
+      '@mohou/host':
         specifier: workspace:^
         version: link:../host
-      '@mini-app/panel':
+      '@mohou/panel':
         specifier: workspace:^
         version: link:../panel
-      '@mini-app/runtime-pi':
+      '@mohou/runtime-pi':
         specifier: workspace:^
         version: link:../runtime/pi
-      '@mini-app/runtime-provider':
+      '@mohou/runtime-provider':
         specifier: workspace:^
         version: link:../runtime/provider
       esbuild:

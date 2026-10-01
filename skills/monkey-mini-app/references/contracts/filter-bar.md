@@ -6,7 +6,7 @@ Horizontal wrap row for filters and toolbar controls.
 
 **when** Above DataGrid or any filtered list
 
-`import { FilterBar } from "@mini-app/ui"`
+`import { FilterBar } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/filter-bar.tsx` · family: Data & tables · type: block
 

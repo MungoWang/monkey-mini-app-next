@@ -6,7 +6,7 @@ Chip-style multi-value text input.
 
 **when** Labels/owners where free values are allowed (`Transfer` when choosing from a fixed pool).
 
-`import { TagInput } from "@mini-app/ui"`
+`import { TagInput } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/tag-input.tsx` · family: Form · type: composite
 

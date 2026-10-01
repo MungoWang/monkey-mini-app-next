@@ -6,7 +6,7 @@ Coloured pill for an environment name.
 
 **when** prd / stg / dev markers in headers and tables.
 
-`import { EnvBadge } from "@mini-app/ui"`
+`import { EnvBadge } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/env-badge.tsx` · family: Feedback & status · type: block
 

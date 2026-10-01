@@ -1,19 +1,19 @@
 
 import type { ComponentProps, CSSProperties, ReactNode } from 'react';
-import type { UiMessages } from '@mini-app/ui/i18n/en';
+import type { UiMessages } from '@mohou/ui/i18n/en';
 
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '@mini-app/ui/components/avatar';
+} from '@mohou/ui/components/avatar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@mini-app/ui/components/popover';
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context';
-import { cn } from '@mini-app/ui/lib/utils';
+} from '@mohou/ui/components/popover';
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type CommitAuthor = {
   name: string

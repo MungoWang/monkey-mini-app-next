@@ -6,7 +6,7 @@ Swatch + hex colour input.
 
 **when** Theme/label colour config. Never for secrets.
 
-`import { ColorPicker } from "@mini-app/ui"`
+`import { ColorPicker } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/color-picker.tsx` · family: Form · type: composite
 

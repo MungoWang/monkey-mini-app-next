@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from "@mini-app/ui"`
+`import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from "@mohou/ui"`
 
 `packages/app/ui/src/components/bubble.tsx` · family: Surface · type: component · primitive
 
@@ -24,7 +24,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[bubble-01.tsx](../examples/bubble/bubble-01.tsx)** — Bubble — One side of a chat transcript — agent vs user bubble without hand-rolling alignment or spacing.

@@ -10,7 +10,7 @@ Supersedes the peer-omission line in [update does not block boot](./2026-09-29-u
 
 ## Decision
 
-The install still passes `--omit=peer`. Optional Pi peers stay out of the prefix; the launcher links them. `@mini-app/ui` depends on `react-is` directly, so the omit does not remove the import the kit bundle resolves. Fetch retries stay at one.
+The install still passes `--omit=peer`. Optional Pi peers stay out of the prefix; the launcher links them. `@mohou/ui` depends on `react-is` directly, so the omit does not remove the import the kit bundle resolves. Fetch retries stay at one.
 
 ## Alternatives considered
 

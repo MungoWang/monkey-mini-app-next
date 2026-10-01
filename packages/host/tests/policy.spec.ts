@@ -5,7 +5,7 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { createEchoProvider } from '@mohou/runtime-provider'
 
 import {
   ConfigError,

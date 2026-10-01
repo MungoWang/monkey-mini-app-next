@@ -19,7 +19,7 @@ Shipped on the 1.0 node:
 - `packages/shell/tests/entry.spec.ts` spawns `dev.ts` and the panel-window binary, checks the HTTP response, and checks that exit leaves no window process. `packages/shell/tests/expected/panel-document.txt` is the panel-document oracle.
 - `ctx.log` appends one JSON line under `apps/<appId>/logs/`. Snapshots skip `logs`, `dist`, `.cache`, and `.autogen`. `coverage` stays. [Identity](../../../docs/product/app-contract/identity.md) owns the log behavior.
 - The storage page asks, then calls `POST /api/apps/:appId/storage/restore`.
-- `@mini-app/shell` version `1.0.0` is the product version. The other publishable workspace packages carry the same string. [Changelog](../../../docs/changelog.md) owns the notes. `pnpm build:artifact` writes `artifacts/Mohou-<version>-<platform>/`. `pnpm publish:check` packs and does not upload. `pnpm publish:packages` uploads only when `MINI_APP_PUBLISH=1`.
+- `@mohou/shell` version `1.0.0` is the product version. The other publishable workspace packages carry the same string. [Changelog](../../../docs/changelog.md) owns the notes. `pnpm build:artifact` writes `artifacts/Mohou-<version>-<platform>/`. `pnpm publish:check` packs and does not upload. `pnpm publish:packages` uploads only when `MINI_APP_PUBLISH=1`.
 - Embedded navigation: a same-origin link stays; `javascript:` runs; an external `http` or `https` link, and `mailto:`, open outside the app.
 
 After 1.0 (not this node):
@@ -32,7 +32,7 @@ Do not add a live-provider test. `echo` plus the mocked Pi provider is enough. W
 
 Feature-page `status` stays the decision level. `progress` is `open` or `settled`. There is no `wip`. A missing `progress` has not been judged. [AGENTS.md](../../../AGENTS.md) owns that rule. 1.0 feature pages are `settled` except deferred capabilities.
 
-The UI toolchain stays in `@mini-app/host` for 1.0. [Package architecture](../../../docs/architecture/packages.md) owns that cut.
+The UI toolchain stays in `@mohou/host` for 1.0. [Package architecture](../../../docs/architecture/packages.md) owns that cut.
 
 ## Alternatives considered
 

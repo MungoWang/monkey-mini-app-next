@@ -3,7 +3,7 @@
  * @title Gantt
  * @scenario Time-phased bars for planning (tasks against a date axis) where dependency order and overlap matter more than exact times.
  */
-import { Gantt } from "@mini-app/ui";
+import { Gantt } from "@mohou/ui";
 
 export default function Gantt01Example() {
   return (

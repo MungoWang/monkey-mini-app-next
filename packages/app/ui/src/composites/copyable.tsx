@@ -2,14 +2,14 @@
 import * as React from 'react'
 import { Check, Copy } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@mini-app/ui/components/input-group'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { writeClipboard } from '@mini-app/ui/lib/clipboard'
+} from '@mohou/ui/components/input-group'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { writeClipboard } from '@mohou/ui/lib/clipboard'
 
 /**
  * Inline text with a copy button.

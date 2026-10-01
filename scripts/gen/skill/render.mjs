@@ -234,7 +234,7 @@ export function renderExamplesSection(examples) {
  "## Examples",
  "",
  "Runnable files under `references/examples/` — portable by construction (`react` +",
- "`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.",
+ "`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.",
  "Pick by **scenario**, then open the file you need.",
  "",
  ]

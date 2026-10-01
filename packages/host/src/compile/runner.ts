@@ -63,7 +63,7 @@ try {
     paintModuleError(${JSON.stringify(input.appId)}, message)
   } else {
   const React = await import('react')
-  const ui = await import('@mini-app/ui')
+  const ui = await import('@mohou/ui')
   const frame = window[${JSON.stringify(hostWrapperBinding.host)}]
   function HostFrame(props) {
     return frame.runInside(() => props.component({}))

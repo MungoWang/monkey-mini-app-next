@@ -6,7 +6,7 @@ Accessible field label.
 
 **when** Always bind `htmlFor` — bare text labels are not accessible.
 
-`import { Label } from "@mini-app/ui"`
+`import { Label } from "@mohou/ui"`
 
 `packages/app/ui/src/components/label.tsx` · family: Form · type: component · primitive
 
@@ -27,7 +27,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[label-01.tsx](../examples/label/label-01.tsx)** — Label — Accessible field label wired by htmlFor; the piece that makes a bare Input keyboard/AT-usable.

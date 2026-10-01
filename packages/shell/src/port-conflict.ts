@@ -1,7 +1,7 @@
 import { createServer, type Server } from 'node:http'
 import type { ChildProcess } from 'node:child_process'
 
-import { allocateHostPort } from '@mini-app/host'
+import { allocateHostPort } from '@mohou/host'
 
 import { openPanelWindow, type WindowSpawn } from './window.ts'
 

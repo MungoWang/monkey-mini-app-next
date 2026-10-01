@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { FileDropzone } from "@mini-app/ui";
+import { FileDropzone } from "@mohou/ui";
 
 export default function FileDropzone01Example() {
   const [files, setFiles] = React.useState<File[]>([]);

@@ -3,7 +3,7 @@
  * @title Scrollspy
  * @scenario Section nav that highlights whichever section is currently in view — long settings/docs pages; wire it to element ids.
  */
-import { Scrollspy } from "@mini-app/ui";
+import { Scrollspy } from "@mohou/ui";
 
 export default function Scrollspy01Example() {
   return (

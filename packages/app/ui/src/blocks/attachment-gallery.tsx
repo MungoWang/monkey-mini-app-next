@@ -5,7 +5,7 @@ import {
   AttachmentGroup,
   AttachmentMedia,
   AttachmentTitle,
-} from '@mini-app/ui/components/attachment'
+} from '@mohou/ui/components/attachment'
 
 export type GalleryFile = { name: string; url?: string }
 

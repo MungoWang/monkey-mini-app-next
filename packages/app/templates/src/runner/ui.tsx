@@ -10,7 +10,7 @@ import {
   eventType,
   useApp,
   type AgentEvent,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 import { EV, type Run, type Step } from './shared/events'
 

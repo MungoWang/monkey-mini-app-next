@@ -1,4 +1,4 @@
-import { defineApp, type AppContext } from '@mini-app/contract'
+import { defineApp, type AppContext } from '@mohou/contract'
 
 export default defineApp({
   name: '骨架示例',

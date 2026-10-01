@@ -1,4 +1,4 @@
-import { Item, ItemContent, ItemDescription, ItemTitle } from '@mini-app/ui/components/item'
+import { Item, ItemContent, ItemDescription, ItemTitle } from '@mohou/ui/components/item'
 
 export type NotificationItem = {
   id: string

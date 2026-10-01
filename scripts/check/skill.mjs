@@ -149,8 +149,8 @@ else {
 if (!/^---\n(?:.*\n)*version: \d+\.\d+\.\d+\n(?:.*\n)*---/m.test(skillText)) {
   fail("skill-version", skillMd, "frontmatter must include version: x.y.z")
 }
-if (!skillText.includes("@mini-app/ui") || !skillText.includes("@mini-app/contract")) {
-  fail("author-specifier", skillMd, "must name @mini-app/ui and @mini-app/contract")
+if (!skillText.includes("@mohou/ui") || !skillText.includes("@mohou/contract")) {
+  fail("author-specifier", skillMd, "must name @mohou/ui and @mohou/contract")
 }
 if (!ctxText.includes("ctx.mcp(serverId, toolName")) {
   fail("mcp-shape", ctxMd, "must document ctx.mcp(serverId, toolName, args?)")

@@ -10,7 +10,7 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-const published = { name: '@mini-app/host', current: '0.0.0', platform: 'darwin', private: false }
+const published = { name: '@mohou/host', current: '0.0.0', platform: 'darwin', private: false }
 
 describe('checkPackageUpdate', () => {
   it('reports a newer registry version and a failed lookup', async () => {
@@ -51,15 +51,15 @@ describe('checkPackageUpdate', () => {
     await writeFile(join(root, 'package.json'), JSON.stringify({
       name: 'mohou-app',
       mohou: { channel: 'tarball', tarballDir: packs },
-      dependencies: { '@mini-app/shell': 'file:old.tgz' },
+      dependencies: { '@mohou/shell': 'file:old.tgz' },
     }))
     const { mkdir } = await import('node:fs/promises')
     await mkdir(packs)
-    await writeFile(join(packs, 'mini-app-shell-1.2.0.tgz'), '')
-    await writeFile(join(packs, 'mini-app-shell-1.0.0.tgz'), '')
+    await writeFile(join(packs, 'mohou-shell-1.2.0.tgz'), '')
+    await writeFile(join(packs, 'mohou-shell-1.0.0.tgz'), '')
     expect(newestTarball(packs, 'shell')).toBe('1.2.0')
     const found = await checkPackageUpdate(
-      { name: '@mini-app/shell', current: '1.0.0', platform: 'darwin', private: false },
+      { name: '@mohou/shell', current: '1.0.0', platform: 'darwin', private: false },
       {},
       root,
     )
@@ -69,7 +69,7 @@ describe('checkPackageUpdate', () => {
     stagePackageUpdate('1.2.0', {}, root)
     const staged = JSON.parse(await readFile(join(root, 'update.json'), 'utf8')) as { args: string[] }
     expect(staged.args[0]).toBe('install')
-    expect(staged.args.some(arg => arg.includes('mini-app-shell-1.2.0.tgz'))).toBe(true)
+    expect(staged.args.some(arg => arg.includes('mohou-shell-1.2.0.tgz'))).toBe(true)
     expect(staged.args).toContain('--omit=peer')
     expect(staged.args).toContain('--fetch-retries=1')
     expect(newestTarball(join(root, 'missing'), 'shell')).toBeNull()
@@ -81,11 +81,11 @@ describe('checkPackageUpdate', () => {
     }))
     stagePackageUpdate('2.0.0', {}, root)
     const registry = JSON.parse(await readFile(join(root, 'update.json'), 'utf8')) as { args: string[] }
-    expect(registry.args).toContain('@mini-app/shell@2.0.0')
+    expect(registry.args).toContain('@mohou/shell@2.0.0')
     expect(registry.args).toContain('--omit=peer')
     vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, status: 503, json: async () => ({}) })))
     const same = await checkPackageUpdate(
-      { name: '@mini-app/shell', current: '9.0.0', platform: 'darwin', private: false },
+      { name: '@mohou/shell', current: '9.0.0', platform: 'darwin', private: false },
       {},
       root,
     )

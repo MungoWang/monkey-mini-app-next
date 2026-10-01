@@ -1,11 +1,11 @@
 
 import * as React from 'react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { CodeEditor } from '@mini-app/ui/products/code-editor'
-import { Markdown } from '@mini-app/ui/products/markdown'
-import { cn } from '@mini-app/ui/lib/utils'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Button } from '@mohou/ui/components/button'
+import { CodeEditor } from '@mohou/ui/products/code-editor'
+import { Markdown } from '@mohou/ui/products/markdown'
+import { cn } from '@mohou/ui/lib/utils'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 export type MarkdownEditorMode = 'edit' | 'split' | 'preview'
 

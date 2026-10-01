@@ -6,7 +6,7 @@ Thumbnail grid of files with open/copy.
 
 **when** A record has N files/images and you show them as tiles, not a table.
 
-`import { AttachmentGallery, GalleryFile } from "@mini-app/ui"`
+`import { AttachmentGallery, GalleryFile } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/attachment-gallery.tsx` · family: Discovery & inspect · type: block
 

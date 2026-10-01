@@ -19,7 +19,7 @@ This is one `kv()` list. Do not put several filterable entities in this array. S
 `main.api.ts`:
 
 ```ts
-import { defineApp } from "@mini-app/contract"
+import { defineApp } from "@mohou/contract"
 
 async function loadItems(ctx) {
   const items = await ctx.storage.kv().get("items")

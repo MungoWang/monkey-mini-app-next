@@ -1,6 +1,6 @@
 ---
 status: locked
-updated: 2026-09-27
+updated: 2026-10-01
 ---
 
 # Blueprint
@@ -37,4 +37,4 @@ These have no feature page and no RFC. Do not raise one unless the user names it
 - Adapters that embed this platform in another agent product.
 - Sharing or installing third-party mini-app packages.
 - A Linux panel window.
-- Shell launcher vs `@mini-app/shell` npm sidecar split (Tauri out of the shell package; Settings can update shell via the package manager without a new launcher build). Proposal: [.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md](../.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md). Update loops (skill-in-shell, K≡S, local tarball install): [.agents/notes/proposed/architecture/2026-09-23-update-loops.md](../.agents/notes/proposed/architecture/2026-09-23-update-loops.md).
+- Shell launcher vs `@mohou/shell` npm sidecar split (Tauri out of the shell package; Settings can update shell via the package manager without a new launcher build). Proposal: [.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md](../.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md). Update loops (skill-in-shell, K≡S, local tarball install): [.agents/notes/proposed/architecture/2026-09-23-update-loops.md](../.agents/notes/proposed/architecture/2026-09-23-update-loops.md).

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Align skill version with @mini-app/shell and copy the skill tree into the shell package.
+ * Align skill version with @mohou/shell and copy the skill tree into the shell package.
  *
  * Inputs: packages/shell/package.json, skills/monkey-mini-app/**
  * Writes: skills/monkey-mini-app/SKILL.md version field;

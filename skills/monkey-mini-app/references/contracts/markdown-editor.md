@@ -6,7 +6,7 @@ Markdown edit + preview toggle.
 
 **when** Authoring md bodies. Read-only render → `Markdown`.
 
-`import { MarkdownEditor, MarkdownEditorMode } from "@mini-app/ui"`
+`import { MarkdownEditor, MarkdownEditorMode } from "@mohou/ui"`
 
 `packages/app/ui/src/products/markdown-editor.tsx` · family: Rich text · type: product
 
@@ -36,7 +36,7 @@ Markdown edit + preview toggle.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[markdown-editor-01.tsx](../examples/markdown-editor/markdown-editor-01.tsx)** — MarkdownEditor — Write markdown with a live preview pane and a mode toggle (edit / split / preview) for docs and descriptions. — _*Left CodeMirror, right live GFM preview*_

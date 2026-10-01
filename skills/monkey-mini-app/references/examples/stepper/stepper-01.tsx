@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Stepper, StepperItem } from "@mini-app/ui";
+import { Stepper, StepperItem } from "@mohou/ui";
 
 export default function Stepper01Example() {
   const [step, setStep] = React.useState(1);

@@ -91,9 +91,9 @@ When `mini_app_*` fails or is unavailable, run `node bin/diagnose.mjs` from this
 
 ## Files
 
-`@mini-app/ui` is the UI package. `@mini-app/contract` is the backend package. The host injects `defineApp`. Layout, imports, and allowlists: [references/guide/loader.md](references/guide/loader.md).
+`@mohou/ui` is the UI package. `@mohou/contract` is the backend package. The host injects `defineApp`. Layout, imports, and allowlists: [references/guide/loader.md](references/guide/loader.md).
 
-- UI: `const { call, on, resolveAssetUrl } = useApp()` from `@mini-app/ui`.
+- UI: `const { call, on, resolveAssetUrl } = useApp()` from `@mohou/ui`.
 - Backend: `export default defineApp({ name, description, api })`.
 - `call("foo")` must be a key of `api.foo`.
 - `ctx.llm` / `ctx.agent` return **string**. MCP args are the tool's own object.
@@ -107,7 +107,7 @@ Full `ctx`: [references/guide/ctx.md](references/guide/ctx.md).
 
 The kit is a shortcut for SaaS-shaped screens: lists, settings, boards, dashboards. It is not a law and it is not the layout. Use a component when its interaction matches. Build the interaction from native elements and Tailwind when it does not. Mixing is normal. Using none of the kit is valid.
 
-`ui.tsx` may import `react`, `@mini-app/ui`, `lodash` / `lodash-es`, `motion` / `motion/react`, and in-app relative paths. Never `api/**`, never `../` out of the app dir, never another npm package.
+`ui.tsx` may import `react`, `@mohou/ui`, `lodash` / `lodash-es`, `motion` / `motion/react`, and in-app relative paths. Never `api/**`, never `../` out of the app dir, never another npm package.
 
 Names, parts, and props: [references/catalog.md](references/catalog.md), then one file under [references/contracts/](references/contracts/). Icons: [references/guide/icons.md](references/guide/icons.md). Colour: [references/theme.md](references/theme.md). Toast is `toast.add`, not a function call: [references/contracts/toast.md](references/contracts/toast.md). `CodeEditor`, `CodeBlock`, and `DiffViewer` load an engine on demand and degrade if that fetch fails. Do not import the engine.
 

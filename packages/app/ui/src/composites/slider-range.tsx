@@ -1,5 +1,5 @@
 
-import { Slider } from '@mini-app/ui/components/slider'
+import { Slider } from '@mohou/ui/components/slider'
 
 /**
  * Two-thumb range slider.

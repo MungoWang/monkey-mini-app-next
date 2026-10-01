@@ -3,7 +3,7 @@
  * @title Table
  * @scenario Static, semantic table you lay out by hand — small fixed datasets; switch to DataGrid the moment you need sort/filter/pagination.
  */
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@mini-app/ui";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@mohou/ui";
 
 export default function Table01Example() {
   return (

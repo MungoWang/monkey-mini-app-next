@@ -8,7 +8,7 @@ Host could be constructed by any caller. The product says only Shell constructs 
 
 ## Decision
 
-`@mini-app/shell` resolves the runtime root, bootstraps or refuses config, constructs `echo`, and starts Host. A failed start disposes the session. The panel window is not opened. The panel view is not written.
+`@mohou/shell` resolves the runtime root, bootstraps or refuses config, constructs `echo`, and starts Host. A failed start disposes the session. The panel window is not opened. The panel view is not written.
 
 ## Alternatives considered
 

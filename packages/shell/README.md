@@ -1,9 +1,9 @@
 ---
 status: locked
-updated: 2026-09-23
+updated: 2026-10-01
 ---
 
-# @mini-app/shell
+# @mohou/shell
 
 Role: `composition`.
 

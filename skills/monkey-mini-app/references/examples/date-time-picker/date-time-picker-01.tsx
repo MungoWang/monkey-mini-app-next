@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { DateTimePicker } from "@mini-app/ui";
+import { DateTimePicker } from "@mohou/ui";
 
 export default function DateTimePicker01Example() {
   const [dt, setDt] = React.useState<Date | undefined>(new Date("2026-08-26T09:15:00"));

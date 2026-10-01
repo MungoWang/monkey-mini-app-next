@@ -28,8 +28,8 @@ import {
   X,
 } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { Checkbox } from '@mini-app/ui/components/checkbox'
+import { Button } from '@mohou/ui/components/button'
+import { Checkbox } from '@mohou/ui/components/checkbox'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -37,24 +37,24 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@mini-app/ui/components/dropdown-menu'
+} from '@mohou/ui/components/dropdown-menu'
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from '@mini-app/ui/components/empty'
+} from '@mohou/ui/components/empty'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@mini-app/ui/components/input-group'
-import { NativeSelect, NativeSelectOption } from '@mini-app/ui/components/native-select'
+} from '@mohou/ui/components/input-group'
+import { NativeSelect, NativeSelectOption } from '@mohou/ui/components/native-select'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@mini-app/ui/components/popover'
+} from '@mohou/ui/components/popover'
 import {
   Table,
   TableBody,
@@ -62,9 +62,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@mini-app/ui/components/table'
-import { cn } from '@mini-app/ui/lib/utils'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/table'
+import { cn } from '@mohou/ui/lib/utils'
+import { useLabels } from '@mohou/ui/i18n/context'
 import { skipUndef } from '../lib/defined'
 import { exportCsv } from './export-csv'
 

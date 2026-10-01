@@ -3,7 +3,7 @@
  * @title Donut / StackedBar / Radar
  * @scenario Recharts-backed set: DonutChart for share-of-total, StackedBarChart for composition over time, RadarChart for multi-axis scorecards — all fed plain arrays.
  */
-import { DonutChart, RadarChart, StackedBarChart } from "@mini-app/ui";
+import { DonutChart, RadarChart, StackedBarChart } from "@mohou/ui";
 
 export default function MiscChartsBlocks03Example() {
   return (

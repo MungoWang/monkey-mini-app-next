@@ -14,7 +14,7 @@ import {
   PageHeader,
   Sparkline,
   StatCard,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 const series = (seed: number, n = 24) =>
   Array.from({ length: n }, (_, i) => ({

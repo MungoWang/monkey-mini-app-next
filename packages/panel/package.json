@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/panel",
+  "name": "@mohou/panel",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",
@@ -26,7 +26,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@mini-app/app-view": "workspace:^",
+    "@mohou/app-view": "workspace:^",
     "lucide-react": "^0.544.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"

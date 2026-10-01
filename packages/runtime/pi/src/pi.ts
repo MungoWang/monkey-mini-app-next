@@ -1,6 +1,6 @@
-import type { AppLlmEvent } from '@mini-app/contract'
-import type { RuntimeLlmOptions } from '@mini-app/runtime-provider'
-import { ProviderError, type ModelListing, type RuntimeProvider, type RuntimeProviderConfig } from '@mini-app/runtime-provider'
+import type { AppLlmEvent } from '@mohou/contract'
+import type { RuntimeLlmOptions } from '@mohou/runtime-provider'
+import { ProviderError, type ModelListing, type RuntimeProvider, type RuntimeProviderConfig } from '@mohou/runtime-provider'
 
 import { piDefaultModel, runPiAgent, selectedModel } from './agent-session.ts'
 import { completionReasoning } from './completion-reasoning.ts'

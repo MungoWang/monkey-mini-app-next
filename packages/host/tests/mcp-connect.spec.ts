@@ -5,8 +5,8 @@ import { join } from 'node:path'
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
-import { McpClient } from '@mini-app/mcp-client'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { McpClient } from '@mohou/mcp-client'
+import { createEchoProvider } from '@mohou/runtime-provider'
 import { describe, expect, it } from 'vitest'
 
 import {

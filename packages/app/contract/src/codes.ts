@@ -1,7 +1,7 @@
 /**
  * Codes this definition emits. Other surfaces declare their own codes.
  * Callers match `code`, not the message.
- * @module @mini-app/contract
+ * @module @mohou/contract
  */
 
 export const definitionCodes = [

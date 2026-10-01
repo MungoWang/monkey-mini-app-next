@@ -3,7 +3,7 @@
  * @title StatusBadge / SeverityChip / EnvBadge
  * @scenario Status vocabulary in one view: StatusBadge (pass/fail/flaky, lowercase statuses), SeverityChip (P0–P3) and EnvBadge (dev/stg/prd) so triage rows read consistently.
  */
-import { EnvBadge, SeverityChip, StatusBadge } from "@mini-app/ui";
+import { EnvBadge, SeverityChip, StatusBadge } from "@mohou/ui";
 
 export default function MiscChartsBlocks04Example() {
   return (

@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Input, Textarea } from "@mini-app/ui";
+import { Input, Textarea } from "@mohou/ui";
 
 export default function MiscForms01Example() {
   const [text, setText] = React.useState("");

@@ -1,5 +1,5 @@
 
-import { NativeSelect, NativeSelectOption } from '@mini-app/ui/components/native-select'
+import { NativeSelect, NativeSelectOption } from '@mohou/ui/components/native-select'
 
 export type CascaderNode = { value: string; label: string; children?: CascaderNode[] }
 

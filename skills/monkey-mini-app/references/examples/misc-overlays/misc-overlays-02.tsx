@@ -14,7 +14,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function MiscOverlays02Example() {
   return (

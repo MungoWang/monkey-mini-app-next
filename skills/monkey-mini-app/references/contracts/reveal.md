@@ -6,7 +6,7 @@ Entrance reveal — fade and rise, with a per-item `delay` for a stagger. This i
 
 **when** A card, row, or section appearing on first paint or after a filter change. Not for a hover/press response (one property: use a Tailwind `transition`) and not for animating an element out (use `AnimatePresence`).
 
-`import { Reveal } from "@mini-app/ui"`
+`import { Reveal } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/reveal.tsx` · family: Animation · type: block
 

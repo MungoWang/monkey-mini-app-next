@@ -2,9 +2,9 @@
 import * as React from 'react'
 import { Bold, Code, Italic, List, ListOrdered } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
 
 function runCommand(command: string, value?: string) {
   // Same primitive as react-simple-wysiwyg. Deprecated, still what lightweight

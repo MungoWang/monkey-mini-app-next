@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { ChevronRight } from 'lucide-react'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 export type TreeNode = {
   id: string

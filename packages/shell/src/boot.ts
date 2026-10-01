@@ -12,9 +12,9 @@ import {
   writeHostPolicy,
   type CredentialProvider,
   type HostSession,
-} from '@mini-app/host'
-import { registerPiRuntime } from '@mini-app/runtime-pi'
-import { createEchoProvider, createProviderRegistry } from '@mini-app/runtime-provider'
+} from '@mohou/host'
+import { registerPiRuntime } from '@mohou/runtime-pi'
+import { createEchoProvider, createProviderRegistry } from '@mohou/runtime-provider'
 
 import { builtinMcpAgents } from './mcp-agents.ts'
 import { resolvePortConflict, type PortConflictMode } from './port-conflict.ts'
@@ -142,7 +142,7 @@ async function startHost(
 }
 
 /**
- * Skill source: packaged copy beside `@mini-app/shell`, then monorepo `skills/` for dev.
+ * Skill source: packaged copy beside `@mohou/shell`, then monorepo `skills/` for dev.
  */
 export function resolveAuthorSkillSource(fromFile = import.meta.url): string {
   const here = path.dirname(fileURLToPath(fromFile))

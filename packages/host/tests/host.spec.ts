@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import type { AppAgentEvent } from '@mini-app/contract'
-import { createEchoProvider, type RuntimeProvider } from '@mini-app/runtime-provider'
+import type { AppAgentEvent } from '@mohou/contract'
+import { createEchoProvider, type RuntimeProvider } from '@mohou/runtime-provider'
 
 import { HostError, bindBrain, resolveWorkingDirectory } from '../src/index.ts'
 

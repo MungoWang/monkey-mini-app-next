@@ -6,7 +6,7 @@ Date + time, optional timezone.
 
 **when** Scheduling moments, not days.
 
-`import { DateTimePicker } from "@mini-app/ui"`
+`import { DateTimePicker } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/date-time-picker.tsx` · family: Calendar & date · type: composite
 
@@ -30,7 +30,7 @@ Date + time, optional timezone.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[date-time-picker-01.tsx](../examples/date-time-picker/date-time-picker-01.tsx)** — DateTimePicker — Date + time + timezone edited as a single value in one popover, for scheduling where the zone matters (CI triggers, shifts). — _*One popover: calendar + time*_

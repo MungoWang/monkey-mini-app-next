@@ -3,7 +3,7 @@ import { mkdtemp } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { emptyCredentials } from '@mini-app/host'
+import { emptyCredentials } from '@mohou/host'
 import { describe, expect, it } from 'vitest'
 
 import { registerWithFiles } from '../../host/tests/author-seed.ts'

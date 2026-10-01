@@ -1,5 +1,5 @@
-import { Badge } from '@mini-app/ui/components/badge'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Badge } from '@mohou/ui/components/badge'
+import { cn } from '@mohou/ui/lib/utils'
 
 const tone: Record<string, string> = {
   prd: 'bg-destructive/15 text-destructive',

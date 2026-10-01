@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Check } from 'lucide-react';
 
-import { cn } from '@mini-app/ui/lib/utils';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type StepStatus = 'default' | 'active' | 'completed';
 

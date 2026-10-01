@@ -12,7 +12,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function Pagination01Example() {
   const [page, setPage] = React.useState(1);

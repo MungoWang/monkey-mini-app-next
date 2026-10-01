@@ -8,7 +8,7 @@ Slide-in side panel.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@mini-app/ui"`
+`import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@mohou/ui"`
 
 `packages/app/ui/src/components/sheet.tsx` · family: Surface · type: component · primitive
 

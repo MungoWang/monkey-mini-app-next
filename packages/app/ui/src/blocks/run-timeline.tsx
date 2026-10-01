@@ -1,4 +1,4 @@
-import { Timeline, type TimelineItem } from '@mini-app/ui/products/timeline'
+import { Timeline, type TimelineItem } from '@mohou/ui/products/timeline'
 
 /**
  * Timeline of run phases with duration + status.

@@ -8,7 +8,7 @@ Apps need optional soft periodic refresh without a host/panel protocol. An earli
 
 ## Decision
 
-`LiveRefresh` lives in `@mini-app/ui` as a composite. The app passes `onTick` and optional `persistState`, `intervals`, and `labels`. Timer, pause, interval menu, and chrome stay inside the iframe. Interval change keeps `lastAt` and sets `dueAt = max(lastAt + interval, now)`. Default is off. No panel status strip, no `activity.json`, no runner registration.
+`LiveRefresh` lives in `@mohou/ui` as a composite. The app passes `onTick` and optional `persistState`, `intervals`, and `labels`. Timer, pause, interval menu, and chrome stay inside the iframe. Interval change keeps `lastAt` and sets `dueAt = max(lastAt + interval, now)`. Default is off. No panel status strip, no `activity.json`, no runner registration.
 
 ## Alternatives considered
 

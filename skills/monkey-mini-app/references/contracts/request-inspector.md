@@ -6,7 +6,7 @@ Side-by-side HTTP request/response panel.
 
 **when** Debugging one API call: method, url, bodies. Multiple calls streaming → `LogViewer`.
 
-`import { RequestInspector } from "@mini-app/ui"`
+`import { RequestInspector } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/request-inspector.tsx` · family: Discovery & inspect · type: block
 

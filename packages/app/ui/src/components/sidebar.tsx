@@ -3,24 +3,24 @@ import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { useIsMobile } from '@mini-app/ui/hooks/use-mobile'
-import { cn } from '@mini-app/ui/lib/utils'
-import { Button } from '@mini-app/ui/components/button'
-import { Input } from '@mini-app/ui/components/input'
-import { Separator } from '@mini-app/ui/components/separator'
+import { useIsMobile } from '@mohou/ui/hooks/use-mobile'
+import { cn } from '@mohou/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
+import { Input } from '@mohou/ui/components/input'
+import { Separator } from '@mohou/ui/components/separator'
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@mini-app/ui/components/sheet'
-import { Skeleton } from '@mini-app/ui/components/skeleton'
+} from '@mohou/ui/components/sheet'
+import { Skeleton } from '@mohou/ui/components/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@mini-app/ui/components/tooltip'
+} from '@mohou/ui/components/tooltip'
 import { PanelLeftIcon } from 'lucide-react'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'

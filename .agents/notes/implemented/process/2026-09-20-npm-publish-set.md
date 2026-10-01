@@ -4,11 +4,11 @@ Status: implemented
 
 ## Problem
 
-Every workspace package was `private`, so a later `npm publish` would skip it. The entries pointed at TypeScript source, and a pack of `@mini-app/shell` would have included the Tauri `target` directory.
+Every workspace package was `private`, so a later `npm publish` would skip it. The entries pointed at TypeScript source, and a pack of `@mohou/shell` would have included the Tauri `target` directory.
 
 ## Decision
 
-The nine packages under `packages/` are the publish set. `@mini-app/root` stays private. Each package version is the `@mini-app/shell` version. `files` lists `src`, `lib/types`, and `README.md`. Shell also lists `src-tauri` and excludes `src-tauri/target`. `publishConfig.access` is `public`. `pnpm publish:check` generates types and packs into `artifacts/npm/`. It does not upload. `pnpm publish:packages` uploads only when `MINI_APP_PUBLISH=1`, the tree is clean, and `pnpm run check` has passed. `pnpm publish` rewrites `workspace:^`.
+The nine packages under `packages/` are the publish set. `@mohou/root` stays private. Each package version is the `@mohou/shell` version. `files` lists `src`, `lib/types`, and `README.md`. Shell also lists `src-tauri` and excludes `src-tauri/target`. `publishConfig.access` is `public`. `pnpm publish:check` generates types and packs into `artifacts/npm/`. It does not upload. `pnpm publish:packages` uploads only when `MINI_APP_PUBLISH=1`, the tree is clean, and `pnpm run check` has passed. `pnpm publish` rewrites `workspace:^`.
 
 ## Alternatives considered
 

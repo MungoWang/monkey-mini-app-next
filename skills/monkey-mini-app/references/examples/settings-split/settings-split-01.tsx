@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Button, Input, NativeSelect, SettingsSplit } from "@mini-app/ui";
+import { Button, Input, NativeSelect, SettingsSplit } from "@mohou/ui";
 
 const GROUPS = [
   {

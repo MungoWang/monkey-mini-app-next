@@ -3,7 +3,7 @@
  *
  * Apps import it from the UI library (never from lucide-react directly):
  *
- *   import { Icon } from "@mini-app/ui";
+ *   import { Icon } from "@mohou/ui";
  *   <Icon.HelpCircle size={16} strokeWidth={2} />
  *
  * The namespace keeps the whole lucide set available so authors aren't limited

@@ -3,9 +3,9 @@ import { closeSync, openSync, writeSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
-import { appEntries, resolveManifest, type AppApiMethod, type AppConfig, type AppId, type AppWorkbench } from '@mini-app/contract'
-import type { McpClient } from '@mini-app/mcp-client'
-import type { RuntimeProvider } from '@mini-app/runtime-provider'
+import { appEntries, resolveManifest, type AppApiMethod, type AppConfig, type AppId, type AppWorkbench } from '@mohou/contract'
+import type { McpClient } from '@mohou/mcp-client'
+import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import type { AppSummary } from '../apps/registry.ts'
 import { cachedUiBundle, purgeAutogen } from '../compile/autogen.ts'

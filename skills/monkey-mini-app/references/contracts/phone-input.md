@@ -6,7 +6,7 @@ Phone number input with formatting.
 
 **when** CN/mobile numbers.
 
-`import { PhoneInput } from "@mini-app/ui"`
+`import { PhoneInput } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/phone-input.tsx` · family: Form · type: composite
 

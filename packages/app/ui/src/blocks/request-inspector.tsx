@@ -1,5 +1,5 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@mini-app/ui/components/tabs'
-import { CodeBlock } from '@mini-app/ui/products/code-block'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@mohou/ui/components/tabs'
+import { CodeBlock } from '@mohou/ui/products/code-block'
 
 /**
  * Side-by-side HTTP request/response panel.

@@ -23,12 +23,12 @@ const lodashFile = platformVendorPath('lodash')
 const motionFile = platformVendorPath('motion')
 
 export const platformModules: readonly PlatformModule[] = [
-  { specifier: '@mini-app/contract', side: 'backend' },
+  { specifier: '@mohou/contract', side: 'backend' },
   { specifier: 'react', side: 'ui', file: runtimeFile },
   { specifier: 'react/jsx-runtime', side: 'ui', file: runtimeFile },
   { specifier: 'react-dom', side: 'ui', file: runtimeFile },
   { specifier: 'react-dom/client', side: 'ui', file: runtimeFile },
-  { specifier: '@mini-app/ui', side: 'ui', file: platformSdkPath() },
+  { specifier: '@mohou/ui', side: 'ui', file: platformSdkPath() },
   { specifier: 'lodash', side: 'both', file: lodashFile },
   { specifier: 'lodash-es', side: 'both', file: lodashFile },
   { specifier: 'lodash/*', side: 'both', bundle: true },

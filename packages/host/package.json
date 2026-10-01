@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/host",
+  "name": "@mohou/host",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",
@@ -34,11 +34,11 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
-    "@mini-app/app-view": "workspace:^",
-    "@mini-app/contract": "workspace:^",
-    "@mini-app/mcp-client": "workspace:^",
-    "@mini-app/runtime-provider": "workspace:^",
-    "@mini-app/ui": "workspace:^",
+    "@mohou/app-view": "workspace:^",
+    "@mohou/contract": "workspace:^",
+    "@mohou/mcp-client": "workspace:^",
+    "@mohou/runtime-provider": "workspace:^",
+    "@mohou/ui": "workspace:^",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "@tailwindcss/node": "^4.3.3",
     "@tailwindcss/oxide": "^4.3.3",

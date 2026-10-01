@@ -3,7 +3,7 @@
  * @title Empty
  * @scenario First-run / no-results state with illustration slot, title, description and a primary action; use instead of a blank card.
  */
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@mini-app/ui";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@mohou/ui";
 
 export default function Empty01Example() {
   return (

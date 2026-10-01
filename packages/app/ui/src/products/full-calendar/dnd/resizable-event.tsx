@@ -11,7 +11,7 @@ import { motion } from '../shims/motion';
 import { Resizable, type ResizeCallback } from '../shims/re-resizable';
 import type React from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { cn } from '@mini-app/ui/lib/utils';
+import { cn } from '@mohou/ui/lib/utils';
 import { useCalendar } from '../contexts/calendar-context';
 
 import type { IEvent } from '../interfaces';

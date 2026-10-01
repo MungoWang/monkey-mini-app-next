@@ -9,7 +9,7 @@ import {
   Progress,
   Separator,
   useApp,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 import { EV, type Payload, type Progress as ScanProgress } from './shared/events'
 import { Brief } from './ui/brief.tsx'

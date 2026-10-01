@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-23
+updated: 2026-10-01
 ---
 
 # Platform files served to the iframe
@@ -16,4 +16,4 @@ Layer: [Host](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: provider. One runtime, one kit, one UI vendor file per served id. The names live on `platformLayout`. Each served specifier is a `file` on its `platformModules` row. A `/*` row with `bundle` is not a vendor file. `react/jsx-runtime` uses the runtime file because the compiler emits that specifier and an import map has no prefix match. `platformImportMap` is that projection. The kit specifier is `@mini-app/ui`. `/mma/sdk.js` is its served file and an import-map row. `buildVendorFiles` writes one artifact per distinct `file` into the host package `vendor/` directory. The runtime file also exports `createRoot` and `flushSync` so the runner and the kit do not load a second React or a second renderer. Host start builds a missing artifact once, before listen. A request never builds. The vendor route is mounted. An unknown id is 404. An unknown vendor id is 404. No second React. Plan: [implementation.md](../implementation.md).
+Role: provider. One runtime, one kit, one UI vendor file per served id. The names live on `platformLayout`. Each served specifier is a `file` on its `platformModules` row. A `/*` row with `bundle` is not a vendor file. `react/jsx-runtime` uses the runtime file because the compiler emits that specifier and an import map has no prefix match. `platformImportMap` is that projection. The kit specifier is `@mohou/ui`. `/mma/sdk.js` is its served file and an import-map row. `buildVendorFiles` writes one artifact per distinct `file` into the host package `vendor/` directory. The runtime file also exports `createRoot` and `flushSync` so the runner and the kit do not load a second React or a second renderer. Host start builds a missing artifact once, before listen. A request never builds. The vendor route is mounted. An unknown id is 404. An unknown vendor id is 404. No second React. Plan: [implementation.md](../implementation.md).

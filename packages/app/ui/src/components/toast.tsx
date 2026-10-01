@@ -2,8 +2,8 @@
 import * as React from 'react'
 import { Toast as ToastPrimitive } from '@base-ui/react/toast'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { Button } from '@mini-app/ui/components/button'
+import { cn } from '@mohou/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
 import { XIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from 'lucide-react'
 
 const toast = ToastPrimitive.createToastManager()
@@ -58,7 +58,7 @@ function ToastViewport({
  * Then call `toast.add({ title, description?, type?, timeout? })` — not `toast()` as a function.
  * @when Confirm/save feedback. Put `<Toaster position="bottom-right" timeout={4000} limit={3} />` in the root, then `toast.add(...)`.
  * @example
- * import { Toaster, toast } from "@mini-app/ui"
+ * import { Toaster, toast } from "@mohou/ui"
  * // root: <Toaster position="top-right" timeout={4000} />
  * toast.add({ title: "已保存", description: "2 条更新", type: "success", timeout: 5000 })
  * @family Feedback & status

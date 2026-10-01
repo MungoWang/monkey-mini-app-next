@@ -13,7 +13,7 @@ The panel document includes this package's copy of the original chrome styleshee
 ## Alternatives considered
 
 - Keep the Tailwind-only gallery. Lost because the controls did not open and the layout was not the original panel.
-- Import `@mini-app/ui` for the chrome. Lost because that kit is the author surface, and the original chrome already has its stylesheet.
+- Import `@mohou/ui` for the chrome. Lost because that kit is the author surface, and the original chrome already has its stylesheet.
 
 ## Consequences
 

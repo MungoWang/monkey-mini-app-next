@@ -8,7 +8,7 @@ Transient notification. Mount `<Toaster />` once at the app root (Host does not 
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Toast, ToastAction, ToastClose, ToastContent, ToastDescription, ToastPortal, ToastProvider, ToastTitle, ToastViewport, Toaster, createToastManager, toast, useToastManager } from "@mini-app/ui"`
+`import { Toast, ToastAction, ToastClose, ToastContent, ToastDescription, ToastPortal, ToastProvider, ToastTitle, ToastViewport, Toaster, createToastManager, toast, useToastManager } from "@mohou/ui"`
 
 `packages/app/ui/src/components/toast.tsx` · family: Feedback & status · type: component · primitive
 
@@ -35,7 +35,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Skeleton
 
 ```tsx
-import { Toaster, toast } from "@mini-app/ui"
+import { Toaster, toast } from "@mohou/ui"
 // root: <Toaster position="top-right" timeout={4000} />
 toast.add({ title: "已保存", description: "2 条更新", type: "success", timeout: 5000 })
 ```

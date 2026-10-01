@@ -8,7 +8,7 @@ Settings listed only `echo`. The person's Pi catalog already has vendors and mod
 
 ## Decision
 
-`@mini-app/runtime-pi` implements `RuntimeProvider`. Shell reads `~/.pi/agent/models.json` and injects the brain. Host picks the live id from the registered list. Host does not import Pi. A private package does not query the public npm registry on update check.
+`@mohou/runtime-pi` implements `RuntimeProvider`. Shell reads `~/.pi/agent/models.json` and injects the brain. Host picks the live id from the registered list. Host does not import Pi. A private package does not query the public npm registry on update check.
 
 ## Alternatives considered
 
@@ -17,4 +17,4 @@ Settings listed only `echo`. The person's Pi catalog already has vendors and mod
 
 ## Consequences
 
-Selecting Pi writes `runtimeProvider.id` and needs a host restart. `models()` rereads the catalog file. Completions use that vendor's OpenAI-compatible URL. The interface stays in `@mini-app/runtime-provider` because it did not have to change with echo.
+Selecting Pi writes `runtimeProvider.id` and needs a host restart. `models()` rereads the catalog file. Completions use that vendor's OpenAI-compatible URL. The interface stays in `@mohou/runtime-provider` because it did not have to change with echo.

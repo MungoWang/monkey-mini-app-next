@@ -6,7 +6,7 @@ Create / edit form over a list you do not want to lose. The usual build has thre
 
 **when** Page shape: focused create/edit over a list — new record, edit record, wizard-less config
 
-`import { FormSheet } from "@mini-app/ui"`
+`import { FormSheet } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/form-sheet.tsx` · family: Layout & structure · type: block
 
@@ -45,7 +45,7 @@ Create / edit form over a list you do not want to lose. The usual build has thre
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[form-sheet-01.tsx](../examples/form-sheet/form-sheet-01.tsx)** — FormSheet — Edit a record over the list: title pinned, fields scrolling between the header and the action row, Enter and Save sharing one submit, and closing a dirty sheet asking first. — _*Change a field, then hit Escape — the discard prompt appears; without a change it closes straight away*_

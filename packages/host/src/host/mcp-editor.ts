@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
-import { McpClient, McpError, resolveMcpConfig, type McpServerSpec } from '@mini-app/mcp-client'
+import { McpClient, McpError, resolveMcpConfig, type McpServerSpec } from '@mohou/mcp-client'
 
 import { hostMcpPath } from './layout.ts'
 import { admitMcpText } from './mcp-import.ts'

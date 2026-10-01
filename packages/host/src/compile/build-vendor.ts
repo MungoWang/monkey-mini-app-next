@@ -71,7 +71,7 @@ async function buildGroup(file: string, specifiers: string[]): Promise<string> {
     bundle: true,
     format: 'esm',
     platform: 'browser',
-    // Packaged @mini-app/ui has no tsconfig; without this, esbuild falls back to
+    // Packaged @mohou/ui has no tsconfig; without this, esbuild falls back to
     // classic JSX (`React.createElement`) and leaves bare `React` unbound in the iframe.
     jsx: 'automatic',
     external: vendorExternals(file),
@@ -100,15 +100,15 @@ function vendorExternals(file: string): string[] {
 }
 
 /**
- * npm package exports map `@mini-app/ui/*` → `./src/*` without a suffix.
+ * npm package exports map `@mohou/ui/*` → `./src/*` without a suffix.
  * esbuild then looks for an extensionless file and fails outside the monorepo TS resolver.
  */
 function workspacePackageExtensions(): esbuild.Plugin {
-  const scopes = ['@mini-app/ui/', '@mini-app/app-view/'] as const
+  const scopes = ['@mohou/ui/', '@mohou/app-view/'] as const
   return {
     name: 'mini-app-package-extensions',
     setup(build) {
-      build.onResolve({ filter: /^@mini-app\/(ui|app-view)\// }, (args) => {
+      build.onResolve({ filter: /^@mohou\/(ui|app-view)\// }, (args) => {
         const scope = scopes.find(prefix => args.path.startsWith(prefix))
         if (scope === undefined) return undefined
         const pkgName = scope.slice(0, -1)

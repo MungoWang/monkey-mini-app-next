@@ -4,7 +4,7 @@
 
 **when** Inside a button while `call()` is pending. Known % → `Progress`.
 
-`import { Spinner } from "@mini-app/ui"`
+`import { Spinner } from "@mohou/ui"`
 
 `packages/app/ui/src/components/spinner.tsx` · family: Feedback & status · type: component · primitive
 
@@ -25,7 +25,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[spinner-01.tsx](../examples/spinner/spinner-01.tsx)** — Spinner — Unknown-duration busy indicator inline in a button or row; prefer Progress when you can report percent.

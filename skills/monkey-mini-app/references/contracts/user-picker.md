@@ -6,7 +6,7 @@ Pick a user from a list (avatar + name).
 
 **when** Assignee/owner fields; you supply the user list.
 
-`import { UserPicker, UserOption } from "@mini-app/ui"`
+`import { UserPicker, UserOption } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/user-picker.tsx` · family: Form · type: composite
 

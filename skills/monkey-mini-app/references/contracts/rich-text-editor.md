@@ -6,7 +6,7 @@ Lightweight rich-text editor (contentEditable + toolbar), same idea as `react-si
 
 **when** Notes/descriptions you store as **HTML**. Markdown → `MarkdownEditor`; code → `CodeEditor`. Sanitize server-side before rendering elsewhere.
 
-`import { RichTextEditor } from "@mini-app/ui"`
+`import { RichTextEditor } from "@mohou/ui"`
 
 `packages/app/ui/src/products/rich-text-editor.tsx` · family: Rich text · type: product
 
@@ -21,7 +21,7 @@ Lightweight rich-text editor (contentEditable + toolbar), same idea as `react-si
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[rich-text-editor-01.tsx](../examples/rich-text-editor/rich-text-editor-01.tsx)** — RichTextEditor — WYSIWYG editing with a local contentEditable toolbar (bold/list/quote) — no CDN, no dependency; use when users are not writing raw markdown. — _*Tiptap — toolbar is live*_

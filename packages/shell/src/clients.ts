@@ -1,4 +1,4 @@
-import type { HostPolicy, HostSession } from '@mini-app/host'
+import type { HostPolicy, HostSession } from '@mohou/host'
 
 /** Policy fields the panel form owns. `runtimeRoot` stays on the host. */
 export interface OwnerPolicy {

@@ -1,9 +1,9 @@
 ---
 status: locked
-updated: 2026-09-18
+updated: 2026-10-01
 ---
 
-# @mini-app/ui
+# @mohou/ui
 
 Role: `definition`.
 

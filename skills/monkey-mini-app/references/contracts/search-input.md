@@ -6,7 +6,7 @@ Search box with debounce.
 
 **when** Filter-as-you-type against `DataGrid`/lists — use `onDebouncedChange` for network calls.
 
-`import { SearchInput } from "@mini-app/ui"`
+`import { SearchInput } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/search-input.tsx` · family: Form · type: composite
 

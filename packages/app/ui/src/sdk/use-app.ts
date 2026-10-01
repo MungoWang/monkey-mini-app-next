@@ -1,5 +1,5 @@
-import type { AppAgentEvent, AppLlmEvent } from '@mini-app/contract'
-import { agentEventType, eventType, llmEventType } from '@mini-app/contract/event-type'
+import type { AppAgentEvent, AppLlmEvent } from '@mohou/contract'
+import { agentEventType, eventType, llmEventType } from '@mohou/contract/event-type'
 import { createElement, type ReactNode } from 'react'
 
 import { AppIdContext } from './app-id.ts'

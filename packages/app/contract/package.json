@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/contract",
+  "name": "@mohou/contract",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",
@@ -27,6 +27,6 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@mini-app/values": "workspace:^"
+    "@mohou/values": "workspace:^"
   }
 }

@@ -1,7 +1,7 @@
 
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Linear determinate progress bar.

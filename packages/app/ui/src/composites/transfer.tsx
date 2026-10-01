@@ -1,5 +1,5 @@
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 
 export type TransferItem = { id: string; label: string }
 

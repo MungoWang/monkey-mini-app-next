@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Copyable, CurrencyInput, PasswordField, PhoneInput } from "@mini-app/ui";
+import { Copyable, CurrencyInput, PasswordField, PhoneInput } from "@mohou/ui";
 
 export default function MiscForms04Example() {
   const [phone, setPhone] = React.useState("");

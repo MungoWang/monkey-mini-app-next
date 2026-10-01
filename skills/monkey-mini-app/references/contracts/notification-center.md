@@ -6,7 +6,7 @@ Grouped notification list with unread state.
 
 **when** Inbox/alert panel. Audit log (read-only, with time) → `ActivityFeed`.
 
-`import { NotificationCenter, NotificationItem } from "@mini-app/ui"`
+`import { NotificationCenter, NotificationItem } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/notification-center.tsx` · family: Feedback & status · type: block
 

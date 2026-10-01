@@ -35,7 +35,7 @@ export async function checkPackageUpdate(
   if (prefix?.channel === 'tarball') {
     const latest = newestTarball(prefix.tarballDir ?? homePackagesDir(homedir()), 'shell')
     return {
-      name: '@mini-app/shell',
+      name: '@mohou/shell',
       current: about.current,
       latest,
       channel: 'tarball',
@@ -45,7 +45,7 @@ export async function checkPackageUpdate(
   }
   if (about.private && prefix === undefined) return { ...empty, latest: about.current, installable: false }
   const registry = prefix?.registry ?? 'https://registry.npmjs.org'
-  const name = prefix === undefined ? about.name : '@mini-app/shell'
+  const name = prefix === undefined ? about.name : '@mohou/shell'
   try {
     const response = await fetch(`${registry.replace(/\/$/, '')}/${name}/latest`, {
       signal: AbortSignal.timeout(3_000),
@@ -75,7 +75,7 @@ export function stagePackageUpdate(version: string, env: NodeJS.ProcessEnv = pro
     writeFileSync(path.join(prefix.dir, 'update.json'), `${JSON.stringify({ args })}\n`)
     return
   }
-  const args = ['install', `@mini-app/shell@${version}`, ...installFlags(), '--registry', prefix.registry ?? 'https://registry.npmjs.org']
+  const args = ['install', `@mohou/shell@${version}`, ...installFlags(), '--registry', prefix.registry ?? 'https://registry.npmjs.org']
   writeFileSync(path.join(prefix.dir, 'update.json'), `${JSON.stringify({ args })}\n`)
 }
 
@@ -104,7 +104,7 @@ export function newestTarball(dir: string, slug: string): string | null {
     return null
   }
   const versions = names.flatMap((name) => {
-    const match = new RegExp(`^mini-app-${slug}-(\\d+\\.\\d+\\.\\d+)\\.tgz$`).exec(name)
+    const match = new RegExp(`^mohou-${slug}-(\\d+\\.\\d+\\.\\d+)\\.tgz$`).exec(name)
     return match?.[1] === undefined ? [] : [match[1]]
   })
   return versions.sort(compareVersion).at(-1) ?? null
@@ -131,7 +131,7 @@ function readPrefixUpdate(cwd: string, env: NodeJS.ProcessEnv): PrefixUpdate | u
   }
   const channel = parsed.mohou?.channel
   if (channel !== 'registry' && channel !== 'tarball') return undefined
-  const packages = Object.keys(parsed.dependencies ?? {}).filter(name => name.startsWith('@mini-app/'))
+  const packages = Object.keys(parsed.dependencies ?? {}).filter(name => name.startsWith('@mohou/'))
   const override = env.MINI_APP_TARBALL_DIR
   const tarballDir = override !== undefined && override.length > 0 ? override : parsed.mohou?.tarballDir
   return {
@@ -139,7 +139,7 @@ function readPrefixUpdate(cwd: string, env: NodeJS.ProcessEnv): PrefixUpdate | u
     channel,
     ...typeof parsed.mohou?.registry === 'string' ? { registry: parsed.mohou.registry } : {},
     ...tarballDir === undefined ? {} : { tarballDir },
-    packages: packages.length === 0 ? ['@mini-app/shell'] : packages,
+    packages: packages.length === 0 ? ['@mohou/shell'] : packages,
   }
 }
 

@@ -2,9 +2,9 @@
 import * as React from 'react'
 import { Questionnaire as QuestionnairePrimitive } from '@shadcn/react/questionnaire'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { buttonVariants, type Button } from '@mini-app/ui/components/button'
+import { cn } from '@mohou/ui/lib/utils'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { buttonVariants, type Button } from '@mohou/ui/components/button'
 import { CheckIcon } from 'lucide-react'
 
 /**

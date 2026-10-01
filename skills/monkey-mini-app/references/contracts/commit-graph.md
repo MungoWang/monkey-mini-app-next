@@ -6,7 +6,7 @@ Topological git commit graph (forks / merges).
 
 **when** App history, release notes, git timeline views
 
-`import { CommitGraph, CommitAuthor, Commit } from "@mini-app/ui"`
+`import { CommitGraph, CommitAuthor, Commit } from "@mohou/ui"`
 
 `packages/app/ui/src/products/commit-graph.tsx` · family: Chart & data · type: product
 

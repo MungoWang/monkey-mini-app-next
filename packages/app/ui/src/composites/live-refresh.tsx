@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import { Popover, PopoverContent, PopoverTrigger } from '@mini-app/ui/components/popover'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import type { UiMessages } from '@mini-app/ui/i18n/en'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Popover, PopoverContent, PopoverTrigger } from '@mohou/ui/components/popover'
+import { useLabels } from '@mohou/ui/i18n/context'
+import type { UiMessages } from '@mohou/ui/i18n/en'
+import { cn } from '@mohou/ui/lib/utils'
 
 /** Default interval chips (ms). */
 export const liveRefreshDefaultIntervals = [10_000, 30_000, 60_000, 300_000] as const

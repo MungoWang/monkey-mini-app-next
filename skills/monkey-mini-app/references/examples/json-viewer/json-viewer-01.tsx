@@ -3,7 +3,7 @@
  * @title JsonViewer
  * @scenario Collapsible tree over an API response payload; use for debugging output instead of <pre>{JSON.stringify(...)}.
  */
-import { JsonViewer } from "@mini-app/ui";
+import { JsonViewer } from "@mohou/ui";
 
 export default function JsonViewer01Example() {
   return <JsonViewer value={{ ok: true, count: 2, nested: { a: 1 } }} />;

@@ -6,8 +6,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from '@mini-app/ui/components/chart'
-import { cn } from '@mini-app/ui/lib/utils'
+} from '@mohou/ui/components/chart'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Stacked bar chart over flat rows.

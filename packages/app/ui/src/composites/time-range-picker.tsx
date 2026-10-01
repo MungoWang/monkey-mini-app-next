@@ -1,6 +1,6 @@
 
-import { TimePicker } from '@mini-app/ui/composites/time-picker'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { TimePicker } from '@mohou/ui/composites/time-picker'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 export type TimeRange = { start: string; end: string }
 

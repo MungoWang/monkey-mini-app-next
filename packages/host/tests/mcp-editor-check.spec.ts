@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@mini-app/mcp-client', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@mini-app/mcp-client')>()
+vi.mock('@mohou/mcp-client', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@mohou/mcp-client')>()
   class FakeClient {
     async listTools(): Promise<readonly { name: string; description?: string }[]> {
       return [{ name: 'ping', description: 'pong' }, { name: 'bare' }]

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { get } from 'lodash'
 
-import { Badge, Button, Icon, Terminal, useApp } from '@mini-app/ui'
+import { Badge, Button, Icon, Terminal, useApp } from '@mohou/ui'
 
 type Job = { id: string; title: string }
 type Run = {

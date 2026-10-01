@@ -1,4 +1,4 @@
-import type { AppAgentEvent, AppAgentOptions, AppLlmEvent, AppLlmOptions } from '@mini-app/contract'
+import type { AppAgentEvent, AppAgentOptions, AppLlmEvent, AppLlmOptions } from '@mohou/contract'
 
 /** Provider-only listener. Authors read a stream. They do not pass this. */
 export type RuntimeLlmOptions = AppLlmOptions & {

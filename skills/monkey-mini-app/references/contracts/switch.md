@@ -6,7 +6,7 @@ Boolean toggle.
 
 **when** Immediate on/off settings (submit-on-toggle).
 
-`import { Switch } from "@mini-app/ui"`
+`import { Switch } from "@mohou/ui"`
 
 `packages/app/ui/src/components/switch.tsx` · family: Form · type: component · primitive
 

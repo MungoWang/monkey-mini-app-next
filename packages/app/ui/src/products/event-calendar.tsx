@@ -1,5 +1,5 @@
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 import { CalendarBody } from './full-calendar/calendar-body'
 import { CalendarProvider } from './full-calendar/contexts/calendar-context'

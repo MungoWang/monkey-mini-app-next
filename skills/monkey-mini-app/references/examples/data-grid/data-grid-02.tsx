@@ -4,7 +4,7 @@
  * @scenario Same grid but the columns render rich cells (avatar, progress bar, status badge) via cell renderers — the pattern for 'run list' style screens.
  * @hint Avatar, progress, badges, row expand, selection, CSV
  */
-import { Avatar, AvatarFallback, type ColumnDef, DataGrid, Progress, StatusBadge } from "@mini-app/ui";
+import { Avatar, AvatarFallback, type ColumnDef, DataGrid, Progress, StatusBadge } from "@mohou/ui";
 
 type Ticket = {
   id: string;

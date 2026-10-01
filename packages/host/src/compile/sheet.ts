@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url'
 
 import { compile } from '@tailwindcss/node'
 import { Scanner } from '@tailwindcss/oxide'
-import { appEntries } from '@mini-app/contract'
-import { appCardCss } from '@mini-app/app-view/css'
+import { appEntries } from '@mohou/contract'
+import { appCardCss } from '@mohou/app-view/css'
 
 import { readAutogen, sheetFile, writeAutogen } from './autogen.ts'
 import { CompileError } from './codes.ts'
@@ -141,11 +141,11 @@ function inputCss(dirs: readonly string[], includeKit = true): string {
 }
 
 function kitSourceDir(): string {
-  return path.dirname(require.resolve('@mini-app/ui'))
+  return path.dirname(require.resolve('@mohou/ui'))
 }
 
 function viewSourceDir(): string {
-  return path.dirname(require.resolve('@mini-app/app-view'))
+  return path.dirname(require.resolve('@mohou/app-view'))
 }
 
 function hostPackageDir(): string {

@@ -5,9 +5,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@mini-app/ui/components/dropdown-menu'
-import { Separator } from '@mini-app/ui/components/separator'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/dropdown-menu'
+import { Separator } from '@mohou/ui/components/separator'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 import { useCalendar } from '../contexts/calendar-context'
 import type { TEventColor } from '../types'

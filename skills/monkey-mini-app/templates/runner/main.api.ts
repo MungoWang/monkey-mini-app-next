@@ -1,4 +1,4 @@
-import { defineApp } from '@mini-app/contract'
+import { defineApp } from '@mohou/contract'
 
 import { EV, type Run, type Step } from './shared/events'
 

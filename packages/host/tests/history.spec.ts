@@ -7,8 +7,8 @@ import git from 'isomorphic-git'
 import { describe, expect, it } from 'vitest'
 
 import { registerWithFiles } from './author-seed.ts'
-import { McpClient } from '@mini-app/mcp-client'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { McpClient } from '@mohou/mcp-client'
+import { createEchoProvider } from '@mohou/runtime-provider'
 
 import {
   emptyCredentials,

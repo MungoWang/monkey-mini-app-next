@@ -6,7 +6,7 @@ Expandable file/dir tree (icons built in).
 
 **when** Repo/zip contents where selection matters. Plain nested list → `TreeView`.
 
-`import { FileTree, TreeNode } from "@mini-app/ui"`
+`import { FileTree, TreeNode } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/file-tree.tsx` · family: Data & tables · type: block
 

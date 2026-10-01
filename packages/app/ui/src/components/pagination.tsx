@@ -1,9 +1,9 @@
 
 import * as React from 'react'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { Button } from '@mini-app/ui/components/button'
+import { cn } from '@mohou/ui/lib/utils'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { Button } from '@mohou/ui/components/button'
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from 'lucide-react'
 
 /**

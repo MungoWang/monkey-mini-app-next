@@ -6,7 +6,7 @@ Numbered steps with status; children are `StepperItem`.
 
 **when** Wizard/progress of an ordered process. Time axis → `RunTimeline`.
 
-`import { Stepper, StepStatus, StepperItemProps } from "@mini-app/ui"`
+`import { Stepper, StepStatus, StepperItemProps } from "@mohou/ui"`
 
 `packages/app/ui/src/products/stepper.tsx` · family: Feedback & status · type: product
 
@@ -47,7 +47,7 @@ Numbered steps with status; children are `StepperItem`.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[stepper-01.tsx](../examples/stepper/stepper-01.tsx)** — Stepper — Multi-step flow (draft → review → ship) with completed/active/pending states, vertical and horizontal. — _*Vertical and horizontal*_

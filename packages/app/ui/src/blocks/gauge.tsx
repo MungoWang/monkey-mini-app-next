@@ -1,5 +1,5 @@
-import { ProgressRing } from '@mini-app/ui/blocks/progress-ring'
-import { cn } from '@mini-app/ui/lib/utils'
+import { ProgressRing } from '@mohou/ui/blocks/progress-ring'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Arc gauge for one 0–100 metric.

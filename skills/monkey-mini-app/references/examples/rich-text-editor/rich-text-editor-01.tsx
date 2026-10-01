@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { RichTextEditor } from "@mini-app/ui";
+import { RichTextEditor } from "@mohou/ui";
 
 export default function RichTextEditor01Example() {
   const [html, setHtml] = React.useState("<p>Write a <strong>run note</strong>.</p>");

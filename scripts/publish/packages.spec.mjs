@@ -11,16 +11,16 @@ describe('publish packages', () => {
   it('accepts the workspace set and keeps the root private', { timeout: 15_000 }, () => {
     expect(publishFailures(root)).toEqual([])
     expect(workspacePackages(root).map(item => item.pkg.name)).toEqual([
-      '@mini-app/app-view',
-      '@mini-app/contract',
-      '@mini-app/host',
-      '@mini-app/mcp-client',
-      '@mini-app/panel',
-      '@mini-app/runtime-pi',
-      '@mini-app/runtime-provider',
-      '@mini-app/shell',
-      '@mini-app/ui',
-      '@mini-app/values',
+      '@mohou/app-view',
+      '@mohou/contract',
+      '@mohou/host',
+      '@mohou/mcp-client',
+      '@mohou/panel',
+      '@mohou/runtime-pi',
+      '@mohou/runtime-provider',
+      '@mohou/shell',
+      '@mohou/ui',
+      '@mohou/values',
     ])
   })
 })

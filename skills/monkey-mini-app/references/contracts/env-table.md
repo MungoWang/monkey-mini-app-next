@@ -6,7 +6,7 @@ Read-only env var table with masked values and copy.
 
 **when** Settings / deploy preview / secrets display
 
-`import { EnvTable, Environment, EnvVariable } from "@mini-app/ui"`
+`import { EnvTable, Environment, EnvVariable } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/env-table.tsx` · family: Data & tables · type: block
 

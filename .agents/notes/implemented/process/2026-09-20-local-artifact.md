@@ -8,7 +8,7 @@ The product version was `0.0.0` in the packages the about block reads and `0.1.0
 
 ## Decision
 
-`@mini-app/shell` owns the product version. `@mini-app/host` and the window crate use that same string. `pnpm build:artifact` builds the panel, builds the release window, and writes `artifacts/mini-app-<version>-<platform>/` with the binary, the panel files, and a `run` script. The script sets `MINI_APP_PANEL` and `MINI_APP_WINDOW`, then starts `dev.ts` from this checkout. [Changelog](../../../docs/changelog.md) owns the notes. [Development](../../../docs/development.md) owns the command.
+`@mohou/shell` owns the product version. `@mohou/host` and the window crate use that same string. `pnpm build:artifact` builds the panel, builds the release window, and writes `artifacts/mini-app-<version>-<platform>/` with the binary, the panel files, and a `run` script. The script sets `MINI_APP_PANEL` and `MINI_APP_WINDOW`, then starts `dev.ts` from this checkout. [Changelog](../../../docs/changelog.md) owns the notes. [Development](../../../docs/development.md) owns the command.
 
 ## Alternatives considered
 

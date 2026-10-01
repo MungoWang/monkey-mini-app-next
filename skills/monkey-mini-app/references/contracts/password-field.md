@@ -6,7 +6,7 @@ Secret input with reveal toggle.
 
 **when** Typing a token/password into your own state. **Never** persist it to storage.
 
-`import { PasswordField } from "@mini-app/ui"`
+`import { PasswordField } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/password-field.tsx` · family: Form · type: composite
 

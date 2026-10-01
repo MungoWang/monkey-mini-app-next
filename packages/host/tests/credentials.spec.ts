@@ -4,9 +4,9 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { parseAppId, type AppStorage } from '@mini-app/contract'
-import { McpClient } from '@mini-app/mcp-client'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { parseAppId, type AppStorage } from '@mohou/contract'
+import { McpClient } from '@mohou/mcp-client'
+import { createEchoProvider } from '@mohou/runtime-provider'
 
 import {
   CredentialError,

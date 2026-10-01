@@ -151,10 +151,10 @@ const row = await pending
 
 `call` waits for `return` and drops yields.
 
-The view imports `LlmEvent` and `AgentEvent` from `@mini-app/ui`. Do not declare those unions again. `llmEventType` lists llm `type` values. `agentEventType` adds `tool` and `turn`. `done` is that model call's final string.
+The view imports `LlmEvent` and `AgentEvent` from `@mohou/ui`. Do not declare those unions again. `llmEventType` lists llm `type` values. `agentEventType` adds `tool` and `turn`. `done` is that model call's final string.
 
 ```ts
-import { agentEventType, eventType, llmEventType, useApp, type AgentEvent, type LlmEvent } from "@mini-app/ui"
+import { agentEventType, eventType, llmEventType, useApp, type AgentEvent, type LlmEvent } from "@mohou/ui"
 ```
 
 Empty completion throws `empty-completion`. Cancel throws `cancelled`. Exhausted retries throw `retry-exhausted`. Match `code`, not the message.

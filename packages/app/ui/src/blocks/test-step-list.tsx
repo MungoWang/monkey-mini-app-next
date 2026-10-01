@@ -1,4 +1,4 @@
-import { StatusBadge, type StatusKey } from '@mini-app/ui/blocks/status-badge'
+import { StatusBadge, type StatusKey } from '@mohou/ui/blocks/status-badge'
 
 export type TestStep = { id: string; title: string; status: StatusKey | string }
 

@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@mini-app/ui"`
+`import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@mohou/ui"`
 
 `packages/app/ui/src/components/avatar.tsx` · family: Layout & structure · type: component · primitive
 

@@ -6,7 +6,7 @@ Right-side inspector Sheet for a selected row/entity.
 
 **when** Master-detail after row/card click
 
-`import { DetailPanel } from "@mini-app/ui"`
+`import { DetailPanel } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/detail-panel.tsx` · family: Surface · type: block
 
@@ -29,7 +29,7 @@ Right-side inspector Sheet for a selected row/entity.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[detail-panel-01.tsx](../examples/detail-panel/detail-panel-01.tsx)** — DetailPanel — Slide-over for record details that keeps the list visible and scroll position intact — the alternative to navigating away or a Dialog.

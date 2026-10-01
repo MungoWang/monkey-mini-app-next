@@ -8,7 +8,7 @@ import ExcelJS from 'exceljs'
 // ⭐ Platform module: full lodash on both sides. Aggregates below are the case it pays for.
 import { mean, sum } from 'lodash'
 
-import { defineApp } from '@mini-app/contract'
+import { defineApp } from '@mohou/contract'
 
 type SheetData = {
   name: string

@@ -1,7 +1,7 @@
 
 import * as ResizablePrimitive from 'react-resizable-panels'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Draggable split panes.

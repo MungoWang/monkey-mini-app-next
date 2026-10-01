@@ -5,10 +5,10 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from '@mini-app/ui/components/resizable';
-import { useIsMobile } from '@mini-app/ui/hooks/use-mobile';
-import { useLabels } from '@mini-app/ui/i18n/context';
-import { cn } from '@mini-app/ui/lib/utils';
+} from '@mohou/ui/components/resizable';
+import { useIsMobile } from '@mohou/ui/hooks/use-mobile';
+import { useLabels } from '@mohou/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type ListDetailProps = {
   /** The collection pane: list, table, board — anything you scroll through. */

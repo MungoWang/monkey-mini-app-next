@@ -1,4 +1,4 @@
-import { ProviderError } from '@mini-app/runtime-provider'
+import { ProviderError } from '@mohou/runtime-provider'
 
 import { HostError } from './codes.ts'
 

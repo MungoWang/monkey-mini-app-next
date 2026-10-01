@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/templates",
+  "name": "@mohou/templates",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -8,8 +8,8 @@
     "node": "^22.19.0 || >=24.0.0"
   },
   "dependencies": {
-    "@mini-app/contract": "workspace:^",
-    "@mini-app/ui": "workspace:^",
+    "@mohou/contract": "workspace:^",
+    "@mohou/ui": "workspace:^",
     "@types/lodash": "^4.17.24",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",

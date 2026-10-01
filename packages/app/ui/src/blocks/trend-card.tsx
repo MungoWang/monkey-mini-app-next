@@ -7,8 +7,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from '@mini-app/ui/components/chart'
-import { StatCard } from '@mini-app/ui/blocks/stat-card'
+} from '@mohou/ui/components/chart'
+import { StatCard } from '@mohou/ui/blocks/stat-card'
 
 export type TrendPoint = { label: string; value: number }
 

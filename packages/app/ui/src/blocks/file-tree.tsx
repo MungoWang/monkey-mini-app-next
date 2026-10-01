@@ -1,4 +1,4 @@
-import { TreeView, type TreeNode } from '@mini-app/ui/products/tree-view'
+import { TreeView, type TreeNode } from '@mohou/ui/products/tree-view'
 
 /**
  * Expandable file/dir tree (icons built in).

@@ -4,7 +4,7 @@ import { homedir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { ProviderError, type ProviderRegistry, type RuntimeProvider } from '@mini-app/runtime-provider'
+import { ProviderError, type ProviderRegistry, type RuntimeProvider } from '@mohou/runtime-provider'
 
 import { createPiProvider } from './pi.ts'
 

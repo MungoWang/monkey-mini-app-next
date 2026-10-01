@@ -2,7 +2,7 @@ import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 import { differenceInMinutes, parseISO } from 'date-fns';
 import type { HTMLAttributes } from 'react';
-import { cn } from '@mini-app/ui/lib/utils';
+import { cn } from '@mohou/ui/lib/utils';
 import { useCalendar } from '../../contexts/calendar-context';
 import { EventDetailsDialog } from '../../dialogs/event-details-dialog';
 import { DraggableEvent } from '../../dnd/draggable-event';

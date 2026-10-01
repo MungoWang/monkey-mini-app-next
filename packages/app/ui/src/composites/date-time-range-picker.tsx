@@ -1,8 +1,8 @@
 
-import { Label } from '@mini-app/ui/components/label'
-import { DateRangePicker } from '@mini-app/ui/composites/date-range-picker'
-import { DateTimePicker } from '@mini-app/ui/composites/date-time-picker'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Label } from '@mohou/ui/components/label'
+import { DateRangePicker } from '@mohou/ui/composites/date-range-picker'
+import { DateTimePicker } from '@mohou/ui/composites/date-time-picker'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 export type DateTimeRange = { start?: Date | undefined; end?: Date | undefined }
 

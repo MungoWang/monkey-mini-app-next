@@ -6,7 +6,7 @@ Star rating.
 
 **when** Feedback/score capture, 1–max.
 
-`import { Rating } from "@mini-app/ui"`
+`import { Rating } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/rating.tsx` · family: Form · type: composite
 

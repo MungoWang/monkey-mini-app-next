@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises'
 
-import type { RuntimeProvider } from '@mini-app/runtime-provider'
+import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import { ConfigError } from './codes.ts'
 import { hostConfigPath } from './layout.ts'

@@ -23,16 +23,16 @@
     "noUnusedParameters": true,
     "types": ["node"],
     "paths": {
-      "@mini-app/values": ["./packages/util/values/src/index.ts"],
-      "@mini-app/app-view": ["./packages/app/view/src/index.ts"],
-      "@mini-app/app-view/css": ["./packages/app/view/src/app-card-css.ts"],
-      "@mini-app/contract": ["./packages/app/contract/src/index.ts"],
-      "@mini-app/ui": ["./packages/app/ui/src/index.ts"],
-      "@mini-app/ui/*": ["./packages/app/ui/src/*"],
-      "@mini-app/runtime-provider": ["./packages/runtime/provider/src/index.ts"],
-      "@mini-app/host": ["./packages/host/src/index.ts"],
-      "@mini-app/host/http": ["./packages/host/src/http/layout.ts"],
-      "@mini-app/mcp-client": ["./packages/mcp/client/src/index.ts"]
+      "@mohou/values": ["./packages/util/values/src/index.ts"],
+      "@mohou/app-view": ["./packages/app/view/src/index.ts"],
+      "@mohou/app-view/css": ["./packages/app/view/src/app-card-css.ts"],
+      "@mohou/contract": ["./packages/app/contract/src/index.ts"],
+      "@mohou/ui": ["./packages/app/ui/src/index.ts"],
+      "@mohou/ui/*": ["./packages/app/ui/src/*"],
+      "@mohou/runtime-provider": ["./packages/runtime/provider/src/index.ts"],
+      "@mohou/host": ["./packages/host/src/index.ts"],
+      "@mohou/host/http": ["./packages/host/src/http/layout.ts"],
+      "@mohou/mcp-client": ["./packages/mcp/client/src/index.ts"]
     }
   }
 }

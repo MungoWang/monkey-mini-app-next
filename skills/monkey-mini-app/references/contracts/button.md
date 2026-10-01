@@ -6,7 +6,7 @@ Action button with variants and icon sizing.
 
 **when** Every click target. `variant="destructive"` for delete, `size="icon*"` for icon-only (add aria-label).
 
-`import { Button, buttonVariants } from "@mini-app/ui"`
+`import { Button, buttonVariants } from "@mohou/ui"`
 
 `packages/app/ui/src/components/button.tsx` · family: Form · type: component · primitive
 

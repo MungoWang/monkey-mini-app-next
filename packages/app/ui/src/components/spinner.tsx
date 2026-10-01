@@ -1,4 +1,4 @@
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 import { Loader2Icon } from 'lucide-react'
 
 /**

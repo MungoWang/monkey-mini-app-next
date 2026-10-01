@@ -3,9 +3,9 @@ import * as React from 'react'
 import { addMonths, addYears, format, setMonth, setYear } from 'date-fns'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
 
 function Stepper({
   onUp,

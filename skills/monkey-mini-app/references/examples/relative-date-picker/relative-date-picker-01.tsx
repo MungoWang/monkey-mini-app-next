@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { type DateRange, RelativeDatePicker, type RelativePreset } from "@mini-app/ui";
+import { type DateRange, RelativeDatePicker, type RelativePreset } from "@mohou/ui";
 
 export default function RelativeDatePicker01Example() {
   const [preset, setPreset] = React.useState<RelativePreset>("7d");

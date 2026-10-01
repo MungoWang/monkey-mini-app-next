@@ -5,8 +5,8 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { emptyCredentials } from '@mini-app/host'
-import { httpLayout } from '@mini-app/host/http'
+import { emptyCredentials } from '@mohou/host'
+import { httpLayout } from '@mohou/host/http'
 
 import { bootHost, resolveAuthorSkillSource } from '../src/index.ts'
 

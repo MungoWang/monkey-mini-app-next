@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Provider injection
@@ -19,4 +19,4 @@ Echo: `llm` returns the prompt unchanged; `agent` returns the goal unchanged and
 ## Implementation
 
 
-Role: seam. Shell registers providers and injects one into Host. Host calls `configure`, then `start`, and routes `ctx.llm` and `ctx.agent`. Host does not embed a vendor. `echo` lives in `@mini-app/runtime-provider`. Pi lives in `@mini-app/runtime-pi` and registers itself. A missing id fails boot with `config-invalid`. `start` throwing fails boot. A Pi load that fails after registration does not. Plan: [implementation.md](../implementation.md).
+Role: seam. Shell registers providers and injects one into Host. Host calls `configure`, then `start`, and routes `ctx.llm` and `ctx.agent`. Host does not embed a vendor. `echo` lives in `@mohou/runtime-provider`. Pi lives in `@mohou/runtime-pi` and registers itself. A missing id fails boot with `config-invalid`. `start` throwing fails boot. A Pi load that fails after registration does not. Plan: [implementation.md](../implementation.md).

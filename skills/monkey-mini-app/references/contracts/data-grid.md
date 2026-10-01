@@ -6,7 +6,7 @@ Product table: sort, column filter popover, global search, pagination.
 
 **when** Any list/table of rows — prefer over raw Table*
 
-`import { DataGrid, SearchVariant, DataGridColumnMeta, DataGridFeatures } from "@mini-app/ui"`
+`import { DataGrid, SearchVariant, DataGridColumnMeta, DataGridFeatures } from "@mohou/ui"`
 
 `packages/app/ui/src/products/data-grid.tsx` · family: Data & tables · type: product
 
@@ -87,7 +87,7 @@ const [page, setPage] = useState(0)
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[data-grid-01.tsx](../examples/data-grid/data-grid-01.tsx)** — DataGrid — The default table for anything bigger than a static list: column sort (asc→desc→off), global search box, pagination — all from props, no external state library. — _*Sort cycles asc → desc → none*_

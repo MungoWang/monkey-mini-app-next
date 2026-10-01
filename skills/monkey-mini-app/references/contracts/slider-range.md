@@ -6,7 +6,7 @@ Two-thumb range slider.
 
 **when** min/max numeric filters.
 
-`import { SliderRange } from "@mini-app/ui"`
+`import { SliderRange } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/slider-range.tsx` · family: Form · type: composite
 

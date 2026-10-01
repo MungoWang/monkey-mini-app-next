@@ -1,7 +1,7 @@
 import { mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
-import { appEntries } from '@mini-app/contract'
+import { appEntries } from '@mohou/contract'
 
 import { FileToolError } from './codes.ts'
 import { snapshotSkip } from './skip.ts'

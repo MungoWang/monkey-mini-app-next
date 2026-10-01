@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { ColorPicker, Rating, TagInput, UserPicker } from "@mini-app/ui";
+import { ColorPicker, Rating, TagInput, UserPicker } from "@mohou/ui";
 
 export default function MiscForms06Example() {
   const [color, setColor] = React.useState("#2563eb");

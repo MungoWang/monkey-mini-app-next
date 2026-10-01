@@ -18,7 +18,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function MiscPrimitives02Example() {
   const [open, setOpen] = React.useState(false);

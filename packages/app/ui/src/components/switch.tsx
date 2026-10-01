@@ -1,7 +1,7 @@
 
 import { Switch as SwitchPrimitive } from '@base-ui/react/switch'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 
 /**
  * Boolean toggle.

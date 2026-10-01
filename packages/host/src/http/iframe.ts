@@ -1,4 +1,4 @@
-import { parseAppId } from '@mini-app/contract'
+import { parseAppId } from '@mohou/contract'
 import type { Context, Hono } from 'hono'
 
 import type { HostEnv } from './env.ts'

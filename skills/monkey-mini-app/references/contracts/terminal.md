@@ -6,7 +6,7 @@ Fixed-width console block.
 
 **when** Showing a command + its output verbatim. Timestamped levels/scrolling → `LogViewer`.
 
-`import { Terminal } from "@mini-app/ui"`
+`import { Terminal } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/terminal.tsx` · family: Realtime · type: block
 

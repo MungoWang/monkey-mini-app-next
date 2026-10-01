@@ -6,7 +6,7 @@ Compact live-refresh chrome: ring + LIVE · status · every N. App owns `onTick`
 
 **when** Dashboards / workbenches that need periodic soft refresh inside the iframe.
 
-`import { LiveRefresh, LiveRefreshState } from "@mini-app/ui"`
+`import { LiveRefresh, LiveRefreshState } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/live-refresh.tsx` · family: Discovery & inspect · type: composite
 

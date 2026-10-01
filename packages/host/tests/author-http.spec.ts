@@ -3,7 +3,7 @@ import { request } from 'node:http'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { createEchoProvider } from '@mohou/runtime-provider'
 import { describe, expect, it } from 'vitest'
 
 import { createHost } from '../src/host/session.ts'

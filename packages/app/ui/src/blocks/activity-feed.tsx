@@ -1,4 +1,4 @@
-import { Timeline, type TimelineItem } from '@mini-app/ui/products/timeline'
+import { Timeline, type TimelineItem } from '@mohou/ui/products/timeline'
 
 /**
  * Chronological activity list (avatar + text + time).

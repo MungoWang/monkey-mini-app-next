@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
-import { Button } from '@mini-app/ui/components/button'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Button } from '@mohou/ui/components/button'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 import { useCalendar } from '../contexts/calendar-context'
 import type { TCalendarView } from '../types'

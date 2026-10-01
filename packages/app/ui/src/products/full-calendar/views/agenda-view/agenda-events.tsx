@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import type { FC } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@mini-app/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@mohou/ui/components/avatar';
 import {
   Command,
   CommandEmpty,
@@ -8,9 +8,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@mini-app/ui/components/command';
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context';
-import { cn } from '@mini-app/ui/lib/utils';
+} from '@mohou/ui/components/command';
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
 import { useCalendar } from '../../contexts/calendar-context';
 import { EventDetailsDialog } from '../../dialogs/event-details-dialog';
 import {

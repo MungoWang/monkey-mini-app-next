@@ -1,11 +1,11 @@
 ---
 status: locked
-updated: 2026-09-20
+updated: 2026-10-01
 ---
 
 # Cookbook: adding a workspace package
 
-Add a package under an existing group when the group already matches the role. A new group is a directory only: no `package.json` at the group level. One package per directory, npm scope `@mini-app`.
+Add a package under an existing group when the group already matches the role. A new group is a directory only: no `package.json` at the group level. One package per directory, npm scope `@mohou`.
 
 State the package role in its README before the first cross-package import. The scene, with the effect of a wrong import, is [.agents/skills/architecture-guard/references/package-boundary.md](../../.agents/skills/architecture-guard/references/package-boundary.md).
 
@@ -25,11 +25,11 @@ packages/<group>/<pkg>/
 ## 2. package.json
 
 - `"type": "module"`.
-- `"name": "@mini-app/<name>"`. The package directory is `packages/<group>/<pkg>`.
+- `"name": "@mohou/<name>"`. The package directory is `packages/<group>/<pkg>`.
 - `exports["."]` points at the typed entry. Local relative imports inside `src` use a `.ts` specifier.
 - `dependencies` lists only packages the role may import, each as `workspace:^`.
 - A package that imports nothing in this repo has no workspace dependency.
-- Do not set `private`. Set `publishConfig.access` to `public`, `engines.node` to the root range, and `files` to `src`, `lib/types`, and `README.md`. The version is the `@mini-app/shell` version. [Package architecture](../architecture/packages.md) owns the publish set.
+- Do not set `private`. Set `publishConfig.access` to `public`, `engines.node` to the root range, and `files` to `src`, `lib/types`, and `README.md`. The version is the `@mohou/shell` version. [Package architecture](../architecture/packages.md) owns the publish set.
 
 ## 3. tsconfig.json
 

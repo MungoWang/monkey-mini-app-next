@@ -8,7 +8,7 @@ Vertically expanding sections.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@mini-app/ui"`
+`import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@mohou/ui"`
 
 `packages/app/ui/src/components/accordion.tsx` · family: Surface · type: component · primitive
 

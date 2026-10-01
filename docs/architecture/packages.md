@@ -1,15 +1,15 @@
 ---
 status: locked
-updated: 2026-09-23
+updated: 2026-10-01
 ---
 
 # Package architecture
 
 This page is the package cut. [functions.md](functions.md) owns who calls what. A package appears when it has code. This page does not create directories.
 
-**Now** is the tree that exists. The Tauri window crate is `packages/launcher/tauri` (not inside `@mini-app/shell`). Sidecar process ownership and Settings npm-update UX: [.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md](../../.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md).
+**Now** is the tree that exists. The Tauri window crate is `packages/launcher/tauri` (not inside `@mohou/shell`). Sidecar process ownership and Settings npm-update UX: [.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md](../../.agents/notes/proposed/architecture/2026-09-23-shell-sidecar-and-launcher.md).
 
-Grouping is `packages/<group>/<pkg>`. npm scope `@mini-app`. A group directory has no `package.json`. Apps live under `apps/*`.
+Grouping is `packages/<group>/<pkg>`. npm scope `@mohou`. A group directory has no `package.json`. Apps live under `apps/*`.
 
 ## Direction
 
@@ -37,25 +37,25 @@ Kernel does not open a socket, read or write app source, compile, or own history
 
 | Path | Name | Role | Owns |
 | --- | --- | --- | --- |
-| `packages/util/values` | `@mini-app/values` | `values` | `assertNever`, branded strings |
-| `packages/app/contract` | `@mini-app/contract` | `definition` | app id, manifest, `defineApp`, `AppContext`, the codes it throws |
-| `packages/app/view` | `@mini-app/app-view` | `definition` | views of an app shared by the panel and the UI kit. No `useApp` |
-| `packages/app/ui` | `@mini-app/ui` | `definition` | author UI kit and `useApp`. Host vendor-builds one copy. It re-exports `@mini-app/app-view` |
-| `packages/runtime/provider` | `@mini-app/runtime-provider` | `provider` | brain interface, model catalog check, `echo` |
-| `packages/runtime/pi` | `@mini-app/runtime-pi` | `provider` | Pi brain. `agent` is an in-memory session. Shell injects it. Host does not import it |
-| `packages/host` | `@mini-app/host` | `provider` | kernel call loop; SQLite storage beside it |
-| `packages/mcp/client` | `@mini-app/mcp-client` | `provider` | external MCP sessions for `ctx.mcp` |
-| `packages/panel` | `@mini-app/panel` | `consumer` | panel views. It does not import Host |
-| `packages/shell` | `@mini-app/shell` | `composition` | constructs Host, attaches the panel document, and may open the panel origin |
-| `packages/launcher/tauri` | *(crate, not npm)* | `launcher` | Tauri panel window binary `mini-app-window`. Not packed into `@mini-app/shell` |
+| `packages/util/values` | `@mohou/values` | `values` | `assertNever`, branded strings |
+| `packages/app/contract` | `@mohou/contract` | `definition` | app id, manifest, `defineApp`, `AppContext`, the codes it throws |
+| `packages/app/view` | `@mohou/app-view` | `definition` | views of an app shared by the panel and the UI kit. No `useApp` |
+| `packages/app/ui` | `@mohou/ui` | `definition` | author UI kit and `useApp`. Host vendor-builds one copy. It re-exports `@mohou/app-view` |
+| `packages/runtime/provider` | `@mohou/runtime-provider` | `provider` | brain interface, model catalog check, `echo` |
+| `packages/runtime/pi` | `@mohou/runtime-pi` | `provider` | Pi brain. `agent` is an in-memory session. Shell injects it. Host does not import it |
+| `packages/host` | `@mohou/host` | `provider` | kernel call loop; SQLite storage beside it |
+| `packages/mcp/client` | `@mohou/mcp-client` | `provider` | external MCP sessions for `ctx.mcp` |
+| `packages/panel` | `@mohou/panel` | `consumer` | panel views. It does not import Host |
+| `packages/shell` | `@mohou/shell` | `composition` | constructs Host, attaches the panel document, and may open the panel origin |
+| `packages/launcher/tauri` | *(crate, not npm)* | `launcher` | Tauri panel window binary `mini-app-window`. Not packed into `@mohou/shell` |
 
-Authoring tools stay inside `@mini-app/host` until a second consumer forces a split. The UI toolchain stays there too: React, the UI kit, Tailwind, and esbuild. A compile package, or a child process whose only job is that toolchain, waits until a second consumer exists or Host must start without it. MCP and the HTTP invoke route are projections, not a second package of behavior.
+Authoring tools stay inside `@mohou/host` until a second consumer forces a split. The UI toolchain stays there too: React, the UI kit, Tailwind, and esbuild. A compile package, or a child process whose only job is that toolchain, waits until a second consumer exists or Host must start without it. MCP and the HTTP invoke route are projections, not a second package of behavior.
 
-A second brain is a new provider package. It implements `RuntimeProvider`. `echo` stays in `@mini-app/runtime-provider`. The interface moves to its own definition package only when that second brain exists and the interface would otherwise change with `echo`.
+A second brain is a new provider package. It implements `RuntimeProvider`. `echo` stays in `@mohou/runtime-provider`. The interface moves to its own definition package only when that second brain exists and the interface would otherwise change with `echo`.
 
 ## Publish
 
-The ten packages in the table above are the npm publish set. `@mini-app/root` is not. Each published package carries the `@mini-app/shell` version. `pnpm publish` rewrites `workspace:^` to that version. [development.md](../development.md) owns `publish:check` and `publish:packages`. The second command uploads only when `MINI_APP_PUBLISH=1`.
+The ten packages in the table above are the npm publish set. `@mohou/root` is not. Each published package carries the `@mohou/shell` version. `pnpm publish` rewrites `workspace:^` to that version. [development.md](../development.md) owns `publish:check` and `publish:packages`. The second command uploads only when `MINI_APP_PUBLISH=1`.
 
 ## Not a package
 

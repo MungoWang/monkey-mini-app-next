@@ -3,7 +3,7 @@
  * @title Timeline
  * @scenario Chronological feed of events with actor + timestamp — deploy history, audit trail (compare RunTimeline for one job's steps).
  */
-import { Timeline } from "@mini-app/ui";
+import { Timeline } from "@mohou/ui";
 
 export default function Timeline01Example() {
   return (

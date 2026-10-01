@@ -6,7 +6,7 @@ Controlled yes/no dialog with loading-safe confirm.
 
 **when** Any destructive action. Needs a form inside → compose `Dialog` yourself.
 
-`import { ConfirmDialog } from "@mini-app/ui"`
+`import { ConfirmDialog } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/confirm-dialog.tsx` · family: Surface · type: composite
 
@@ -31,7 +31,7 @@ Controlled yes/no dialog with loading-safe confirm.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[confirm-dialog-01.tsx](../examples/confirm-dialog/confirm-dialog-01.tsx)** — ConfirmDialog / Toast — Destructive-action guard — one click opens a yes/no dialog, cancel keeps state; pair with toast for the result. Do not hand-roll a Dialog for confirmations.

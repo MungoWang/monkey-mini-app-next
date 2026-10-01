@@ -3,7 +3,7 @@
 # Examples · forms
 
 Multi-component demos: layout/pattern recipes with no single subject component.
-Copy the whole file into `ui.tsx` (or split it) — imports are `react` + `@mini-app/ui` only.
+Copy the whole file into `ui.tsx` (or split it) — imports are `react` + `@mohou/ui` only.
 
 | example | what it shows | scenario |
 |---|---|---|

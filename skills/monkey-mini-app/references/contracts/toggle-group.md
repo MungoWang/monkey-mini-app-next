@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { ToggleGroup, ToggleGroupItem } from "@mini-app/ui"`
+`import { ToggleGroup, ToggleGroupItem } from "@mohou/ui"`
 
 `packages/app/ui/src/components/toggle-group.tsx` · family: Form · type: component · primitive
 
@@ -22,7 +22,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[toggle-group-01.tsx](../examples/toggle-group/toggle-group-01.tsx)** — ToggleGroup — Mutually exclusive set of Toggle buttons for a view choice (alignment, density) held as one value.

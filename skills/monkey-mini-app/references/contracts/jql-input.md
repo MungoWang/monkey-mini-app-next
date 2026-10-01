@@ -6,7 +6,7 @@ JQL query field: CodeMirror 6 (esm.sh, on demand) with syntax highlighting and f
 
 **when** Issue search / saved filters. Needs a real field list: pass `fields`.
 
-`import { JqlInput, JqlSuggestItem } from "@mini-app/ui"`
+`import { JqlInput, JqlSuggestItem } from "@mohou/ui"`
 
 `packages/app/ui/src/products/jql-input.tsx` · family: Form · type: product
 
@@ -38,7 +38,7 @@ JQL query field: CodeMirror 6 (esm.sh, on demand) with syntax highlighting and f
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[jql-input-01.tsx](../examples/jql-input/jql-input-01.tsx)** — JqlInput — Query-language field with syntax feedback (JQL/SQL-ish filters) — the CodeMirror-powered sibling of SearchInput. — _*CodeMirror JQL · type to complete fields*_

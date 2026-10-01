@@ -8,7 +8,7 @@ Draggable split panes.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@mini-app/ui"`
+`import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@mohou/ui"`
 
 `packages/app/ui/src/components/resizable.tsx` · family: Layout & structure · type: component · primitive
 

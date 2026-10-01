@@ -133,11 +133,11 @@ Match `code`. The message is for a person. Full table: [loader.md](loader.md).
 
 | Message | Root cause | Fix |
 |---|---|---|
-| `UI cannot import main.api.ts; use useApp() from @mini-app/ui` | UI imported the backend | Go through `call(method, args)` |
+| `UI cannot import main.api.ts; use useApp() from @mohou/ui` | UI imported the backend | Go through `call(method, args)` |
 | `UI cannot import api/**: "<spec>"` | UI reached into the backend tree | Move the shared logic to `shared/**` |
 | `UI import escapes the app dir: "<spec>"` | `../` pointed at a sibling app or outside | Keep every import inside the app dir |
 | `missing ui entry (ui.tsx / App.tsx)` | `manifest.entry` points at a file that isn't there | Match `entry` to the real file |
-| `Failed to resolve import "<pkg>"` | Imported an npm package the app directory does not have | UI: `react` / `@mini-app/ui` / in-app relative paths. React, lucide and recharts already ship inside the SDK |
+| `Failed to resolve import "<pkg>"` | Imported an npm package the app directory does not have | UI: `react` / `@mohou/ui` / in-app relative paths. React, lucide and recharts already ship inside the SDK |
 
 ## It compiles but looks wrong
 

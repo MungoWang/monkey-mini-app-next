@@ -1,4 +1,4 @@
-import { appEntries } from '@mini-app/contract'
+import { appEntries } from '@mohou/contract'
 
 /** Register with manifest fields, then write remaining files through the HTTP file tools. */
 export async function registerWithFiles(

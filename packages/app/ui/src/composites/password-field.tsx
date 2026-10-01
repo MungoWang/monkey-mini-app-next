@@ -2,13 +2,13 @@
 import * as React from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@mini-app/ui/components/input-group'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/input-group'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 /**
  * Secret input with reveal toggle.

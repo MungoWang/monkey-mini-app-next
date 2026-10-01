@@ -8,7 +8,7 @@ A custom home was going to be a second document, with its own props, its own imp
 
 ## Decision
 
-A workbench is an app whose manifest `kind` is `workbench`. It keeps ordinary app capabilities. The backend receives `ctx.workbench` with `listApps`, `openApp`, `listWorkbenches`, and `setDefaultWorkbench`. The UI calls `main.api.ts`. The builtin library id is `default`. The card is `AppCard` in `@mini-app/app-view`. The panel imports that package. `@mini-app/ui` re-exports it for authors. `extra.featured` is the only style-specific field, and only glass reads it.
+A workbench is an app whose manifest `kind` is `workbench`. It keeps ordinary app capabilities. The backend receives `ctx.workbench` with `listApps`, `openApp`, `listWorkbenches`, and `setDefaultWorkbench`. The UI calls `main.api.ts`. The builtin library id is `default`. The card is `AppCard` in `@mohou/app-view`. The panel imports that package. `@mohou/ui` re-exports it for authors. `extra.featured` is the only style-specific field, and only glass reads it.
 
 ## Alternatives considered
 

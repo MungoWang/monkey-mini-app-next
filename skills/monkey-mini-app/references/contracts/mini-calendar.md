@@ -6,7 +6,7 @@ Compact month grid, day cell only.
 
 **when** Inside a popover or sidebar. Full page with events → `EventCalendar`.
 
-`import { MiniCalendar } from "@mini-app/ui"`
+`import { MiniCalendar } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/mini-calendar.tsx` · family: Calendar & date · type: composite
 
@@ -27,7 +27,7 @@ Compact month grid, day cell only.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[mini-calendar-01.tsx](../examples/mini-calendar/mini-calendar-01.tsx)** — MiniCalendar — An always-visible inline calendar (no popover) — side rail of a scheduler, or date filtered next to a list.

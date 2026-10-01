@@ -1,4 +1,4 @@
-import type { AppAgentOptions } from '@mini-app/contract'
+import type { AppAgentOptions } from '@mohou/contract'
 
 import { HostError } from './codes.ts'
 

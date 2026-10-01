@@ -34,7 +34,7 @@ pub fn child_stop(code: Option<i32>) -> ChildStop {
 }
 
 pub fn shell_entry(prefix: &Path) -> PathBuf {
-    prefix.join("node_modules/@mini-app/shell/src/dev.ts")
+    prefix.join("node_modules/@mohou/shell/src/dev.ts")
 }
 
 /// `Contents/MacOS/<exe>` uses `Contents/Resources/prefix`. A sibling `prefix/` is the local layout.
@@ -242,7 +242,7 @@ fn launch_plan(prefix: &Path, app: &AppHandle, announce: bool) -> Result<(Launch
             path,
             entry,
             runtime,
-            panel: prefix.join("node_modules/@mini-app/shell/dist"),
+            panel: prefix.join("node_modules/@mohou/shell/dist"),
             gui,
         },
         cached,
@@ -1030,7 +1030,7 @@ mod tests {
     fn prefix_follows_the_app_bundle_and_a_sibling_directory() {
         let root = std::env::temp_dir().join(format!("mohou-prefix-{}", std::process::id()));
         let _ = fs::remove_dir_all(&root);
-        let bundle = root.join("Mohou.app/Contents/Resources/prefix/node_modules/@mini-app/shell/src");
+        let bundle = root.join("Mohou.app/Contents/Resources/prefix/node_modules/@mohou/shell/src");
         fs::create_dir_all(&bundle).unwrap();
         fs::write(bundle.join("dev.ts"), "export {}\n").unwrap();
         let exe = root.join("Mohou.app/Contents/MacOS/Mohou");
@@ -1048,7 +1048,7 @@ mod tests {
             Path::new("/tmp/rt")
         );
 
-        let local = root.join("local/prefix/node_modules/@mini-app/shell/src");
+        let local = root.join("local/prefix/node_modules/@mohou/shell/src");
         fs::create_dir_all(&local).unwrap();
         fs::write(local.join("dev.ts"), "export {}\n").unwrap();
         let local_exe = root.join("local/Mohou");
@@ -1060,7 +1060,7 @@ mod tests {
         assert_eq!(runtime.parent().unwrap().file_name().unwrap(), "local");
 
         let win = root.join("win/Mohou.exe");
-        let win_prefix = root.join("win/Resources/prefix/node_modules/@mini-app/shell/src");
+        let win_prefix = root.join("win/Resources/prefix/node_modules/@mohou/shell/src");
         fs::create_dir_all(&win_prefix).unwrap();
         fs::write(win_prefix.join("dev.ts"), "export {}\n").unwrap();
         fs::create_dir_all(win.parent().unwrap()).unwrap();

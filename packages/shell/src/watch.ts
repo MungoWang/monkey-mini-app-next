@@ -1,4 +1,4 @@
-import type { HostSession } from '@mini-app/host'
+import type { HostSession } from '@mohou/host'
 
 import { applyHostEvent, type FrameBridge, type PanelBridge } from './bridge.ts'
 

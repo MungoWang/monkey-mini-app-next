@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@mini-app/ui/components/card'
-import { cn } from '@mini-app/ui/lib/utils'
+import { Card, CardContent, CardHeader, CardTitle } from '@mohou/ui/components/card'
+import { cn } from '@mohou/ui/lib/utils'
 
 export type StatCardProps = {
   title: string

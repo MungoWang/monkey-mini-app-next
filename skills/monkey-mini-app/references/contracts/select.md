@@ -8,7 +8,7 @@ Dropdown single-choice from a fixed list.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue } from "@mini-app/ui"`
+`import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue } from "@mohou/ui"`
 
 `packages/app/ui/src/components/select.tsx` · family: Form · type: component · primitive
 

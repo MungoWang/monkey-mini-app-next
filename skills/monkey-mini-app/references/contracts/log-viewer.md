@@ -6,7 +6,7 @@ Virtualized streaming log viewer with level colors, search, and auto-scroll.
 
 **when** Streaming / CLI-style log output
 
-`import { LogViewer, LogLevel, LogEntry } from "@mini-app/ui"`
+`import { LogViewer, LogLevel, LogEntry } from "@mohou/ui"`
 
 `packages/app/ui/src/products/log-viewer.tsx` · family: Realtime · type: product
 
@@ -48,7 +48,7 @@ Virtualized streaming log viewer with level colors, search, and auto-scroll.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[log-viewer-01.tsx](../examples/log-viewer/log-viewer-01.tsx)** — LogViewer — Thousands of streamed log lines: virtualised rows with level colouring and auto-follow; never render logs with a plain map.

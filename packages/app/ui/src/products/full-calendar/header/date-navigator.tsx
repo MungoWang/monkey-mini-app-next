@@ -2,9 +2,9 @@ import { formatDate } from 'date-fns';
 import { AnimatePresence, motion } from '../shims/motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
-import { Badge } from '@mini-app/ui/components/badge';
-import { Button } from '@mini-app/ui/components/button';
-import { useDateLocale, useLabels } from '@mini-app/ui/i18n/context';
+import { Badge } from '@mohou/ui/components/badge';
+import { Button } from '@mohou/ui/components/button';
+import { useDateLocale, useLabels } from '@mohou/ui/i18n/context';
 import { buttonHover, transition } from '../animations';
 import { useCalendar } from '../contexts/calendar-context';
 

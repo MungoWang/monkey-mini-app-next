@@ -2,7 +2,7 @@ import { lstatSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:f
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 
-import { createProviderRegistry } from '@mini-app/runtime-provider'
+import { createProviderRegistry } from '@mohou/runtime-provider'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { linkPiPeers, peerRoots, piPackage, registerPiRuntime } from '../src/register.ts'

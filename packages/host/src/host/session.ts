@@ -3,9 +3,9 @@ import { mkdir } from 'node:fs/promises'
 import { homedir, tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { builtinWorkbenchId } from '@mini-app/contract'
-import { McpClient } from '@mini-app/mcp-client'
-import type { RuntimeProvider } from '@mini-app/runtime-provider'
+import { builtinWorkbenchId } from '@mohou/contract'
+import { McpClient } from '@mohou/mcp-client'
+import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import { createAppRegistry, listedApp, type ListedApp } from '../apps/registry.ts'
 import { ensureRuntimeAppsLayout } from '../apps/startup-seed.ts'

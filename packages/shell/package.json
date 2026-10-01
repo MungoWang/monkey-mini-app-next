@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/shell",
+  "name": "@mohou/shell",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",
@@ -28,10 +28,10 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@mini-app/host": "workspace:^",
-    "@mini-app/panel": "workspace:^",
-    "@mini-app/runtime-pi": "workspace:^",
-    "@mini-app/runtime-provider": "workspace:^",
+    "@mohou/host": "workspace:^",
+    "@mohou/panel": "workspace:^",
+    "@mohou/runtime-pi": "workspace:^",
+    "@mohou/runtime-provider": "workspace:^",
     "esbuild": "^0.28.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

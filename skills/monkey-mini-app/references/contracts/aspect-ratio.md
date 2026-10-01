@@ -4,7 +4,7 @@
 
 **when** Keeping an image/video/embed from shifting the layout while loading.
 
-`import { AspectRatio } from "@mini-app/ui"`
+`import { AspectRatio } from "@mohou/ui"`
 
 `packages/app/ui/src/components/aspect-ratio.tsx` · family: Layout & structure · type: component · primitive
 
@@ -19,7 +19,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[aspect-ratio-01.tsx](../examples/aspect-ratio/aspect-ratio-01.tsx)** — AspectRatio — A media/skeleton placeholder that must keep a fixed ratio (16/9 here) while its container resizes — prevents layout shift when images or embeds load late.

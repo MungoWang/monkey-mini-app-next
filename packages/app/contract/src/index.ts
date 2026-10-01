@@ -1,6 +1,6 @@
-/** App definition: ids, manifest, imports, `defineApp`, `ctx`. No I/O. @module @mini-app/contract */
+/** App definition: ids, manifest, imports, `defineApp`, `ctx`. No I/O. @module @mohou/contract */
 
-export const packageId = '@mini-app/contract' as const
+export const packageId = '@mohou/contract' as const
 
 export { parseAppId, type AppId } from './app-id.ts'
 export { appEntries, appTrees } from './entries.ts'

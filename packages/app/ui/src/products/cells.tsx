@@ -1,4 +1,4 @@
-import { StatusBadge } from '@mini-app/ui/blocks/status-badge'
+import { StatusBadge } from '@mohou/ui/blocks/status-badge'
 
 export function TextCell({ value }: { value: unknown }) {
   return <span className="truncate">{String(value ?? '')}</span>

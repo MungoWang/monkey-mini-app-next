@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 
-const names = ['@mini-app/host', '@mini-app/shell'] as const
+const names = ['@mohou/host', '@mohou/shell'] as const
 
 /**
  * Versions for the settings about block. Reads the package files. Does not invent a number.

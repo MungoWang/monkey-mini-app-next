@@ -17,7 +17,7 @@ Ship the hygiene in the same change as the review:
 - The superseded workbench-slot proposal is [rejected](../../rejected/architecture/2026-09-20-workbench-slot.md).
 - [Changelog](../../../docs/changelog.md) records the 1.0.0 surface that main actually ships.
 - Boundary tests raise branch coverage off the gate floor (about 85.8% → about 87.2%) across frame-bus, tabs, desk, theme pin, owner mount, wrapper streams, mcp-list, and http-client parsers. The gate stays 85%.
-- `pnpm build:artifact` and `pnpm publish:check` refresh `artifacts/Mohou-1.0.0-*` and the ten npm packs, including `@mini-app/app-view`. The old `mini-app-1.0.0-*` directory is removed.
+- `pnpm build:artifact` and `pnpm publish:check` refresh `artifacts/Mohou-1.0.0-*` and the ten npm packs, including `@mohou/app-view`. The old `mini-app-1.0.0-*` directory is removed.
 
 ## Alternatives considered
 

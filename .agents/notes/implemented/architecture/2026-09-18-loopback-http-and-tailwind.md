@@ -12,7 +12,7 @@ Author, owner, and iframe calls existed in-process while product pages still sai
 
 `POST /mcp` with `Accept` that includes `application/json` is stateless. `Accept: text/event-stream` only opens a session and returns `mcp-session-id`. Later GET, POST, and DELETE reuse that header. GET and DELETE without a live session are 404.
 
-There is no `@mini-app/ui` package yet and no host-written kit. `/mma/sdk.js` is reserved. The kit specifier is not an allowlist row.
+There is no `@mohou/ui` package yet and no host-written kit. `/mma/sdk.js` is reserved. The kit specifier is not an allowlist row.
 
 ## Alternatives considered
 

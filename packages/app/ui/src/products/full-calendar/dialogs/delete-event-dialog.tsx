@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@mini-app/ui/components/alert-dialog'
+} from '@mohou/ui/components/alert-dialog'
 import { useCalendar } from '../contexts/calendar-context'
 
 export default function DeleteEventDialog({ eventId }: { eventId: number }) {

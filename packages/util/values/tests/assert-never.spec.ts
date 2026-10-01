@@ -16,7 +16,7 @@ function label(gate: Gate): string {
 
 describe('packageId', () => {
   it('names the package', () => {
-    expect(packageId).toBe('@mini-app/values')
+    expect(packageId).toBe('@mohou/values')
   })
 })
 

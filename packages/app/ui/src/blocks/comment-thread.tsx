@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from '@mini-app/ui/components/avatar'
+import { Avatar, AvatarFallback } from '@mohou/ui/components/avatar'
 
 export type Comment = { id: string; author: string; body: string; time?: string | undefined }
 

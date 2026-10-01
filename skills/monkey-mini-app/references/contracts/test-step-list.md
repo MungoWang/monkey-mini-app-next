@@ -6,7 +6,7 @@ Numbered test steps with expected/actual + status.
 
 **when** QA cases, checklists that get executed and graded.
 
-`import { TestStepList, TestStep } from "@mini-app/ui"`
+`import { TestStepList, TestStep } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/test-step-list.tsx` · family: Data & tables · type: block
 

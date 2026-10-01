@@ -6,8 +6,8 @@ import { describe, expect, it } from 'vitest'
 
 import { registerWithFiles } from './author-seed.ts'
 
-import { McpClient } from '@mini-app/mcp-client'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { McpClient } from '@mohou/mcp-client'
+import { createEchoProvider } from '@mohou/runtime-provider'
 
 import {
   emptyCredentials, InstallError, createAppRegistry, createAuthorTools, installApp, runNpm, type AuthorCallPorts } from '../src/index.ts'
@@ -124,7 +124,7 @@ describe('mini_app_install', () => {
     })
     expect(removed.ok).toBe(true)
     expect(removed.packages.kept).toBeUndefined()
-    expect(await installApp(dir, { packages: [{ name: '@mini-app/contract' }], remove: [] })).toMatchObject({ code: 'install-denied' })
+    expect(await installApp(dir, { packages: [{ name: '@mohou/contract' }], remove: [] })).toMatchObject({ code: 'install-denied' })
     expect(await installApp(dir, { packages: [{ name: 'left-pad', version: '1.0.0; rm' }], remove: [] })).toMatchObject({ code: 'install-denied' })
     expect(await installApp(dir, { packages: [], remove: ['../x'] })).toMatchObject({ code: 'install-denied' })
     const thrown = await installApp(dir, { packages: [{ name: 'left-pad' }], remove: [] }, {

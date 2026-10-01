@@ -8,8 +8,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@mini-app/ui/components/alert-dialog'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/alert-dialog'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 /**
  * Controlled yes/no dialog with loading-safe confirm.

@@ -8,7 +8,7 @@
     "jsx": "react-jsx",
     "lib": ["es2024", "dom"],
     "paths": {
-      "@mini-app/ui/*": ["./src/*"]
+      "@mohou/ui/*": ["./src/*"]
     }
   },
   "include": ["src"]

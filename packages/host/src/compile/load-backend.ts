@@ -2,7 +2,7 @@ import { existsSync, realpathSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
 
-import { appEntries, ContractError, type AppApiMethod } from '@mini-app/contract'
+import { appEntries, ContractError, type AppApiMethod } from '@mohou/contract'
 import * as esbuild from 'esbuild'
 
 import { CompileError } from './codes.ts'

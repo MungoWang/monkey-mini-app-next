@@ -1,7 +1,7 @@
 import { formatDate } from 'date-fns';
 import { motion } from '../shims/motion';
-import { Button } from '@mini-app/ui/components/button';
-import { useDateLocale } from '@mini-app/ui/i18n/context';
+import { Button } from '@mohou/ui/components/button';
+import { useDateLocale } from '@mohou/ui/i18n/context';
 import { buttonHover, transition } from '../animations';
 import { useCalendar } from '../contexts/calendar-context';
 

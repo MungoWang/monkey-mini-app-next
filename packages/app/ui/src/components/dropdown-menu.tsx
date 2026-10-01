@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { Menu as MenuPrimitive } from '@base-ui/react/menu'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 import { ChevronRightIcon, CheckIcon } from 'lucide-react'
 
 /**

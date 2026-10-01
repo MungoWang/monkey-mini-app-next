@@ -2,7 +2,7 @@ import { createRequire } from 'node:module'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { compilePanelStylesheet } from '@mini-app/host'
+import { compilePanelStylesheet } from '@mohou/host'
 import * as esbuild from 'esbuild'
 
 const require = createRequire(import.meta.url)

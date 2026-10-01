@@ -36,7 +36,7 @@ import {
   SheetTitle,
   Textarea,
   useApp,
-} from '@mini-app/ui'
+} from '@mohou/ui'
 
 type Issue = {
   key: string

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { Button } from '@mini-app/ui/components/button'
+import { cn } from '@mohou/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
 
 /**
  * Blocking confirm modal (no click-outside dismiss).

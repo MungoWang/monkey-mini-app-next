@@ -1,8 +1,8 @@
 ---
 status: locked
-updated: 2026-09-20
+updated: 2026-10-01
 ---
 
 Role: `definition`.
 
-Shared views of an app. The panel and `@mini-app/ui` both import them. Product behavior: [features.md](../../../docs/product/features.md).
+Shared views of an app. The panel and `@mohou/ui` both import them. Product behavior: [features.md](../../../docs/product/features.md).

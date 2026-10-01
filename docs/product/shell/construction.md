@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Construction
@@ -16,7 +16,7 @@ Layer: [Shell](README.md). Index: [features.md](../features.md).
 - Window: the Tauri binary from **`packages/launcher/tauri`**, not from the shell npm package. It exposes no Tauri commands to the page. `pnpm dev:host` passes the loopback origin; the binary refuses any other URL. The macOS app executable is that binary. Windows `run.cmd` execs `Mohou.exe`. A release zip places that executable beside `Resources/prefix`, so runtime data uses the user profile, as the macOS app does. A local prefix beside the executable stays the local-app layout. It spawns the shell sidecar, reads the loopback origin the sidecar prints, and opens that origin. The splash names the step in progress. A remembered shell PATH starts the sidecar without waiting for the login shell. The next open uses a PATH refreshed in the background. A missing remembered Node asks the shell again. Sidecar exit 75 starts the sidecar again and keeps the window. It does not link Pi peers before the spawn. Pi registers after the sidecar starts.
 - Pending update: `update.json` installs only after sidecar exit 75 in this process. A file left by a previous process does not install and does not block open. The install omits peer dependencies so optional Pi peers are not fetched. A UI import that is only a peer, such as `react-is`, is a direct dependency of the kit. It stops after its budget, on failure, or when the window closes, then restores the prefix manifest and starts the sidecar from the installed prefix. The file does not stay pending.
 - Failure: bad config, unknown provider id, provider `start` failure, or a missing window binary exits non-zero and prints the message. Shell does not start a half-configured Host. Port in use fails start with that message. A missing binary names `pnpm build:window`.
-- Non-goals: Panel calling the constructor; Host choosing the provider implementation; embedding this platform inside another agent product; packing Tauri sources inside `@mini-app/shell`.
+- Non-goals: Panel calling the constructor; Host choosing the provider implementation; embedding this platform inside another agent product; packing Tauri sources inside `@mohou/shell`.
 
 ## Implementation
 

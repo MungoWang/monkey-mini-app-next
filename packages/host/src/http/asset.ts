@@ -1,7 +1,7 @@
 import { lstat, readFile, realpath } from 'node:fs/promises'
 import path from 'node:path'
 
-import { appTrees } from '@mini-app/contract'
+import { appTrees } from '@mohou/contract'
 
 import { admitAssetInner, assetMediaType } from '../compile/asset-path.ts'
 import { RouteError } from './route-codes.ts'

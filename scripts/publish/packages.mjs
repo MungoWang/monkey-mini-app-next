@@ -22,13 +22,13 @@ export function publishFailures(rootDir) {
   if (typeof rootPkg.engines?.node !== 'string' || rootPkg.engines.node.length === 0) {
     failures.push('root engines.node is missing')
   }
-  const shell = packages.find(item => item.pkg.name === '@mini-app/shell')
+  const shell = packages.find(item => item.pkg.name === '@mohou/shell')
   const version = shell?.pkg.version
   if (packages.length === 0) failures.push('no workspace packages')
   for (const item of packages) {
     const { dir, pkg } = item
     if (pkg.private === true) failures.push(`${pkg.name} is private`)
-    if (typeof pkg.name !== 'string' || !pkg.name.startsWith('@mini-app/')) failures.push(`${dir} name must be @mini-app/*`)
+    if (typeof pkg.name !== 'string' || !pkg.name.startsWith('@mohou/')) failures.push(`${dir} name must be @mohou/*`)
     if (pkg.version !== version) failures.push(`${pkg.name} version ${pkg.version} is not ${version}`)
     if (pkg.version === '0.0.0') failures.push(`${pkg.name} version is 0.0.0`)
     if (pkg.license !== 'MIT') failures.push(`${pkg.name} license is not MIT`)
@@ -36,15 +36,15 @@ export function publishFailures(rootDir) {
     if (!Array.isArray(pkg.files) || !pkg.files.includes('src') || !pkg.files.includes('README.md') || !pkg.files.includes('!**/*.tsbuildinfo')) {
       failures.push(`${pkg.name} files must include src and README.md and exclude tsbuildinfo`)
     }
-    if (pkg.name === '@mini-app/shell' && (pkg.files.includes('src-tauri') || pkg.files.some(f => String(f).includes('src-tauri')))) {
-      failures.push('@mini-app/shell must not pack the Tauri launcher (packages/launcher/tauri)')
+    if (pkg.name === '@mohou/shell' && (pkg.files.includes('src-tauri') || pkg.files.some(f => String(f).includes('src-tauri')))) {
+      failures.push('@mohou/shell must not pack the Tauri launcher (packages/launcher/tauri)')
     }
-    if (pkg.name === '@mini-app/host') {
+    if (pkg.name === '@mohou/host') {
       if (!Array.isArray(pkg.files) || !pkg.files.includes('themes')) {
-        failures.push('@mini-app/host files must include themes (builtin palettes)')
+        failures.push('@mohou/host files must include themes (builtin palettes)')
       }
       if (!existsSync(join(rootDir, dir, 'themes', 'theme-default.css'))) {
-        failures.push('@mini-app/host themes/theme-default.css is missing')
+        failures.push('@mohou/host themes/theme-default.css is missing')
       }
     }
     const access = pkg.publishConfig?.access
@@ -99,10 +99,10 @@ export function tarballFailures(rootDir, list) {
       failures.push(`${name} packs tests, node_modules, or src-tauri`)
     }
     if (!entries.some(entry => entry.endsWith('/src/index.ts'))) failures.push(`${name} is missing src/index.ts`)
-    if (name.startsWith('mini-app-shell-') && !entries.some(entry => entry.includes('/skill/monkey-mini-app/SKILL.md'))) {
+    if (name.startsWith('mohou-shell-') && !entries.some(entry => entry.includes('/skill/monkey-mini-app/SKILL.md'))) {
       failures.push(`${name} is missing packaged skill (run pnpm sync:skill)`)
     }
-    if (name.startsWith('mini-app-shell-') && !entries.some(entry => entry.endsWith('/dist/panel.html'))) {
+    if (name.startsWith('mohou-shell-') && !entries.some(entry => entry.endsWith('/dist/panel.html'))) {
       failures.push(`${name} is missing panel dist (run pnpm build:panel)`)
     }
   }

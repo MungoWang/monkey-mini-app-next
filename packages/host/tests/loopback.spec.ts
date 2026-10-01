@@ -4,7 +4,7 @@ import { mkdtemp } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { createEchoProvider } from '@mohou/runtime-provider'
 import { describe, expect, it } from 'vitest'
 
 import { registerWithFiles } from './author-seed.ts'
@@ -23,7 +23,7 @@ const files = {
   }),
   'ui.tsx': 'export default function View() { return null }\n',
   'main.api.ts': [
-    'import { defineApp } from \'@mini-app/contract\'',
+    'import { defineApp } from \'@mohou/contract\'',
     'export default defineApp({ name: \'Example\', description: \'One line\', api: { ping: async () => \'pong\', wrapped: async () => ({ ok: true, value: \'x\' }), failObj: async () => ({ ok: false, error: { message: \'nope\' } }), failStr: async () => ({ ok: false, error: \'nope\' }), failBare: async () => ({ ok: false, error: 1 }) } })',
     '',
   ].join('\n'),

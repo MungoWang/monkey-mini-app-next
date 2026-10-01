@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { Check, ClipboardList, Copy, Eye, EyeOff } from 'lucide-react';
 
-import { useLabels } from '@mini-app/ui/i18n/context';
-import { writeClipboard } from '@mini-app/ui/lib/clipboard';
-import { cn } from '@mini-app/ui/lib/utils';
+import { useLabels } from '@mohou/ui/i18n/context';
+import { writeClipboard } from '@mohou/ui/lib/clipboard';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type Environment =
   | 'production'

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { McpClient, McpError } from '@mini-app/mcp-client'
+import { McpClient, McpError } from '@mohou/mcp-client'
 
 import { listMcpForAuthor, toolsMcpForAuthor } from '../src/index.ts'
 

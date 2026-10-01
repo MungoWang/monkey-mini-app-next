@@ -1,6 +1,6 @@
-/** Closed-union helpers. @module @mini-app/values */
+/** Closed-union helpers. @module @mohou/values */
 
-export const packageId = '@mini-app/values' as const
+export const packageId = '@mohou/values' as const
 
 export { assertNever } from './assert-never.ts'
 export type { Branded } from './brand.ts'

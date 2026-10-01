@@ -1,1 +1,1 @@
-export { Calendar as DayPicker } from '@mini-app/ui/components/calendar'
+export { Calendar as DayPicker } from '@mohou/ui/components/calendar'

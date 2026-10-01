@@ -64,7 +64,7 @@ function shellVersion() {
   return JSON.parse(readFileSync(join(root, 'packages/shell/package.json'), 'utf8')).version
 }
 
-/** `local` installs file: tarballs. `release` installs `@mini-app/shell` from the registry. */
+/** `local` installs file: tarballs. `release` installs `@mohou/shell` from the registry. */
 function distChannel(argv) {
   const named = argv.find(arg => arg === '--channel=tarball' || arg === '--channel=registry')
   if (named === '--channel=tarball') return 'tarball'
@@ -99,7 +99,7 @@ function prefixPackage(channel, version, engines) {
       description: 'Mohou install prefix from the npm registry.',
       mohou: { channel: 'registry', registry: 'https://registry.npmjs.org' },
       dependencies: {
-        '@mini-app/shell': version,
+        '@mohou/shell': version,
         tsx: '^4.20.0',
       },
     }
@@ -328,7 +328,7 @@ const installArgs = ['install', '--no-fund', '--no-audit']
 if (channel === 'registry') installArgs.push('--registry', 'https://registry.npmjs.org')
 run('npm', installArgs, { cwd: prefix })
 
-const shellRoot = join(prefix, 'node_modules', '@mini-app', 'shell')
+const shellRoot = join(prefix, 'node_modules', '@mohou', 'shell')
 if (!existsSync(join(shellRoot, 'skill', 'monkey-mini-app', 'SKILL.md'))) {
   throw new Error('installed shell missing skill')
 }

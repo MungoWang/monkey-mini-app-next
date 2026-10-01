@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { AppCard, DashboardShell, LiveRefresh, PageHeader, useApp } from '@mini-app/ui'
+import { AppCard, DashboardShell, LiveRefresh, PageHeader, useApp } from '@mohou/ui'
 
 type FocusItem = { id: string; title: string; detail: string }
 type AppItem = { id: string; name: string; description: string; version: string; acronym: string }

@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { MiniCalendar } from "@mini-app/ui";
+import { MiniCalendar } from "@mohou/ui";
 
 export default function MiniCalendar01Example() {
   const [mini, setMini] = React.useState<Date | undefined>(new Date());

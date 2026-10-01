@@ -1,5 +1,5 @@
-import type { AppAgentEvent, AppLlmEvent } from '@mini-app/contract'
-import { ProviderError, assertKnownModel, type RuntimeAgentOptions, type RuntimeLlmOptions, type RuntimeProvider, type RuntimeProviderConfig } from '@mini-app/runtime-provider'
+import type { AppAgentEvent, AppLlmEvent } from '@mohou/contract'
+import { ProviderError, assertKnownModel, type RuntimeAgentOptions, type RuntimeLlmOptions, type RuntimeProvider, type RuntimeProviderConfig } from '@mohou/runtime-provider'
 
 import { HostError } from './codes.ts'
 import { admitModelBudget, callWithRetry, stripSchemaFence, type ModelPolicy, DEFAULT_MODEL_POLICY } from './model-policy.ts'

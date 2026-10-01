@@ -1,7 +1,7 @@
 
-import { Avatar, AvatarFallback } from '@mini-app/ui/components/avatar'
-import { NativeSelect, NativeSelectOption } from '@mini-app/ui/components/native-select'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Avatar, AvatarFallback } from '@mohou/ui/components/avatar'
+import { NativeSelect, NativeSelectOption } from '@mohou/ui/components/native-select'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 export type UserOption = { id: string; name: string }
 

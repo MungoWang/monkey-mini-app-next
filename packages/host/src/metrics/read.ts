@@ -1,6 +1,6 @@
 import { arch, cpus, freemem, hostname, loadavg, platform, totalmem, uptime } from 'node:os'
 
-import type { AppSystemMetrics } from '@mini-app/contract'
+import type { AppSystemMetrics } from '@mohou/contract'
 
 import { MetricsError } from './codes.ts'
 

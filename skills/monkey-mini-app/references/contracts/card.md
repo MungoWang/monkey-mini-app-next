@@ -8,7 +8,7 @@ Surface with header/content/footer.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@mini-app/ui"`
+`import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@mohou/ui"`
 
 `packages/app/ui/src/components/card.tsx` · family: Surface · type: component · primitive
 
@@ -35,7 +35,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[card-01.tsx](../examples/card/card-01.tsx)** — Card — The default content container: header (title + description), body, optional footer. Start here for any panel before writing custom borders/padding.

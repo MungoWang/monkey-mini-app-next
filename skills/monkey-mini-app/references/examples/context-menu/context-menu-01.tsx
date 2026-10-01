@@ -9,7 +9,7 @@ import {
   ContextMenuGroup,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 export default function ContextMenu01Example() {
   return (

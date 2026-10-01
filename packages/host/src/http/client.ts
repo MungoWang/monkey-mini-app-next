@@ -1,4 +1,4 @@
-import type { AppHttpRequest, AppHttpResponse } from '@mini-app/contract'
+import type { AppHttpRequest, AppHttpResponse } from '@mohou/contract'
 
 import { present } from '../kernel/present.ts'
 import { HttpError } from './codes.ts'

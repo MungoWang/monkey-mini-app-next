@@ -6,11 +6,11 @@ status: implemented
 
 ## Decision
 
-`@mini-app/host` `package.json` `files` includes `themes/`. Builtin palette CSS is part of the published package, not monorepo-only.
+`@mohou/host` `package.json` `files` includes `themes/`. Builtin palette CSS is part of the published package, not monorepo-only.
 
 ## Why
 
-`builtinThemesDir()` resolves to `../../themes` beside `src/`. Monorepo `dev:host` finds `packages/host/themes`. A packed install under `node_modules/@mini-app/host` had only `src` and no `themes`, so first paint returned empty style tokens and the panel looked unthemed (plain white).
+`builtinThemesDir()` resolves to `../../themes` beside `src/`. Monorepo `dev:host` finds `packages/host/themes`. A packed install under `node_modules/@mohou/host` had only `src` and no `themes`, so first paint returned empty style tokens and the panel looked unthemed (plain white).
 
 ## Given up
 

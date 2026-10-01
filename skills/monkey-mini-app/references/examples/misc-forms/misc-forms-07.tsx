@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Cascader, Transfer } from "@mini-app/ui";
+import { Cascader, Transfer } from "@mohou/ui";
 
 export default function MiscForms07Example() {
   const [cascade, setCascade] = React.useState<string[]>([]);

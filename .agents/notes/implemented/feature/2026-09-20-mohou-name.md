@@ -8,7 +8,7 @@ The window title was `mini-app`. That is the package category, not a product nam
 
 ## Decision
 
-The English name is Mohou. The Chinese name is 墨猴. The panel sets `document.title` from the current locale, and the window copies that title. Before the page loads, the title is Mohou. Settings about shows the name and the meaning in the current locale. [Window and event bridge](../../../docs/product/shell/window.md) owns the wording. The binary stays `mini-app-window`. The packages stay `@mini-app/*`.
+The English name is Mohou. The Chinese name is 墨猴. The panel sets `document.title` from the current locale, and the window copies that title. Before the page loads, the title is Mohou. Settings about shows the name and the meaning in the current locale. [Window and event bridge](../../../docs/product/shell/window.md) owns the wording. The binary stays `mini-app-window`. The packages stay `@mohou/*`.
 
 Mohou is the small monkey once kept to grind ink. It is small, stays at hand, and serves one task. This product is that set of tools. The user brings the idea. The language model writes the implementation. Mohou supplies the brush, the ink, the paper, the inkstone, the library, and the shelf.
 

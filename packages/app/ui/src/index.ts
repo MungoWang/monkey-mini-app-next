@@ -90,7 +90,7 @@ export * from './composites/time-range-picker';
 export * from './composites/timezone-select';
 export * from './composites/transfer';
 export * from './composites/user-picker';
-export { AppCard, WorkbenchLibrary, appCardStyles, type AppCardExtra, type AppCardStyle } from '@mini-app/app-view';
+export { AppCard, WorkbenchLibrary, appCardStyles, type AppCardExtra, type AppCardStyle } from '@mohou/app-view';
 export * from './products/cells';
 export * from './products/code-block';
 export * from './products/code-editor';

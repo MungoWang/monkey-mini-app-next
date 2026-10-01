@@ -87,7 +87,7 @@ There is no `ctx.tool` and no `listTools`. Tools stay on the runtime provider. S
 
 ## The kit, when you want it
 
-`@mini-app/ui` is what the agent writes against when the screen is a list, a board, settings, or a dashboard. The parts use the host's colour tokens, so a new app does not invent a second palette. The catalog is generated from the kit: [skills/monkey-mini-app/references/catalog.md](skills/monkey-mini-app/references/catalog.md).
+`@mohou/ui` is what the agent writes against when the screen is a list, a board, settings, or a dashboard. The parts use the host's colour tokens, so a new app does not invent a second palette. The catalog is generated from the kit: [skills/monkey-mini-app/references/catalog.md](skills/monkey-mini-app/references/catalog.md).
 
 A page can also be plain elements and Tailwind, or a mix. Using none of the kit is a valid app. Heavy editors load on demand, so an app that never opens a code editor does not ship that engine.
 
@@ -95,7 +95,7 @@ A page can also be plain elements and Tailwind, or a mix. Using none of the kit 
 
 ```tsx
 // ui.tsx
-import { Button, useApp } from "@mini-app/ui";
+import { Button, useApp } from "@mohou/ui";
 
 export default function Ui() {
   const { call } = useApp();
@@ -105,7 +105,7 @@ export default function Ui() {
 
 ```ts
 // main.api.ts
-import { defineApp } from "@mini-app/contract";
+import { defineApp } from "@mohou/contract";
 
 export default defineApp({
   name: "Ping",
@@ -114,7 +114,7 @@ export default defineApp({
 });
 ```
 
-The view imports `@mini-app/ui` and `react`. The backend imports `@mini-app/contract`. Helpers go in `ui/` (view only), `api/` (backend only), or `shared/` (pure, both sides). A relative import cannot leave the app directory.
+The view imports `@mohou/ui` and `react`. The backend imports `@mohou/contract`. Helpers go in `ui/` (view only), `api/` (backend only), or `shared/` (pure, both sides). A relative import cannot leave the app directory.
 
 ## Try it
 

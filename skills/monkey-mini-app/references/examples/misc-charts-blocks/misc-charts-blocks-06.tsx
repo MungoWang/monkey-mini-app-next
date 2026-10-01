@@ -9,7 +9,7 @@ import {
   FileTree,
   RequestInspector,
   Terminal,
-} from "@mini-app/ui";
+} from "@mohou/ui";
 
 const REQUEST = JSON.stringify(
   {

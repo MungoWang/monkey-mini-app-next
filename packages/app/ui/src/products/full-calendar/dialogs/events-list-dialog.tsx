@@ -7,8 +7,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@mini-app/ui/components/dialog'
-import { cn } from '@mini-app/ui/lib/utils'
+} from '@mohou/ui/components/dialog'
+import { cn } from '@mohou/ui/lib/utils'
 
 import { useCalendar } from '../contexts/calendar-context'
 import { formatTime } from '../helpers'

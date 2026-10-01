@@ -9,7 +9,7 @@ import { join } from 'node:path'
 
 import { workspacePackages } from '../publish/packages.mjs'
 
-/** `@mini-app/app-view` + `1.0.0` → `mini-app-app-view-1.0.0.tgz`. */
+/** `@mohou/app-view` + `1.0.0` → `mohou-app-view-1.0.0.tgz`. */
 export function packedFileName(packageName, version) {
   return `${packageName.replace(/^@/, '').replaceAll('/', '-')}-${version}.tgz`
 }

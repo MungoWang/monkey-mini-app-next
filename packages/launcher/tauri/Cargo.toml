@@ -2,7 +2,7 @@
 name = "mini-app-window"
 version = "1.0.9"
 edition = "2021"
-description = "Mohou panel window (launcher). Loads the loopback origin; not part of @mini-app/shell."
+description = "Mohou panel window (launcher). Loads the loopback origin; not part of @mohou/shell."
 publish = false
 
 [dependencies]

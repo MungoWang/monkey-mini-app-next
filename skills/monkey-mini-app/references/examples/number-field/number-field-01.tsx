@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { NumberField } from "@mini-app/ui";
+import { NumberField } from "@mohou/ui";
 
 export default function NumberField01Example() {
   const [n, setN] = React.useState(3);

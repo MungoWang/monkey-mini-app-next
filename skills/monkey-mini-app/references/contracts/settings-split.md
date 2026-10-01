@@ -6,7 +6,7 @@ Preferences / long-form page: a jump list that always matches the sections it sc
 
 **when** Page shape: a settings page, integration config, or a long report with anchored sections
 
-`import { SettingsSplit, SettingsSection } from "@mini-app/ui"`
+`import { SettingsSplit, SettingsSection } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/settings-split.tsx` · family: Layout & structure · type: block
 
@@ -47,7 +47,7 @@ Preferences / long-form page: a jump list that always matches the sections it sc
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[settings-split-01.tsx](../examples/settings-split/settings-split-01.tsx)** — SettingsSplit — A settings page in a fixed-height panel: the jump list tracks the section you are reading, each side scrolls on its own, and the unsaved bar stays pinned to the content pane. — _*Scroll the sections — the nav highlight follows; edit a field and the save bar appears without the layout moving*_

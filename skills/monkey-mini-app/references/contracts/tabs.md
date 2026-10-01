@@ -8,7 +8,7 @@ Switch between views in one page.
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Tabs, TabsContent, TabsList, TabsTrigger, tabsListVariants } from "@mini-app/ui"`
+`import { Tabs, TabsContent, TabsList, TabsTrigger, tabsListVariants } from "@mohou/ui"`
 
 `packages/app/ui/src/components/tabs.tsx` · family: Navigation · type: component · primitive
 

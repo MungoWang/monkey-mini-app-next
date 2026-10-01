@@ -3,7 +3,7 @@
  * @title Progress
  * @scenario Determinate percentage bar for a known-length task (upload, batch done/total); use Spinner when progress is unknown.
  */
-import { Progress } from "@mini-app/ui";
+import { Progress } from "@mohou/ui";
 
 export default function Progress01Example() {
   return <Progress value={48} />;

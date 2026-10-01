@@ -6,7 +6,7 @@ From/to moments, all-day toggle.
 
 **when** Run windows, on-call shifts.
 
-`import { DateTimeRangePicker, DateTimeRange } from "@mini-app/ui"`
+`import { DateTimeRangePicker, DateTimeRange } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/date-time-range-picker.tsx` · family: Calendar & date · type: composite
 
@@ -36,7 +36,7 @@ From/to moments, all-day toggle.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[date-time-range-picker-01.tsx](../examples/date-time-range-picker/date-time-range-picker-01.tsx)** — DateTimeRangePicker — A time span with both endpoints at day+time precision (log/incident investigation windows). — _*Two DateTimePickers; allDay switches to a date range*_

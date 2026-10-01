@@ -1,9 +1,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { useHtmlDark } from '@mini-app/ui/hooks/use-html-dark'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { cn } from '@mini-app/ui/lib/utils'
+import { useHtmlDark } from '@mohou/ui/hooks/use-html-dark'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
 
 export type JqlSuggestItem = { name: string; type?: string | undefined }
 

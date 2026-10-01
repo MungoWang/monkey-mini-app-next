@@ -87,7 +87,7 @@ ctx.signal                                       // 停止会真的停
 
 ## 组件库，要用的时候再用
 
-`@mini-app/ui` 是列表、看板、设置、仪表盘时对着写的。颜色走宿主的 token，新 app 不会再造一套色板。目录是从组件库生成的：[skills/monkey-mini-app/references/catalog.md](skills/monkey-mini-app/references/catalog.md)。
+`@mohou/ui` 是列表、看板、设置、仪表盘时对着写的。颜色走宿主的 token，新 app 不会再造一套色板。目录是从组件库生成的：[skills/monkey-mini-app/references/catalog.md](skills/monkey-mini-app/references/catalog.md)。
 
 页面也可以是原生元素加 Tailwind，或者混用。一个组件都不用，同样是一个合法的 app。重编辑器按需加载，不开代码编辑器的 app 不会带上那套引擎。
 
@@ -95,7 +95,7 @@ ctx.signal                                       // 停止会真的停
 
 ```tsx
 // ui.tsx
-import { Button, useApp } from "@mini-app/ui";
+import { Button, useApp } from "@mohou/ui";
 
 export default function Ui() {
   const { call } = useApp();
@@ -105,7 +105,7 @@ export default function Ui() {
 
 ```ts
 // main.api.ts
-import { defineApp } from "@mini-app/contract";
+import { defineApp } from "@mohou/contract";
 
 export default defineApp({
   name: "Ping",
@@ -114,7 +114,7 @@ export default defineApp({
 });
 ```
 
-界面引 `@mini-app/ui` 和 `react`。后端引 `@mini-app/contract`。辅助代码放 `ui/`（仅界面）、`api/`（仅后端）或 `shared/`（纯代码，两边都能用）。相对路径不能跳出 app 目录。
+界面引 `@mohou/ui` 和 `react`。后端引 `@mohou/contract`。辅助代码放 `ui/`（仅界面）、`api/`（仅后端）或 `shared/`（纯代码，两边都能用）。相对路径不能跳出 app 目录。
 
 ## 试用
 

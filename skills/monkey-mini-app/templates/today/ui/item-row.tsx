@@ -1,4 +1,4 @@
-import { Badge } from '@mini-app/ui'
+import { Badge } from '@mohou/ui'
 
 export type Item = { id: string; title: string; done: boolean; createdAt: number }
 

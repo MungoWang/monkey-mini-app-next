@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Checkbox, RadioGroup, RadioGroupItem, Switch } from "@mini-app/ui";
+import { Checkbox, RadioGroup, RadioGroupItem, Switch } from "@mohou/ui";
 
 export default function MiscForms02Example() {
   const [on, setOn] = React.useState(true);

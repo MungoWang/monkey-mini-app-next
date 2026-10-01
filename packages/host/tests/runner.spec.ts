@@ -65,7 +65,7 @@ describe('renderRunnerDocument', () => {
     const script = win.document.createElement('script')
     script.textContent = moduleErrorPaintSource('en')
     win.document.body.append(script)
-    win.paintModuleError?.('com.example.app', "The requested module '@mini-app/ui' does not provide an export named 'LiveRefresh'")
+    win.paintModuleError?.('com.example.app', "The requested module '@mohou/ui' does not provide an export named 'LiveRefresh'")
     const root = win.document.getElementById('root')
     expect(root?.querySelector('[data-module-error="1"]')).toBeTruthy()
     expect(root?.textContent).toContain('This mini-app failed to load')

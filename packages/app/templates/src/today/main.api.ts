@@ -1,4 +1,4 @@
-import { defineApp } from '@mini-app/contract'
+import { defineApp } from '@mohou/contract'
 
 type TodoItem = { id: string; title: string; done: boolean; createdAt: number }
 type Filter = 'all' | 'active' | 'done'

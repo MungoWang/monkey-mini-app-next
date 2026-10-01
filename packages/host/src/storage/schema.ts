@@ -4,7 +4,7 @@ import { join } from 'node:path'
 
 import Database from 'better-sqlite3'
 
-import { appTrees } from '@mini-app/contract'
+import { appTrees } from '@mohou/contract'
 
 import { StorageError } from './codes.ts'
 import { storageBackup, storageBackupMeta, storageBlocked, storageDatabase, storageDir } from './layout.ts'

@@ -6,7 +6,7 @@ Nested comments with author + time.
 
 **when** Issue/ticket discussion, review comments. Editing a comment is your job, not the component's.
 
-`import { CommentThread, Comment } from "@mini-app/ui"`
+`import { CommentThread, Comment } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/comment-thread.tsx` · family: Realtime · type: block
 

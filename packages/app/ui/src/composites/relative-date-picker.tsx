@@ -2,9 +2,9 @@
 import { subDays } from 'date-fns'
 import type { DateRange } from 'react-day-picker'
 
-import { Button } from '@mini-app/ui/components/button'
-import { DateRangePicker } from '@mini-app/ui/composites/date-range-picker'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Button } from '@mohou/ui/components/button'
+import { DateRangePicker } from '@mohou/ui/composites/date-range-picker'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 export type RelativePreset = 'today' | '7d' | '30d' | 'sprint' | 'custom'
 

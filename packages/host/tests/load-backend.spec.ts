@@ -22,11 +22,11 @@ describe('platformModuleAllowed', () => {
     expect(imports['react/jsx-runtime']).toBe(platformRuntimePath())
     expect(imports['react-dom']).toBe(platformRuntimePath())
     expect(imports['react-dom/client']).toBe(platformRuntimePath())
-    expect(imports['@mini-app/ui']).toBe(platformSdkPath())
+    expect(imports['@mohou/ui']).toBe(platformSdkPath())
     expect(imports.lodash).toBe(platformVendorPath('lodash'))
     expect(imports['lodash-es']).toBe(imports.lodash)
     expect(imports['motion/react']).toBe(platformVendorPath('motion'))
-    expect(imports).not.toHaveProperty('@mini-app/contract')
+    expect(imports).not.toHaveProperty('@mohou/contract')
     expect(platformSdkPath()).toBe(`${platformLayout.root}/${platformLayout.sdk}`)
   })
 
@@ -69,7 +69,7 @@ describe('loadBackend', () => {
     const dir = await mkdtemp(join(tmpdir(), 'mma-backend-'))
     await writeFile(join(dir, 'helper.ts'), 'export const n = 1\n')
     await writeFile(join(dir, 'main.api.ts'), `
-      import { defineApp } from '@mini-app/contract'
+      import { defineApp } from '@mohou/contract'
       import { n } from './helper.ts'
       export default defineApp({
         name: 'Example',
@@ -83,7 +83,7 @@ describe('loadBackend', () => {
     await expect(loadBackend(dir, 'silent')).rejects.toMatchObject({ code: 'import-forbidden' })
     await writeFile(join(dir, 'main.api.ts'), `
       import { readFileSync } from 'node:fs'
-      import { defineApp } from '@mini-app/contract'
+      import { defineApp } from '@mohou/contract'
       export default defineApp({
         name: 'Example',
         description: 'One line',
@@ -94,7 +94,7 @@ describe('loadBackend', () => {
     expect(await withNode.api.ping?.({} as never, {})).toBe('function')
     await writeFile(join(dir, 'main.api.ts'), `
       import get from 'lodash/get'
-      import { defineApp } from '@mini-app/contract'
+      import { defineApp } from '@mohou/contract'
       export default defineApp({
         name: 'Example',
         description: 'One line',

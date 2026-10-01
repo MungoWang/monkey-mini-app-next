@@ -6,7 +6,7 @@ Render Jira wiki markup to tokens (headings, lists, tables, [^file], -strike-). 
 
 **when** Jira description / comment body
 
-`import { JiraWiki, JiraWikiClassNames } from "@mini-app/ui"`
+`import { JiraWiki, JiraWikiClassNames } from "@mohou/ui"`
 
 `packages/app/ui/src/products/jira-wiki.tsx` · family: Rich text · type: product
 

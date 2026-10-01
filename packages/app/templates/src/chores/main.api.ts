@@ -1,4 +1,4 @@
-import { defineApp } from '@mini-app/contract'
+import { defineApp } from '@mohou/contract'
 
 type Job = { id: string; title: string; command: string }
 

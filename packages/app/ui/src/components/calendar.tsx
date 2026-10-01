@@ -7,8 +7,8 @@ import {
   type Locale,
 } from 'react-day-picker'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { Button, buttonVariants } from '@mini-app/ui/components/button'
+import { cn } from '@mohou/ui/lib/utils'
+import { Button, buttonVariants } from '@mohou/ui/components/button'
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from 'lucide-react'
 
 /**

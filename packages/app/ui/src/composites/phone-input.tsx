@@ -1,5 +1,5 @@
 
-import { Input } from '@mini-app/ui/components/input'
+import { Input } from '@mohou/ui/components/input'
 
 /**
  * Phone number input with formatting.

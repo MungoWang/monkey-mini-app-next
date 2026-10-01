@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Marker, MarkerContent, MarkerIcon, markerVariants } from "@mini-app/ui"`
+`import { Marker, MarkerContent, MarkerIcon, markerVariants } from "@mohou/ui"`
 
 `packages/app/ui/src/components/marker.tsx` · family: Layout & structure · type: component · primitive
 
@@ -24,7 +24,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[marker-01.tsx](../examples/marker/marker-01.tsx)** — Marker — Small inline marker (icon + text) used to annotate a list row or timeline step with its state/file type.

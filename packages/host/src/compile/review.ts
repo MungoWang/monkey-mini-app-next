@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
 import type * as ts from 'typescript'
 
-import { appEntries, appTrees, type DefinitionCode } from '@mini-app/contract'
+import { appEntries, appTrees, type DefinitionCode } from '@mohou/contract'
 
 import { snapshotSkip } from '../files/skip.ts'
 import type { CompileCode } from './codes.ts'

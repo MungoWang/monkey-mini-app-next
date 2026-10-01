@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { ContextMenu as ContextMenuPrimitive } from '@base-ui/react/context-menu'
 
-import { cn } from '@mini-app/ui/lib/utils'
+import { cn } from '@mohou/ui/lib/utils'
 import { ChevronRightIcon, CheckIcon } from 'lucide-react'
 
 /**

@@ -6,7 +6,7 @@ Text input with filtered suggestions.
 
 **when** Free text allowed but known values should be suggested. Strict pick-list → `Select`.
 
-`import { Autocomplete } from "@mini-app/ui"`
+`import { Autocomplete } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/autocomplete.tsx` · family: Form · type: composite
 

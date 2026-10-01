@@ -1,4 +1,4 @@
-import type { Branded } from '@mini-app/values'
+import type { Branded } from '@mohou/values'
 
 import { ContractError } from './codes.ts'
 

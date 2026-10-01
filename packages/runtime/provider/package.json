@@ -1,5 +1,5 @@
 {
-  "name": "@mini-app/runtime-provider",
+  "name": "@mohou/runtime-provider",
   "version": "1.0.9",
   "license": "MIT",
   "type": "module",
@@ -26,6 +26,6 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@mini-app/contract": "workspace:^"
+    "@mohou/contract": "workspace:^"
   }
 }

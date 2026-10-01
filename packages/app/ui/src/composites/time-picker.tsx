@@ -2,13 +2,13 @@
 import * as React from 'react'
 import { ChevronDown } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@mini-app/ui/components/popover'
-import { cn } from '@mini-app/ui/lib/utils'
+} from '@mohou/ui/components/popover'
+import { cn } from '@mohou/ui/lib/utils'
 
 const ITEM_H = 36
 

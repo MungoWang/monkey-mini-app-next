@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 
-import type { RuntimeProvider } from '@mini-app/runtime-provider'
+import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import type { AuthorMcpLayout, AuthorMcpStatus } from '../host/author-mcp.ts'
 import type { AuthorSkillLayout, AuthorSkillStatus } from '../host/author-skill.ts'
@@ -87,7 +87,7 @@ export async function readVendorFile(dir: string, name: string): Promise<string>
 }
 
 export function aboutInfo(): { name: string; current: string; platform: string; private: boolean } {
-  const parsed = JSON.parse(readFileSync(require.resolve('@mini-app/host/package.json'), 'utf8')) as {
+  const parsed = JSON.parse(readFileSync(require.resolve('@mohou/host/package.json'), 'utf8')) as {
     name?: unknown
     version?: unknown
     private?: unknown

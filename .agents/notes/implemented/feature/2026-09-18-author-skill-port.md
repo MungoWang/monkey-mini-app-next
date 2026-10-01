@@ -10,7 +10,7 @@ The skill in this repo was a short write loop that told the agent not to import 
 
 The author skill is the whole previous-product system, rewritten for this product. Sentences are shorter. A capability is not dropped unless this kit or this `ctx` removed it.
 
-`pnpm gen:skill` writes catalog, contracts, examples, looks, and theme tokens from `@mini-app/ui` plus `scripts/gen/skill/fixtures`. Handwritten pages document the write loop, `ctx`, tools, loader, history, eval, and troubleshoot. Templates are the eight facades, with `@mini-app/contract`, `@mini-app/ui`, and `ctx.storage.kv()`.
+`pnpm gen:skill` writes catalog, contracts, examples, looks, and theme tokens from `@mohou/ui` plus `scripts/gen/skill/fixtures`. Handwritten pages document the write loop, `ctx`, tools, loader, history, eval, and troubleshoot. Templates are the eight facades, with `@mohou/contract`, `@mohou/ui`, and `ctx.storage.kv()`.
 
 This product does not have `mini_app_history_revert` or `ctx.storage.table()`. Theme files use the same token names as `themeTokens`, not short `--bg` keys. The skill does not curl the host.
 

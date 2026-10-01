@@ -7,7 +7,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@mini-app/ui/components/sheet'
+} from '@mohou/ui/components/sheet'
 
 /**
  * Right-side inspector Sheet for a selected row/entity.

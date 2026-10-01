@@ -6,8 +6,8 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@mini-app/ui/components/input-group'
-import { useLabels } from '@mini-app/ui/i18n/context'
+} from '@mohou/ui/components/input-group'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 /**
  * Search box with debounce.

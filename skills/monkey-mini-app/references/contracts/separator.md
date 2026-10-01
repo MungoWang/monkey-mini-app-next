@@ -6,7 +6,7 @@ Horizontal/vertical rule.
 
 **when** Grouping inside panels.
 
-`import { Separator } from "@mini-app/ui"`
+`import { Separator } from "@mohou/ui"`
 
 `packages/app/ui/src/components/separator.tsx` · family: Layout & structure · type: component · primitive
 
@@ -21,7 +21,7 @@ _Inherited HTML/ARIA props (`className`, `style`, `id`, `onClick`, `aria-*`, …
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[separator-01.tsx](../examples/separator/separator-01.tsx)** — Separator — Horizontal or vertical rule that inherits theme spacing, for splitting toolbar groups and metadata rows.

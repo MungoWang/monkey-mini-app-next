@@ -2,7 +2,7 @@ import { realpathSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
 
-import { appEntries, ContractError } from '@mini-app/contract'
+import { appEntries, ContractError } from '@mohou/contract'
 import * as esbuild from 'esbuild'
 
 import { platformBundled } from './allowlist.ts'

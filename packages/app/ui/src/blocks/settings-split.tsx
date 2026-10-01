@@ -2,10 +2,10 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
 
-import { Scrollspy } from '@mini-app/ui/blocks/scrollspy';
-import { useIsMobile } from '@mini-app/ui/hooks/use-mobile';
-import { useLabels } from '@mini-app/ui/i18n/context';
-import { cn } from '@mini-app/ui/lib/utils';
+import { Scrollspy } from '@mohou/ui/blocks/scrollspy';
+import { useIsMobile } from '@mohou/ui/hooks/use-mobile';
+import { useLabels } from '@mohou/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
 
 export type SettingsSection = {
   /** The anchor id. The preset puts it on the section **and** hands the same value to the jump

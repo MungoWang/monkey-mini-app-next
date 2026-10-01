@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { ChevronsUpDown } from 'lucide-react'
 
-import { Button } from '@mini-app/ui/components/button'
+import { Button } from '@mohou/ui/components/button'
 import {
   Command,
   CommandEmpty,
@@ -10,14 +10,14 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@mini-app/ui/components/command'
+} from '@mohou/ui/components/command'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@mini-app/ui/components/popover'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { cn } from '@mini-app/ui/lib/utils'
+} from '@mohou/ui/components/popover'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { cn } from '@mohou/ui/lib/utils'
 
 const COMMON_IDS = [
   'UTC',

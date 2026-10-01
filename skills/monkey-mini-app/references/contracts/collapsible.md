@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@mini-app/ui"`
+`import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@mohou/ui"`
 
 `packages/app/ui/src/components/collapsible.tsx` · family: Layout & structure · type: component · primitive
 

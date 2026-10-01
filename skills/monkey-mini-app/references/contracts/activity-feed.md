@@ -6,7 +6,7 @@ Chronological activity list (avatar + text + time).
 
 **when** Read-only “who did what when” — commits, deploys, agent runs. For steps with status use `RunTimeline`.
 
-`import { ActivityFeed, TimelineItem } from "@mini-app/ui"`
+`import { ActivityFeed, TimelineItem } from "@mohou/ui"`
 
 `packages/app/ui/src/blocks/activity-feed.tsx` · family: Realtime · type: block
 

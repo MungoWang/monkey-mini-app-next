@@ -10,7 +10,7 @@ status: implemented
 
 ## Why
 
-Monorepo builds pick up `packages/app/ui/tsconfig.json` (`jsx: react-jsx`) via esbuild's config walk. A packed `@mini-app/ui` has no tsconfig, so esbuild defaulted to classic `React.createElement` without binding `React`. Iframe then threw `Can't find variable: React` (WebKit).
+Monorepo builds pick up `packages/app/ui/tsconfig.json` (`jsx: react-jsx`) via esbuild's config walk. A packed `@mohou/ui` has no tsconfig, so esbuild defaulted to classic `React.createElement` without binding `React`. Iframe then threw `Can't find variable: React` (WebKit).
 
 ## Given up
 

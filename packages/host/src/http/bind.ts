@@ -1,4 +1,4 @@
-import type { RuntimeProvider } from '@mini-app/runtime-provider'
+import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import { listedApp, type AppSummary } from '../apps/registry.ts'
 import { readActivity } from '../host/activity.ts'
@@ -13,7 +13,7 @@ import type { LoopbackPorts } from './ports.ts'
 import { authoringTokenMatches } from './guard.ts'
 import { probeBrain, type HostPolicy } from '../host/config.ts'
 import { checkPackageUpdate, stagePackageUpdate } from './updates.ts'
-import { McpError } from '@mini-app/mcp-client'
+import { McpError } from '@mohou/mcp-client'
 
 import { admitMcpText } from '../host/mcp-import.ts'
 import { checkMcpEditor, readMcpEditor, readMcpImport, writeMcpEditor } from '../host/mcp-editor.ts'

@@ -2,9 +2,9 @@
 import * as React from 'react'
 import { X } from 'lucide-react'
 
-import { Badge } from '@mini-app/ui/components/badge'
-import { Input } from '@mini-app/ui/components/input'
-import { useLabels } from '@mini-app/ui/i18n/context'
+import { Badge } from '@mohou/ui/components/badge'
+import { Input } from '@mohou/ui/components/input'
+import { useLabels } from '@mohou/ui/i18n/context'
 
 /**
  * Chip-style multi-value text input.

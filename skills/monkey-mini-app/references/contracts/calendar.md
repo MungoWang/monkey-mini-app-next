@@ -6,7 +6,7 @@
 
 Compound: compose the parts below — **do not invent part names**.
 
-`import { Calendar, CalendarDayButton } from "@mini-app/ui"`
+`import { Calendar, CalendarDayButton } from "@mohou/ui"`
 
 `packages/app/ui/src/components/calendar.tsx` · family: Calendar & date · type: component · primitive
 

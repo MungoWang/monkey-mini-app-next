@@ -17,4 +17,4 @@ Constructor fields are assigned in the body. `erasableSyntaxOnly` is on in `tsco
 
 ## Consequences
 
-A new parameter property fails `pnpm run typecheck` before `dev:host`. Enums and namespaces are refused for the same reason. The Node boot graph cannot import `.tsx`; Shell reads panel CSS from `@mini-app/panel/chrome`.
+A new parameter property fails `pnpm run typecheck` before `dev:host`. Enums and namespaces are refused for the same reason. The Node boot graph cannot import `.tsx`; Shell reads panel CSS from `@mohou/panel/chrome`.

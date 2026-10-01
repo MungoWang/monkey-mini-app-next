@@ -1,6 +1,6 @@
-/** Brain interface and the echo provider. @module @mini-app/runtime-provider */
+/** Brain interface and the echo provider. @module @mohou/runtime-provider */
 
-export const packageId = '@mini-app/runtime-provider' as const
+export const packageId = '@mohou/runtime-provider' as const
 
 export { ProviderError, providerCodes, type ProviderCode } from './codes.ts'
 export type { ModelListing, RuntimeAgentOptions, RuntimeLlmOptions, RuntimeProvider, RuntimeProviderConfig, SettingsField } from './provider.ts'

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@mini-app/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@mohou/ui/components/avatar';
 import { AvatarGroup } from '../shims/avatar-group';
 import {
   Select,
@@ -6,8 +6,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@mini-app/ui/components/select';
-import { useLabels } from '@mini-app/ui/i18n/context';
+} from '@mohou/ui/components/select';
+import { useLabels } from '@mohou/ui/i18n/context';
 import { useCalendar } from '../contexts/calendar-context';
 
 export function UserSelect() {

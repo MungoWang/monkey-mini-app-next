@@ -1,8 +1,8 @@
 import { format, getYear, isSameDay, isSameMonth } from 'date-fns';
 import { useMemo } from 'react';
 import { motion } from '../../shims/motion';
-import { cn } from '@mini-app/ui/lib/utils';
-import { useDateLocale } from '@mini-app/ui/i18n/context';
+import { cn } from '@mohou/ui/lib/utils';
+import { useDateLocale } from '@mohou/ui/i18n/context';
 import { staggerContainer, transition } from '../../animations';
 import { useCalendar } from '../../contexts/calendar-context';
 import { EventListDialog } from '../../dialogs/events-list-dialog';

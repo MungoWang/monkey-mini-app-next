@@ -40,7 +40,7 @@ Effect: a field only the HTTP provider fills is rejected from `RunResult` while 
 ## Not this
 
 ```ts
-import type { LocalProcess } from '@mini-app/executor-local'
+import type { LocalProcess } from '@mohou/executor-local'
 
 export async function runTool(command: string): Promise<LocalProcess> {
   return startLocal(command)

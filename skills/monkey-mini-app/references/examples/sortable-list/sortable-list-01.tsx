@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { type SortableItem, SortableList } from "@mini-app/ui";
+import { type SortableItem, SortableList } from "@mohou/ui";
 
 export default function SortableList01Example() {
   const [items, setItems] = React.useState<SortableItem[]>([

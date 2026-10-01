@@ -1,6 +1,6 @@
-/** Panel chrome labels. Not the app's own strings. @module @mini-app/panel */
+/** Panel chrome labels. Not the app's own strings. @module @mohou/panel */
 
-export const packageId = '@mini-app/panel' as const
+export const packageId = '@mohou/panel' as const
 
 export {
   isPanelLocale,

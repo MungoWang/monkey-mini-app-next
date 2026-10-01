@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { parseAppId, type AppStorage } from '@mini-app/contract'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { parseAppId, type AppStorage } from '@mohou/contract'
+import { createEchoProvider } from '@mohou/runtime-provider'
 
 import {
   emptyCredentials, HostError, bindBrain, runCall, type CallCapabilities } from '../src/index.ts'

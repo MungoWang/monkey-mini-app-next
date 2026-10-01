@@ -6,7 +6,7 @@ From/to time of day.
 
 **when** Daily windows (maintenance 02:00–04:00).
 
-`import { TimeRangePicker, TimeRange } from "@mini-app/ui"`
+`import { TimeRangePicker, TimeRange } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/time-range-picker.tsx` · family: Calendar & date · type: composite
 
@@ -35,7 +35,7 @@ From/to time of day.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[time-range-picker-01.tsx](../examples/time-range-picker/time-range-picker-01.tsx)** — TimeRangePicker — Start/end time-of-day pair, e.g. a maintenance window inside one day.

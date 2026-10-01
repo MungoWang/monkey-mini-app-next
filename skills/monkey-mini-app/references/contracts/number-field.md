@@ -6,7 +6,7 @@ Numeric input with min/max/step + steppers.
 
 **when** Any number the user edits — keeps NaN out of your state.
 
-`import { NumberField } from "@mini-app/ui"`
+`import { NumberField } from "@mohou/ui"`
 
 `packages/app/ui/src/composites/number-field.tsx` · family: Form · type: composite
 
@@ -29,7 +29,7 @@ Numeric input with min/max/step + steppers.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[number-field-01.tsx](../examples/number-field/number-field-01.tsx)** — NumberField — Numeric input with stepper buttons and clamped min/max, so quantity fields never receive NaN or out-of-range text. — _*Plus/minus and typing*_

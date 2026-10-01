@@ -6,7 +6,7 @@ Render a markdown string. The component owns the reading styles. `className` ove
 
 **when** Model output, README-ish bodies. Children must be a string.
 
-`import { Markdown } from "@mini-app/ui"`
+`import { Markdown } from "@mohou/ui"`
 
 `packages/app/ui/src/products/markdown.tsx` · family: Rich text · type: product
 

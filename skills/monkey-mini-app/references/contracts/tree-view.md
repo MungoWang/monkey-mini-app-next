@@ -6,7 +6,7 @@ Generic expandable node list.
 
 **when** Any hierarchy without file semantics. Files → `FileTree`.
 
-`import { TreeView, TreeNode } from "@mini-app/ui"`
+`import { TreeView, TreeNode } from "@mohou/ui"`
 
 `packages/app/ui/src/products/tree-view.tsx` · family: Data & tables · type: product
 
@@ -35,7 +35,7 @@ Generic expandable node list.
 ## Examples
 
 Runnable files under `references/examples/` — portable by construction (`react` +
-`@mini-app/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
+`@mohou/ui` + relatives), so copy the closest one into `ui.tsx` / `ui/`.
 Pick by **scenario**, then open the file you need.
 
 - **[tree-view-01.tsx](../examples/tree-view/tree-view-01.tsx)** — TreeView — Nested hierarchy with expand/collapse and selection — file tree, org chart, category taxonomy.

@@ -1,9 +1,9 @@
 
 import { useDropzone } from 'react-dropzone'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { Attachment, AttachmentContent, AttachmentTitle } from '@mini-app/ui/components/attachment'
+import { cn } from '@mohou/ui/lib/utils'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { Attachment, AttachmentContent, AttachmentTitle } from '@mohou/ui/components/attachment'
 
 /**
  * Drag-drop + click file picker.

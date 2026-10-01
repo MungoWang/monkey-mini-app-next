@@ -1,9 +1,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { useLabels } from '@mini-app/ui/i18n/context'
-import { useHtmlDark } from '@mini-app/ui/hooks/use-html-dark'
-import { cn } from '@mini-app/ui/lib/utils'
+import { useLabels } from '@mohou/ui/i18n/context'
+import { useHtmlDark } from '@mohou/ui/hooks/use-html-dark'
+import { cn } from '@mohou/ui/lib/utils'
 
 type LangS = 'js' | 'ts' | 'json' | 'html' | 'md'
 

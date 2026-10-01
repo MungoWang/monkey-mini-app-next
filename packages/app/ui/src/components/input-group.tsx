@@ -2,10 +2,10 @@
 import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '@mini-app/ui/lib/utils'
-import { Button } from '@mini-app/ui/components/button'
-import { Input } from '@mini-app/ui/components/input'
-import { Textarea } from '@mini-app/ui/components/textarea'
+import { cn } from '@mohou/ui/lib/utils'
+import { Button } from '@mohou/ui/components/button'
+import { Input } from '@mohou/ui/components/input'
+import { Textarea } from '@mohou/ui/components/textarea'
 
 /**
  * @family Form
