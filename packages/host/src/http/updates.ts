@@ -75,8 +75,12 @@ export function stagePackageUpdate(version: string, env: NodeJS.ProcessEnv = pro
     writeFileSync(path.join(prefix.dir, 'update.json'), `${JSON.stringify({ args })}\n`)
     return
   }
-  const args = ['install', `@mini-app/shell@${version}`, '--no-fund', '--no-audit', '--registry', prefix.registry ?? 'https://registry.npmjs.org']
+  const args = ['install', `@mini-app/shell@${version}`, ...installFlags(), '--registry', prefix.registry ?? 'https://registry.npmjs.org']
   writeFileSync(path.join(prefix.dir, 'update.json'), `${JSON.stringify({ args })}\n`)
+}
+
+function installFlags(): string[] {
+  return ['--no-fund', '--no-audit', '--omit=peer', '--fetch-retries=1', '--fetch-timeout=20000']
 }
 
 function tarballInstallArgs(prefix: PrefixUpdate, version: string): string[] {
@@ -85,7 +89,7 @@ function tarballInstallArgs(prefix: PrefixUpdate, version: string): string[] {
     const file = path.join(dir, packedName(name, version))
     return `file:${file.replaceAll('\\', '/')}`
   })
-  return ['install', ...specs, '--no-fund', '--no-audit']
+  return ['install', ...specs, ...installFlags()]
 }
 
 function packedName(packageName: string, version: string): string {

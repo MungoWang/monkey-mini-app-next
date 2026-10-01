@@ -70,6 +70,8 @@ describe('checkPackageUpdate', () => {
     const staged = JSON.parse(await readFile(join(root, 'update.json'), 'utf8')) as { args: string[] }
     expect(staged.args[0]).toBe('install')
     expect(staged.args.some(arg => arg.includes('mini-app-shell-1.2.0.tgz'))).toBe(true)
+    expect(staged.args).toContain('--omit=peer')
+    expect(staged.args).toContain('--fetch-retries=1')
     expect(newestTarball(join(root, 'missing'), 'shell')).toBeNull()
     expect(() => { stagePackageUpdate('1.0.0', {}, join(tmpdir(), 'mma-no-prefix')) }).toThrow(/app prefix/)
     await writeFile(join(root, 'package.json'), JSON.stringify({
@@ -80,6 +82,7 @@ describe('checkPackageUpdate', () => {
     stagePackageUpdate('2.0.0', {}, root)
     const registry = JSON.parse(await readFile(join(root, 'update.json'), 'utf8')) as { args: string[] }
     expect(registry.args).toContain('@mini-app/shell@2.0.0')
+    expect(registry.args).toContain('--omit=peer')
     vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, status: 503, json: async () => ({}) })))
     const same = await checkPackageUpdate(
       { name: '@mini-app/shell', current: '9.0.0', platform: 'darwin', private: false },
