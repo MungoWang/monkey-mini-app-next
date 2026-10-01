@@ -19,4 +19,14 @@ describe('assistant dest tables', () => {
     })
     expect(builtinSkillAgents(home, { CLAUDE_CONFIG_DIR: '/tmp/claude-home' }).find(agent => agent.id === 'claude')?.skillsDir).toBe('/tmp/claude-home/skills')
   })
+
+  it('sends the skill to DSH under its own skills directory', () => {
+    const home = homedir()
+    expect(builtinSkillAgents(home, {}).find(agent => agent.id === 'dsh')).toEqual({
+      id: 'dsh',
+      label: 'DSH',
+      skillsDir: path.join(home, '.dsh', 'skills'),
+      detectDir: path.join(home, '.dsh'),
+    })
+  })
 })
