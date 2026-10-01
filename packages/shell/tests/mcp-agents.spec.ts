@@ -29,4 +29,21 @@ describe('assistant dest tables', () => {
       detectDir: path.join(home, '.dsh'),
     })
   })
+
+  it('writes the DSH MCP entry into the active profile patch layer', () => {
+    const home = homedir()
+    expect(builtinMcpAgents(home, {}).find(agent => agent.id === 'dsh')).toMatchObject({
+      label: 'DSH',
+      file: path.join(home, '.dsh', 'profiles', 'web', 'cordis.patch.yml'),
+      detectDir: path.join(home, '.dsh', 'profiles', 'web'),
+      format: 'dsh',
+    })
+    expect(builtinMcpAgents(home, { DSH_PROFILE_DIR: '/tmp/dsh-profile', DSH_PROFILE: 'work' }).find(agent => agent.id === 'dsh')).toMatchObject({
+      file: '/tmp/dsh-profile/cordis.patch.yml',
+      detectDir: '/tmp/dsh-profile',
+    })
+    expect(builtinMcpAgents(home, { DSH_PROFILE: 'work' }).find(agent => agent.id === 'dsh')).toMatchObject({
+      file: path.join(home, '.dsh', 'profiles', 'work', 'cordis.patch.yml'),
+    })
+  })
 })

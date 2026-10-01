@@ -57,4 +57,56 @@ describe('author mcp install', () => {
     await writeFile(file, 'not json', 'utf8')
     await expect(writeAuthorMcp(layout, ['claude'], live)).rejects.toMatchObject({ code: 'config-invalid' })
   })
+
+  it('appends the DSH patch entry and leaves hand-written YAML byte for byte', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'mma-mcp-dsh-'))
+    const file = join(root, 'cordis.patch.yml')
+    const existing = [
+      '# Your patch layer for this dsh profile, applied after every bundle layer.',
+      '- insert:',
+      '    - id: mcp-everything',
+      '      name: "@deepseek-ai/dsh-mcp-client"',
+      '      config:',
+      '        serverName: everything',
+      '        transport: stdio',
+      '        env:',
+      '          TOKEN: !!js process.env.MCP_TOKEN',
+      '',
+    ].join('\n')
+    await mkdir(root, { recursive: true })
+    await writeFile(file, existing, 'utf8')
+    const layout = {
+      agents: [{ id: 'dsh', label: 'DSH', file, detectDir: root, format: 'dsh' as const }],
+    }
+    expect((await readAuthorMcp(layout, live)).agents[0]).toMatchObject({ installed: false, updateAvailable: false, homePresent: true })
+
+    const wrote = await writeAuthorMcp(layout, ['dsh'], live)
+    expect(wrote.agents[0]).toMatchObject({ installed: true, updateAvailable: false })
+    const saved = await readFile(file, 'utf8')
+    expect(saved.startsWith(existing)).toBe(true)
+    expect(saved).toContain('TOKEN: !!js process.env.MCP_TOKEN')
+    expect(saved).toContain('serverName: mini-app')
+    expect(saved).toContain('transport: streamable-http')
+    expect(saved).toContain(`url: ${live.url}`)
+    expect(saved).toContain(`Authorization: "Bearer ${live.token}"`)
+    expect(saved).toContain('failOnStartupError: false')
+    expect(saved.match(/id: mcp-mini-app/g)).toHaveLength(1)
+  })
+
+  it('replaces the DSH block so a stale token never duplicates it', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'mma-mcp-dsh-again-'))
+    const file = join(root, 'cordis.patch.yml')
+    const layout = {
+      agents: [{ id: 'dsh', label: 'DSH', file, detectDir: root, format: 'dsh' as const }],
+    }
+    await writeAuthorMcp(layout, ['dsh'], live)
+    expect((await readAuthorMcp(layout, { ...live, token: 'older' })).agents[0]).toMatchObject({ installed: true, updateAvailable: true })
+
+    await writeAuthorMcp(layout, ['dsh'], { ...live, token: 'newest' })
+    const saved = await readFile(file, 'utf8')
+    expect(saved).toContain('Authorization: "Bearer newest"')
+    expect(saved).not.toContain('Authorization: "Bearer older"')
+    expect(saved.match(/id: mcp-mini-app/g)).toHaveLength(1)
+    expect((await readAuthorMcp(layout, { ...live, token: 'newest' })).agents[0]).toMatchObject({ installed: true, updateAvailable: false })
+  })
 })

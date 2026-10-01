@@ -6,7 +6,11 @@ import { ConfigError } from './codes.ts'
 
 export const authorMcpServerId = 'mini-app'
 
-export type AuthorMcpFormat = 'mcpServers' | 'claude' | 'opencode'
+/**
+ * `dsh` is not a JSON file: DSH reads MCP servers from the YAML plugin list in the profile's
+ * `cordis.patch.yml`, so that format is merged as text (see `writeDshPatch`).
+ */
+export type AuthorMcpFormat = 'mcpServers' | 'claude' | 'opencode' | 'dsh'
 
 /** One assistant file Shell named. */
 export interface AuthorMcpAgent {
@@ -81,6 +85,10 @@ export async function revealAuthorMcp(
 }
 
 async function writeAgent(agent: AuthorMcpAgent, live: AuthorMcpLive): Promise<void> {
+  if (agent.format === 'dsh') {
+    await writeDshPatch(agent.file, live)
+    return
+  }
   const root = await readRoot(agent.file)
   const key = nestKey(agent.format)
   const nest = isRecord(root[key]) ? { ...root[key] } : {}
@@ -90,7 +98,64 @@ async function writeAgent(agent: AuthorMcpAgent, live: AuthorMcpLive): Promise<v
   await writeFile(agent.file, `${JSON.stringify(next, null, 2)}\n`, 'utf8')
 }
 
+/** First and last line of the block this product owns inside a DSH patch file. */
+const dshMarkStart = `# >>> mohou:${authorMcpServerId}`
+const dshMarkEnd = `# <<< mohou:${authorMcpServerId}`
+
+/**
+ * The plugin entry DSH needs. `serverName` is what DSH turns into `mcp__<serverName>__<tool>`.
+ * A failed connection must not stop the harness from booting.
+ */
+function dshBlock(live: AuthorMcpLive): string {
+  return [
+    `${dshMarkStart} — written by Mohou Settings → Agent. Delete this whole block to uninstall.`,
+    '- insert:',
+    `    - id: mcp-${authorMcpServerId}`,
+    '      name: "@deepseek-ai/dsh-mcp-client"',
+    '      config:',
+    `        serverName: ${authorMcpServerId}`,
+    '        transport: streamable-http',
+    `        url: ${live.url}`,
+    '        headers:',
+    `          Authorization: "Bearer ${live.token}"`,
+    '        failOnStartupError: false',
+    dshMarkEnd,
+    '',
+  ].join('\n')
+}
+
+/**
+ * Merge the entry into the profile's patch layer as text. The file may hold hand-written YAML
+ * (`!!js` tags included), so it is never re-serialised: everything outside our two markers is
+ * copied through byte for byte.
+ */
+async function writeDshPatch(file: string, live: AuthorMcpLive): Promise<void> {
+  const text = await readText(file)
+  const stripped = dropDshBlock(text)
+  const head = stripped.trimEnd()
+  const next = head.length === 0 ? dshBlock(live) : `${head}\n\n${dshBlock(live)}`
+  await mkdir(path.dirname(file), { recursive: true })
+  await writeFile(file, next, 'utf8')
+}
+
+function dropDshBlock(text: string): string {
+  const start = text.indexOf(dshMarkStart)
+  if (start < 0) return text
+  const end = text.indexOf(dshMarkEnd, start)
+  if (end < 0) return text.slice(0, start)
+  const after = text.indexOf('\n', end)
+  return `${text.slice(0, start)}${after < 0 ? '' : text.slice(after + 1)}`
+}
+
+async function readText(file: string): Promise<string> {
+  return await readFile(file, 'utf8').catch((error: unknown) => {
+    if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'ENOENT') return ''
+    throw error
+  })
+}
+
 async function hasServer(agent: AuthorMcpAgent, live: AuthorMcpLive): Promise<{ ok: boolean; current: boolean }> {
+  if (agent.format === 'dsh') return hasDshBlock(agent.file, live)
   const root = await readRoot(agent.file).catch(() => undefined)
   if (root === undefined) return { ok: false, current: false }
   const nest = root[nestKey(agent.format)]
@@ -100,6 +165,18 @@ async function hasServer(agent: AuthorMcpAgent, live: AuthorMcpLive): Promise<{ 
   const headers = isRecord(row.headers) ? row.headers : {}
   const current = row.url === live.url && headers.Authorization === `Bearer ${live.token}`
   return { ok: true, current }
+}
+
+/** Installed when our markers are there; current only when the block matches the live server. */
+async function hasDshBlock(file: string, live: AuthorMcpLive): Promise<{ ok: boolean; current: boolean }> {
+  const text = await readText(file)
+  const start = text.indexOf(dshMarkStart)
+  if (start < 0) return { ok: false, current: false }
+  const end = text.indexOf(dshMarkEnd, start)
+  if (end < 0) return { ok: true, current: false }
+  const lineEnd = text.indexOf('\n', end)
+  const block = lineEnd < 0 ? text.slice(start) : text.slice(start, lineEnd)
+  return { ok: true, current: block === dshBlock(live).trimEnd() }
 }
 
 async function readRoot(file: string): Promise<Record<string, unknown>> {
