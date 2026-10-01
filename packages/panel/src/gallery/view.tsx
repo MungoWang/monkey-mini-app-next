@@ -245,121 +245,123 @@ export function GalleryBody(props: {
       {props.themeOpen === true && props.onToggleTheme !== undefined ? (
         <button type="button" aria-label={label('pane-close')} data-theme-scrim="" className="fixed inset-0 z-30 cursor-default bg-transparent" onPointerDown={(event) => { event.preventDefault(); props.onToggleTheme?.() }} />
       ) : null}
-      {appTab ? null : (
-        <div className="mma-status">
-          <span className="mma-dot" data-status={statusDot(kind)} />
-          <span>{kind === 'unreachable' || kind === 'failed' ? label('host-unreachable') : label('status-ready')}</span>
-          <span>{label('gallery-count').replaceAll('{n}', String(state.apps.length))}</span>
-          {desk === undefined ? null : (
-            <Tooltip text={label('open-workbench-tab-hint')} align="end">
-              <button
-                type="button"
-                className="mma-status-action"
-                data-open-workbench={desk.id}
-                aria-label={label('open-workbench-tab')}
-                onClick={() => {
-                  const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === desk.id)
-                  void openApp(props.client, desk.id, desk.name, dispatch, open)
-                }}
-              >
-                <span>{label('open-workbench-tab-now')}</span>
-                <span className="mma-status-split" aria-hidden="true" />
-                <span className="mma-status-more">{label('open-workbench-tab-more')}</span>
-                <span className="mma-status-go" aria-hidden="true"><ArrowUpRight size={12} strokeWidth={2} /></span>
-              </button>
-            </Tooltip>
-          )}
-        </div>
-      )}
-      <div className="relative min-h-0 flex-1 overflow-hidden">
-        {state.tabs.tabs.map(tab => tab.kind === 'app' ? (
-          <div key={tab.appId} className={stageClass(active?.kind === 'app' && active.appId === tab.appId, 'flex flex-col')}>
-            {active?.kind === 'app' && active.appId === tab.appId && state.frameError !== undefined ? <p className="px-6 py-2 text-sm text-destructive">{state.frameError.length > 0 ? state.frameError : label('reload-failed')}</p> : null}
-            <div className="mma-stage">
-              <AppFrame appId={tab.appId} pending={label('frame-pending')} {...props.frame === undefined ? {} : { frame: props.frame }} />
-            </div>
+      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
+        {appTab ? null : (
+          <div className="mma-status">
+            <span className="mma-dot" data-status={statusDot(kind)} />
+            <span>{kind === 'unreachable' || kind === 'failed' ? label('host-unreachable') : label('status-ready')}</span>
+            <span>{label('gallery-count').replaceAll('{n}', String(state.apps.length))}</span>
+            {desk === undefined ? null : (
+              <Tooltip text={label('open-workbench-tab-hint')} align="end">
+                <button
+                  type="button"
+                  className="mma-status-action"
+                  data-open-workbench={desk.id}
+                  aria-label={label('open-workbench-tab')}
+                  onClick={() => {
+                    const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === desk.id)
+                    void openApp(props.client, desk.id, desk.name, dispatch, open)
+                  }}
+                >
+                  <span>{label('open-workbench-tab-now')}</span>
+                  <span className="mma-status-split" aria-hidden="true" />
+                  <span className="mma-status-more">{label('open-workbench-tab-more')}</span>
+                  <span className="mma-status-go" aria-hidden="true"><ArrowUpRight size={12} strokeWidth={2} /></span>
+                </button>
+              </Tooltip>
+            )}
           </div>
-        ) : null)}
-        <div className={stageClass(!appTab, 'flex flex-col')}>
-          <div className="mma-stage mma-app-frame">
-            {desk !== undefined ? (
-              <div className="mma-frame [&_iframe]:block [&_iframe]:size-full [&_iframe]:border-0">
-                {props.frame?.(desk.id) ?? <div data-app-id={desk.id} data-workbench-slot="" />}
+        )}
+        <div className="relative min-h-0 flex-1 overflow-hidden">
+          {state.tabs.tabs.map(tab => tab.kind === 'app' ? (
+            <div key={tab.appId} className={stageClass(active?.kind === 'app' && active.appId === tab.appId, 'flex flex-col')}>
+              {active?.kind === 'app' && active.appId === tab.appId && state.frameError !== undefined ? <p className="px-6 py-2 text-sm text-destructive">{state.frameError.length > 0 ? state.frameError : label('reload-failed')}</p> : null}
+              <div className="mma-stage">
+                <AppFrame appId={tab.appId} pending={label('frame-pending')} {...props.frame === undefined ? {} : { frame: props.frame }} />
               </div>
-            ) : (
-              <div className="mma-frame">
-                <div className="mma-library">
-                  <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-                    <div className="min-w-0">
-                      <h2 className="m-0 text-3xl font-extrabold tracking-tight">{label('gallery-title')}</h2>
-                      <div className="mt-3 w-fit">
-                        <DeskBar
-                          label={label('card-style')}
-                          fit
-                          choices={galleryCardStyles.map(style => ({ id: style, name: label(cardLabel(style)) }))}
-                          selected={state.cardStyle}
-                          onSelect={(id) => {
-                            if (!isGalleryCardStyle(id)) return
-                            writeCardStyle(id)
-                            dispatch({ type: 'card', cardStyle: id })
-                          }}
+            </div>
+          ) : null)}
+          <div className={stageClass(!appTab, 'flex flex-col')}>
+            <div className="mma-stage mma-app-frame">
+              {desk !== undefined ? (
+                <div className="mma-frame [&_iframe]:block [&_iframe]:size-full [&_iframe]:border-0">
+                  {props.frame?.(desk.id) ?? <div data-app-id={desk.id} data-workbench-slot="" />}
+                </div>
+              ) : (
+                <div className="mma-frame">
+                  <div className="mma-library">
+                    <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                      <div className="min-w-0">
+                        <h2 className="m-0 text-3xl font-extrabold tracking-tight">{label('gallery-title')}</h2>
+                        <div className="mt-3 w-fit">
+                          <DeskBar
+                            label={label('card-style')}
+                            fit
+                            choices={galleryCardStyles.map(style => ({ id: style, name: label(cardLabel(style)) }))}
+                            selected={state.cardStyle}
+                            onSelect={(id) => {
+                              if (!isGalleryCardStyle(id)) return
+                              writeCardStyle(id)
+                              dispatch({ type: 'card', cardStyle: id })
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="mma-search relative w-full max-w-xs">
+                        <Search size={18} strokeWidth={2} className="pointer-events-none absolute top-1/2 left-3.5 z-10 -translate-y-1/2 text-muted-foreground" />
+                        <input
+                          className="h-11 w-full rounded-[14px] border border-foreground/10 bg-card/60 pr-4 pl-10 text-sm text-foreground outline-none backdrop-blur-md placeholder:text-muted-foreground focus:border-primary focus:bg-card"
+                          type="search"
+                          aria-label={label('search')}
+                          placeholder={label('search-placeholder')}
+                          value={state.query}
+                          onChange={event => dispatch({ type: 'search', query: event.target.value })}
                         />
                       </div>
                     </div>
-                    <div className="mma-search relative w-full max-w-xs">
-                      <Search size={18} strokeWidth={2} className="pointer-events-none absolute top-1/2 left-3.5 z-10 -translate-y-1/2 text-muted-foreground" />
-                      <input
-                        className="h-11 w-full rounded-[14px] border border-foreground/10 bg-card/60 pr-4 pl-10 text-sm text-foreground outline-none backdrop-blur-md placeholder:text-muted-foreground focus:border-primary focus:bg-card"
-                        type="search"
-                        aria-label={label('search')}
-                        placeholder={label('search-placeholder')}
-                        value={state.query}
-                        onChange={event => dispatch({ type: 'search', query: event.target.value })}
+                    {state.openError !== undefined ? <p className="px-6 py-2 text-sm text-destructive">{state.openError.length > 0 ? state.openError : label('open-failed')}</p> : null}
+                    {kind === 'unreachable' ? <p className="px-6 py-2 text-sm text-destructive">{label('host-unreachable')}</p> : null}
+                    {kind === 'failed' ? <p className="px-6 py-2 text-sm text-destructive">{state.failed !== undefined && state.failed.length > 0 ? state.failed : label('list-failed')}</p> : null}
+                    {kind === 'empty' ? <p className="px-6 py-4 text-sm text-muted-foreground">{label('gallery-empty')}</p> : null}
+                    {kind === 'none' ? <p className="px-6 py-4 text-sm text-muted-foreground">{label('search-empty')}</p> : null}
+                    {kind === 'ready' ? (
+                      <WorkbenchLibrary
+                        apps={visibleApps(state)}
+                        cardStyle={state.cardStyle}
+                        openLabel={label('open')}
+                        openAppIds={state.tabs.tabs.flatMap(tab => tab.kind === 'app' ? [tab.appId] : [])}
+                        openApp={(id, title) => {
+                          const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === id)
+                          void openApp(props.client, id, title ?? id, dispatch, open)
+                        }}
                       />
-                    </div>
+                    ) : null}
+                    {state.trashFailed ? <p className="px-6 py-2 text-sm text-destructive">{label('trash-failed')}</p> : null}
+                    {state.trash.length === 0 ? null : (
+                      <div className="px-6 py-4 text-sm text-muted-foreground">
+                        <p>{label('trash')}</p>
+                        {state.trash.map(app => (
+                          <button key={app.id} type="button" className="h-8 rounded-md px-2 text-sm hover:bg-muted" data-trash={app.id} onClick={() => { void restoreApp(props.client, app.id, dispatch) }}>{app.name}</button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  {state.openError !== undefined ? <p className="px-6 py-2 text-sm text-destructive">{state.openError.length > 0 ? state.openError : label('open-failed')}</p> : null}
-                  {kind === 'unreachable' ? <p className="px-6 py-2 text-sm text-destructive">{label('host-unreachable')}</p> : null}
-                  {kind === 'failed' ? <p className="px-6 py-2 text-sm text-destructive">{state.failed !== undefined && state.failed.length > 0 ? state.failed : label('list-failed')}</p> : null}
-                  {kind === 'empty' ? <p className="px-6 py-4 text-sm text-muted-foreground">{label('gallery-empty')}</p> : null}
-                  {kind === 'none' ? <p className="px-6 py-4 text-sm text-muted-foreground">{label('search-empty')}</p> : null}
-                  {kind === 'ready' ? (
-                    <WorkbenchLibrary
-                      apps={visibleApps(state)}
-                      cardStyle={state.cardStyle}
-                      openLabel={label('open')}
-                      openAppIds={state.tabs.tabs.flatMap(tab => tab.kind === 'app' ? [tab.appId] : [])}
-                      openApp={(id, title) => {
-                        const open = state.tabs.tabs.some(tab => tab.kind === 'app' && tab.appId === id)
-                        void openApp(props.client, id, title ?? id, dispatch, open)
-                      }}
-                    />
-                  ) : null}
-                  {state.trashFailed ? <p className="px-6 py-2 text-sm text-destructive">{label('trash-failed')}</p> : null}
-                  {state.trash.length === 0 ? null : (
-                    <div className="px-6 py-4 text-sm text-muted-foreground">
-                      <p>{label('trash')}</p>
-                      {state.trash.map(app => (
-                        <button key={app.id} type="button" className="h-8 rounded-md px-2 text-sm hover:bg-muted" data-trash={app.id} onClick={() => { void restoreApp(props.client, app.id, dispatch) }}>{app.name}</button>
-                      ))}
-                    </div>
-                  )}
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-        {state.deletePrompt === 'confirm' ? (
-          <Dialog width="sm" onClose={() => dispatch({ type: 'cancel-delete' })}>
-            <h3>{label('delete')}</h3>
-            <p>{label('delete-confirm')}</p>
-            <div className="mt-4 flex justify-end gap-2">
-              <button type="button" onClick={() => dispatch({ type: 'cancel-delete' })}>{label('cancel')}</button>
-              <button type="button" className="go" onClick={() => { void removeApp(props.client, state.pendingDeleteId, dispatch) }}>{label('delete')}</button>
+              )}
             </div>
-          </Dialog>
-        ) : null}
-        {state.deletePrompt === 'failed' ? <p className="px-6 py-2 text-sm text-destructive">{state.deleteError !== undefined && state.deleteError.length > 0 ? state.deleteError : label('delete-failed')}</p> : null}
+          </div>
+          {state.deletePrompt === 'confirm' ? (
+            <Dialog width="sm" onClose={() => dispatch({ type: 'cancel-delete' })}>
+              <h3>{label('delete')}</h3>
+              <p>{label('delete-confirm')}</p>
+              <div className="mt-4 flex justify-end gap-2">
+                <button type="button" onClick={() => dispatch({ type: 'cancel-delete' })}>{label('cancel')}</button>
+                <button type="button" className="go" onClick={() => { void removeApp(props.client, state.pendingDeleteId, dispatch) }}>{label('delete')}</button>
+              </div>
+            </Dialog>
+          ) : null}
+          {state.deletePrompt === 'failed' ? <p className="px-6 py-2 text-sm text-destructive">{state.deleteError !== undefined && state.deleteError.length > 0 ? state.deleteError : label('delete-failed')}</p> : null}
+        </div>
         {props.overlay}
       </div>
     </section>
