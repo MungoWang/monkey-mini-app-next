@@ -7,7 +7,7 @@ export function templateSource(repoRoot) {
 }
 
 export function templateDest(repoRoot) {
-  return path.join(repoRoot, 'skills/monkey-mini-app/templates')
+  return path.join(repoRoot, 'skills/mohou-mini-app/templates')
 }
 
 function relativeFiles(dir) {

@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-09-28
+updated: 2026-10-01
 ---
 
 # Write loop
@@ -36,4 +36,4 @@ Layer: [Author skill](README.md). Index: [features.md](../features.md).
 ## Implementation
 
 
-Role: consumer of the authoring tools. The skill is [skills/monkey-mini-app/SKILL.md](../../../skills/monkey-mini-app/SKILL.md). It documents the write loop, the MCP tool names, the facades, the generated component catalog, and diagnose. It does not delete the app directory and does not register a second tool schema. Pre-1.0 confirm gate: [.agents/notes/implemented/feature/2026-09-27-author-skill-confirm.md](../../../.agents/notes/implemented/feature/2026-09-27-author-skill-confirm.md). L0 shape: [.agents/notes/implemented/feature/2026-09-27-skill-l0-is-the-gate.md](../../../.agents/notes/implemented/feature/2026-09-27-skill-l0-is-the-gate.md). Plan: [implementation.md](../implementation.md).
+Role: consumer of the authoring tools. The skill is [skills/mohou-mini-app/SKILL.md](../../../skills/mohou-mini-app/SKILL.md). It documents the write loop, the MCP tool names, the facades, the generated component catalog, and diagnose. It does not delete the app directory and does not register a second tool schema. Pre-1.0 confirm gate: [.agents/notes/implemented/feature/2026-09-27-author-skill-confirm.md](../../../.agents/notes/implemented/feature/2026-09-27-author-skill-confirm.md). L0 shape: [.agents/notes/implemented/feature/2026-09-27-skill-l0-is-the-gate.md](../../../.agents/notes/implemented/feature/2026-09-27-skill-l0-is-the-gate.md). Plan: [implementation.md](../implementation.md).

@@ -45,7 +45,7 @@ function archiveBytes(path) {
 
 const version = shellVersion()
 const stamp = new Date().toISOString().slice(0, 10).replaceAll('-', '')
-const baseName = `monkey-mini-app-next-${version}-source`
+const baseName = `mohou-mini-app-${version}-source`
 const archiveName = `${baseName}-${stamp}.tgz`
 const archivePath = join(outDir, archiveName)
 const readmePath = join(outDir, 'README.md')
@@ -65,8 +65,8 @@ Files: ${files.length}
 ## Unpack
 
 \`\`\`sh
-mkdir -p monkey-mini-app-next && tar -xzf ${archiveName} -C monkey-mini-app-next
-cd monkey-mini-app-next
+mkdir -p mohou-mini-app && tar -xzf ${archiveName} -C mohou-mini-app
+cd mohou-mini-app
 \`\`\`
 
 ## Run on the other machine
@@ -129,8 +129,8 @@ Unpack and run steps are inside the archive as \`${setupName}\`.
 
 \`\`\`sh
 tar -tzf ${archiveName} | head
-mkdir -p monkey-mini-app-next && tar -xzf ${archiveName} -C monkey-mini-app-next
-cat monkey-mini-app-next/${setupName}
+mkdir -p mohou-mini-app && tar -xzf ${archiveName} -C mohou-mini-app
+cat mohou-mini-app/${setupName}
 \`\`\`
 `,
 )

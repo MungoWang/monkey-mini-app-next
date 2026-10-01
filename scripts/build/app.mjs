@@ -329,7 +329,7 @@ if (channel === 'registry') installArgs.push('--registry', 'https://registry.npm
 run('npm', installArgs, { cwd: prefix })
 
 const shellRoot = join(prefix, 'node_modules', '@mohou', 'shell')
-if (!existsSync(join(shellRoot, 'skill', 'monkey-mini-app', 'SKILL.md'))) {
+if (!existsSync(join(shellRoot, 'skill', 'mohou-mini-app', 'SKILL.md'))) {
   throw new Error('installed shell missing skill')
 }
 if (!existsSync(join(shellRoot, 'dist', 'panel.html'))) {

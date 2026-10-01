@@ -10,7 +10,7 @@ On `createHost`, ensure `apps/` and `trash/` exist. When the runtime has no apps
 
 ## Why
 
-The writing skill already ships inside shell (`skill/monkey-mini-app`). A packed install should not open to an empty library when polished facades are one copy away. Two samples fill the glass gallery; `today` is personal home, `board` is the second card.
+The writing skill already ships inside shell (`skill/mohou-mini-app`). A packed install should not open to an empty library when polished facades are one copy away. Two samples fill the glass gallery; `today` is personal home, `board` is the second card.
 
 ## Given up
 

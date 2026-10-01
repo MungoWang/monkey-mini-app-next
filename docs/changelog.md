@@ -9,7 +9,7 @@ This page owns released version notes. The product version is the `version` fiel
 
 ## 1.0.9
 
-The publish set moves to the `@mohou` npm scope. [Package architecture](architecture/packages.md) owns the set.
+The publish set moves to the `@mohou` npm scope, and the author skill is `mohou-mini-app`, so an agent installs it under that name. [Package architecture](architecture/packages.md) owns the set.
 
 The palette list kept `origin`, but the panel client dropped it. Every row stayed marked system. The client now keeps `builtin` and `custom`.
 

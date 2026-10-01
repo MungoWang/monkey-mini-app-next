@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-[![check](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml/badge.svg)](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml)
+[![check](https://github.com/mungowang/mohou-mini-app/actions/workflows/check.yml/badge.svg)](https://github.com/mungowang/mohou-mini-app/actions/workflows/check.yml)
 [![license](https://img.shields.io/badge/license-MIT-blue)](package.json)
 [![node](https://img.shields.io/badge/node-22.19%20%7C%2024-339933)](package.json)
 [![pnpm](https://img.shields.io/badge/pnpm-11.7.0-F69220)](package.json)
@@ -37,7 +37,7 @@ These need nothing but the host. Connect your own systems later and the same sha
 
 Once your own tools are connected, the same pattern lands on them: a Jira board over your JQL, an internal API behind a form, a failing CI step, a worklog written back.
 
-The authoring skill ships the starting facades, so none of the above starts from an empty directory: today's desk, a stage board, an info radar, a spreadsheet bench, an agent runner, one-button chores, a watch strip, a bare skeleton, and a homepage. See [skills/monkey-mini-app/templates/](skills/monkey-mini-app/templates/).
+The authoring skill ships the starting facades, so none of the above starts from an empty directory: today's desk, a stage board, an info radar, a spreadsheet bench, an agent runner, one-button chores, a watch strip, a bare skeleton, and a homepage. See [skills/mohou-mini-app/templates/](skills/mohou-mini-app/templates/).
 
 ## How one gets built
 
@@ -87,7 +87,7 @@ There is no `ctx.tool` and no `listTools`. Tools stay on the runtime provider. S
 
 ## The kit, when you want it
 
-`@mohou/ui` is what the agent writes against when the screen is a list, a board, settings, or a dashboard. The parts use the host's colour tokens, so a new app does not invent a second palette. The catalog is generated from the kit: [skills/monkey-mini-app/references/catalog.md](skills/monkey-mini-app/references/catalog.md).
+`@mohou/ui` is what the agent writes against when the screen is a list, a board, settings, or a dashboard. The parts use the host's colour tokens, so a new app does not invent a second palette. The catalog is generated from the kit: [skills/mohou-mini-app/references/catalog.md](skills/mohou-mini-app/references/catalog.md).
 
 A page can also be plain elements and Tailwind, or a mix. Using none of the kit is a valid app. Heavy editors load on demand, so an app that never opens a code editor does not ship that engine.
 
@@ -121,7 +121,7 @@ The view imports `@mohou/ui` and `react`. The backend imports `@mohou/contract`.
 Node.js 22.19 or newer (or 24+). pnpm 11.7.0. Rust, when you build the window. No Docker, no Python, no database.
 
 ```bash
-git clone <this repo> && cd monkey-mini-app-next
+git clone <this repo> && cd mohou-mini-app
 pnpm install
 pnpm build:panel && pnpm build:window
 pnpm dev:host
@@ -149,7 +149,7 @@ Build me an "AI trend radar" mini-app:
 
 ## Packages and docs
 
-Package roles: [packages/README.md](packages/README.md). What the product does: [docs/product/features.md](docs/product/features.md). Commands: [docs/development.md](docs/development.md). The file an assistant follows: [skills/monkey-mini-app/SKILL.md](skills/monkey-mini-app/SKILL.md).
+Package roles: [packages/README.md](packages/README.md). What the product does: [docs/product/features.md](docs/product/features.md). Commands: [docs/development.md](docs/development.md). The file an assistant follows: [skills/mohou-mini-app/SKILL.md](skills/mohou-mini-app/SKILL.md).
 
 `pnpm run check` is lint, typecheck, the coverage gate, and the skill check.
 

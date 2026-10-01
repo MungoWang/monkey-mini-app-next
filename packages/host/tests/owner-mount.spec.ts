@@ -114,13 +114,13 @@ describe('mountOwner', () => {
         restarted += 1
       },
       readAuthorSkill: async (dirs?: readonly string[]) => ({
-        skillId: 'monkey-mini-app',
+        skillId: 'mohou-mini-app',
         version: '1.0.0',
         agents: [],
         customs: dirs ?? [],
       }),
       writeAuthorSkill: async (agents: readonly string[], dirs: readonly string[]) => ({
-        skillId: 'monkey-mini-app',
+        skillId: 'mohou-mini-app',
         version: '1.0.0',
         agents,
         customs: dirs,

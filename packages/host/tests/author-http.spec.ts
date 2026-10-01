@@ -12,7 +12,7 @@ import { httpLayout } from '../src/http/layout.ts'
 describe('author skill and mcp owner routes', () => {
   it('reads and writes dests when Shell injected the tables', async () => {
     const root = await mkdtemp(join(tmpdir(), 'mma-author-http-'))
-    const source = join(root, 'monkey-mini-app')
+    const source = join(root, 'mohou-mini-app')
     const skillsDir = join(root, '.pi', 'agent', 'skills')
     const mcpFile = join(root, '.pi', 'agent', 'mcp.json')
     await mkdir(source)
@@ -34,7 +34,7 @@ describe('author skill and mcp owner routes', () => {
     const started = await host.start()
     try {
       const skill = objectBody((await get(started.port, httpLayout.authorSkill)).body)
-      expect(skill).toMatchObject({ ok: true, result: { skillId: 'monkey-mini-app', version: '1.0.2' } })
+      expect(skill).toMatchObject({ ok: true, result: { skillId: 'mohou-mini-app', version: '1.0.2' } })
       const wroteSkill = objectBody((await post(started.port, httpLayout.authorSkill, JSON.stringify({ agentIds: ['pi'], customDirs: [] }))).body)
       expect(wroteSkill).toMatchObject({ ok: true, result: { agents: [{ installed: true }] } })
       const mcp = objectBody((await get(started.port, httpLayout.authorMcp)).body)

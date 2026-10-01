@@ -12,7 +12,7 @@ A cold agent treated a vague ask as a brief and called `mini_app_register` immed
 
 Before register, the skill classifies the ask as one loop, several regions, or a workbench desk, and says which. One message asks the core choices the agent cannot see, each with a recommendation and the consequence of the other options. A skip, or "you decide", is a stated assumption. Register waits while a core choice is open. A clear one-loop ask is two sentences, then register. Several independent products are named, and only the first is built.
 
-A workbench is `kind: "workbench"`: the first screen is that person's queue, and other mini-apps open as panel tabs. Shared-screen regions stay an ordinary app. Filterable rows get `schema/NNN_*.sql`. The UI kit is a shortcut for SaaS-shaped screens. Native elements and Tailwind, kit parts, or both are valid, including using none of the kit. The option table and the red flags are `skills/monkey-mini-app/references/choices.md`.
+A workbench is `kind: "workbench"`: the first screen is that person's queue, and other mini-apps open as panel tabs. Shared-screen regions stay an ordinary app. Filterable rows get `schema/NNN_*.sql`. The UI kit is a shortcut for SaaS-shaped screens. Native elements and Tailwind, kit parts, or both are valid, including using none of the kit. The option table and the red flags are `skills/mohou-mini-app/references/choices.md`.
 
 The question shape is adapted from a design-before-code checklist: classify first, offer a few options with trade-offs, recommend one, and do not treat familiarity as a reason to skip. It is one message, not one question per turn, and a stated default is enough to continue.
 

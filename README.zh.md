@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-[![check](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml/badge.svg)](https://github.com/MungoWang/monkey-mini-app-next/actions/workflows/check.yml)
+[![check](https://github.com/mungowang/mohou-mini-app/actions/workflows/check.yml/badge.svg)](https://github.com/mungowang/mohou-mini-app/actions/workflows/check.yml)
 [![license](https://img.shields.io/badge/license-MIT-blue)](package.json)
 [![node](https://img.shields.io/badge/node-22.19%20%7C%2024-339933)](package.json)
 [![pnpm](https://img.shields.io/badge/pnpm-11.7.0-F69220)](package.json)
@@ -37,7 +37,7 @@
 
 工具接上之后，同一套做法落到它们身上：按你的 JQL 排的 Jira 看板、内网 API 做成的表单、CI 挂在哪一步、工时写回去。
 
-创作 skill 里带了起步门面，所以上面这些不是从空目录开始：今日台子、阶段看板、信息雷达、表格台、执行器、一键杂事、值班屏、骨架，还有一张首页。见 [skills/monkey-mini-app/templates/](skills/monkey-mini-app/templates/)。
+创作 skill 里带了起步门面，所以上面这些不是从空目录开始：今日台子、阶段看板、信息雷达、表格台、执行器、一键杂事、值班屏、骨架，还有一张首页。见 [skills/mohou-mini-app/templates/](skills/mohou-mini-app/templates/)。
 
 ## 一个 app 是怎么做出来的
 
@@ -87,7 +87,7 @@ ctx.signal                                       // 停止会真的停
 
 ## 组件库，要用的时候再用
 
-`@mohou/ui` 是列表、看板、设置、仪表盘时对着写的。颜色走宿主的 token，新 app 不会再造一套色板。目录是从组件库生成的：[skills/monkey-mini-app/references/catalog.md](skills/monkey-mini-app/references/catalog.md)。
+`@mohou/ui` 是列表、看板、设置、仪表盘时对着写的。颜色走宿主的 token，新 app 不会再造一套色板。目录是从组件库生成的：[skills/mohou-mini-app/references/catalog.md](skills/mohou-mini-app/references/catalog.md)。
 
 页面也可以是原生元素加 Tailwind，或者混用。一个组件都不用，同样是一个合法的 app。重编辑器按需加载，不开代码编辑器的 app 不会带上那套引擎。
 
@@ -121,7 +121,7 @@ export default defineApp({
 Node.js 22.19 或更新（或 24+）。pnpm 11.7.0。要编窗口才需要 Rust。没有 Docker，没有 Python，没有数据库。
 
 ```bash
-git clone <这个仓库> && cd monkey-mini-app-next
+git clone <这个仓库> && cd mohou-mini-app
 pnpm install
 pnpm build:panel && pnpm build:window
 pnpm dev:host
@@ -149,7 +149,7 @@ Mac 上如果已经有 Node.js 22+，`pnpm dist:app` 会写出 `artifacts/app/Mo
 
 ## 包和文档
 
-包的角色：[packages/README.md](packages/README.md)。产品做什么：[docs/product/features.md](docs/product/features.md)。命令：[docs/development.md](docs/development.md)。助手读的文件：[skills/monkey-mini-app/SKILL.md](skills/monkey-mini-app/SKILL.md)。
+包的角色：[packages/README.md](packages/README.md)。产品做什么：[docs/product/features.md](docs/product/features.md)。命令：[docs/development.md](docs/development.md)。助手读的文件：[skills/mohou-mini-app/SKILL.md](skills/mohou-mini-app/SKILL.md)。
 
 `pnpm run check` 是 lint、typecheck、覆盖率门禁，加上 skill 检查。
 

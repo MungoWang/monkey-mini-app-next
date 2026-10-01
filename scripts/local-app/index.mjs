@@ -73,7 +73,7 @@ writeFileSync(join(prefix, 'package.json'), `${JSON.stringify(appPkg, null, 2)}\
 run('npm', ['install', '--no-fund', '--no-audit'], { cwd: prefix })
 
 const shellRoot = join(prefix, 'node_modules', '@mohou', 'shell')
-const skillInShell = join(shellRoot, 'skill', 'monkey-mini-app', 'SKILL.md')
+const skillInShell = join(shellRoot, 'skill', 'mohou-mini-app', 'SKILL.md')
 if (!existsSync(skillInShell)) throw new Error(`installed shell missing skill: ${skillInShell}`)
 const distPanel = join(shellRoot, 'dist', 'panel.html')
 if (!existsSync(distPanel)) throw new Error(`installed shell missing panel dist: ${distPanel}`)

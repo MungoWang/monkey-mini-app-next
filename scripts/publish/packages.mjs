@@ -99,7 +99,7 @@ export function tarballFailures(rootDir, list) {
       failures.push(`${name} packs tests, node_modules, or src-tauri`)
     }
     if (!entries.some(entry => entry.endsWith('/src/index.ts'))) failures.push(`${name} is missing src/index.ts`)
-    if (name.startsWith('mohou-shell-') && !entries.some(entry => entry.includes('/skill/monkey-mini-app/SKILL.md'))) {
+    if (name.startsWith('mohou-shell-') && !entries.some(entry => entry.includes('/skill/mohou-mini-app/SKILL.md'))) {
       failures.push(`${name} is missing packaged skill (run pnpm sync:skill)`)
     }
     if (name.startsWith('mohou-shell-') && !entries.some(entry => entry.endsWith('/dist/panel.html'))) {

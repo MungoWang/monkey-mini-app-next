@@ -21,14 +21,14 @@ const policy: PanelPolicy = {
 }
 
 const skill: PanelSkillStatus = {
-  skillId: 'monkey-mini-app',
+  skillId: 'mohou-mini-app',
   version: '1.0.2',
   agents: [
     {
       id: 'pi',
       label: 'Pi',
       skillsDir: '/Users/me/.pi/agent/skills',
-      dest: '/Users/me/.pi/agent/skills/monkey-mini-app',
+      dest: '/Users/me/.pi/agent/skills/mohou-mini-app',
       homePresent: true,
       installed: true,
       version: '1.0.1',
@@ -38,7 +38,7 @@ const skill: PanelSkillStatus = {
       id: 'kiro',
       label: 'Kiro',
       skillsDir: '/Users/me/.kiro/skills',
-      dest: '/Users/me/.kiro/skills/monkey-mini-app',
+      dest: '/Users/me/.kiro/skills/mohou-mini-app',
       homePresent: false,
       installed: false,
       version: null,
@@ -47,7 +47,7 @@ const skill: PanelSkillStatus = {
   ],
   customs: [{
     dir: '/tmp/work/skills',
-    dest: '/tmp/work/skills/monkey-mini-app',
+    dest: '/tmp/work/skills/mohou-mini-app',
     installed: true,
     version: '1.0.2',
     updateAvailable: false,
@@ -143,12 +143,12 @@ describe('skill and authoring MCP install', () => {
       await Promise.resolve()
     })
     expect(installed).toContain('kiro')
-    const open = [...host.querySelectorAll('button')].find(button => button.textContent?.includes('monkey-mini-app'))
+    const open = [...host.querySelectorAll('button')].find(button => button.textContent?.includes('mohou-mini-app'))
     await act(async () => {
       open?.click()
       await Promise.resolve()
     })
-    expect(revealed).toContain('monkey-mini-app')
+    expect(revealed).toContain('mohou-mini-app')
     root.unmount()
     host.remove()
   })
@@ -293,7 +293,7 @@ describe('skill and authoring MCP install', () => {
       agents: skill.agents.map(agent => ({ ...agent, updateAvailable: false })),
       customs: [{
         dir: '/tmp/other/skills',
-        dest: '/tmp/other/skills/monkey-mini-app',
+        dest: '/tmp/other/skills/mohou-mini-app',
         installed: true,
         version: null,
         updateAvailable: true,

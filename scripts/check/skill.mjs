@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Skill gate: keep skills/monkey-mini-app honest against this repo.
+ * Skill gate: keep skills/mohou-mini-app honest against this repo.
  *
- * Inputs: skills/monkey-mini-app/**, packages/host/src/tools/author.ts,
+ * Inputs: skills/mohou-mini-app/**, packages/host/src/tools/author.ts,
  *         packages/app/contract/src/context.ts, packages/app/ui/catalog-families.json
  * Writes: nothing
  * Side effects: none — exit 1 means the tree drifted
@@ -17,7 +17,7 @@ import { templateDrift } from "../gen/skill/templates.mjs"
 import { readShellVersion, readSkillVersion } from "../sync/skill-into-shell.mjs"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..")
-const skillDir = path.join(root, "skills/monkey-mini-app")
+const skillDir = path.join(root, "skills/mohou-mini-app")
 const contractsDir = path.join(skillDir, "references/contracts")
 const catalogPath = path.join(skillDir, "references/catalog.md")
 const skillMd = path.join(skillDir, "SKILL.md")

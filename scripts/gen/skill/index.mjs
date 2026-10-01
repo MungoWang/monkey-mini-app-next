@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
  * Generate the mini-app UI reference from component source (TypeScript AST + JSDoc)
- * → skills/monkey-mini-app/references/{catalog.md,contracts/*.md} + packages/app/ui/ai/catalog.json.
+ * → skills/mohou-mini-app/references/{catalog.md,contracts/*.md} + packages/app/ui/ai/catalog.json.
  *
  * Inputs: packages/app/ui/src/**, packages/app/ui/catalog-families.json,
  *         scripts/gen/skill/fixtures/**
- * Writes: skills/monkey-mini-app/references/**, packages/app/ui/ai/catalog.json,
- *         skills/monkey-mini-app/templates/** (copied from packages/app/templates/src)
+ * Writes: skills/mohou-mini-app/references/**, packages/app/ui/ai/catalog.json,
+ *         skills/mohou-mini-app/templates/** (copied from packages/app/templates/src)
  * Side effects: repo tracked files — commit the regenerated diff
  * Run as: pnpm gen:skill
  *
@@ -27,7 +27,7 @@ import { copyTemplates } from "./templates.mjs"
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..")
 const uiRoot = path.join(repoRoot, "packages/app/ui")
 const srcRoot = path.join(uiRoot, "src")
-const skillRef = path.join(repoRoot, "skills/monkey-mini-app/references")
+const skillRef = path.join(repoRoot, "skills/mohou-mini-app/references")
 const fixturesRoot = path.join(repoRoot, "scripts/gen/skill/fixtures")
 const contractsDir = path.join(skillRef, "contracts")
 const catalogMdPath = path.join(skillRef, "catalog.md")
@@ -134,9 +134,9 @@ async function main() {
  const withTypes = components.filter((c) => c.types?.length).length
  const parts = primitives.reduce((n, f) => n + f.parts.length + f.helpers.length, 0)
  console.log(
- `monkey-mini-app skill: ${entries.length} components in ${families.length} families ` +
+ `mohou-mini-app skill: ${entries.length} components in ${families.length} families ` +
  `(${components.length} contracts, ${withTypes} with related types; ${primitives.length} L1 files, ${parts} parts) ` +
- `→ skills/monkey-mini-app/references/ (+ theme.md: ${tokenCount} tokens, ${templateCount} template files); ` +
+ `→ skills/mohou-mini-app/references/ (+ theme.md: ${tokenCount} tokens, ${templateCount} template files); ` +
  `shell skill @ ${synced.shellVersion}`
 )
  if (badFamily.length) process.exitCode = 1

@@ -7,7 +7,7 @@ updated: 2026-10-01
 
 This repository has one TypeScript compiler face for packages: `tsconfig.json` typechecks every package from `src`, except author templates. There is no host/client split. `packages/app/templates/tsconfig.json` typechecks the templates and allows an unannotated parameter. `defineApp` still infers `ctx` and a named `args` object.
 
-Author templates are edited in `packages/app/templates/src`. `pnpm gen:skill` copies that directory to `skills/monkey-mini-app/templates`. An edit under the skill directory is replaced by the next copy. `check:skill` fails while the two trees differ. Skill `version` **equals** `@mohou/shell` version: run `pnpm sync:skill` (also at the end of `gen:skill` and before pack). That script copies `skills/monkey-mini-app` into `packages/shell/skill/monkey-mini-app` for the shell npm package. Do not hand-edit the shell copy.
+Author templates are edited in `packages/app/templates/src`. `pnpm gen:skill` copies that directory to `skills/mohou-mini-app/templates`. An edit under the skill directory is replaced by the next copy. `check:skill` fails while the two trees differ. Skill `version` **equals** `@mohou/shell` version: run `pnpm sync:skill` (also at the end of `gen:skill` and before pack). That script copies `skills/mohou-mini-app` into `packages/shell/skill/mohou-mini-app` for the shell npm package. Do not hand-edit the shell copy.
 
 ## Commands
 

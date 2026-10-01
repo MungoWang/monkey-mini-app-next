@@ -13,8 +13,8 @@ import { bootHost, resolveAuthorSkillSource } from '../src/index.ts'
 describe('resolveAuthorSkillSource', () => {
   it('finds the monorepo or packaged skill tree', () => {
     const source = resolveAuthorSkillSource()
-    expect(source.includes('monkey-mini-app')).toBe(true)
-    expect(source.endsWith('monkey-mini-app') || source.endsWith('monkey-mini-app/')).toBe(true)
+    expect(source.includes('mohou-mini-app')).toBe(true)
+    expect(source.endsWith('mohou-mini-app') || source.endsWith('mohou-mini-app/')).toBe(true)
   })
 })
 

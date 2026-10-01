@@ -22,10 +22,10 @@ Without one picture of version lines, agents and pack scripts disagree on what a
 
 ### Skill lives in the shell package
 
-- Source of truth in the monorepo remains `skills/monkey-mini-app/` (gen:skill, check:skill).
-- Release/pack **copies** that tree into `packages/shell/skill/monkey-mini-app/` and packs it with `@mohou/shell`.
+- Source of truth in the monorepo remains `skills/mohou-mini-app/` (gen:skill, check:skill).
+- Release/pack **copies** that tree into `packages/shell/skill/mohou-mini-app/` and packs it with `@mohou/shell`.
 - There is **no** separate `@mohou/author-skill` npm package.
-- `bootHost` resolves author skill source from the shell package (`skill/monkey-mini-app` next to package root). Monorepo dev may fall back to repo `skills/monkey-mini-app` when the copy is absent.
+- `bootHost` resolves author skill source from the shell package (`skill/mohou-mini-app` next to package root). Monorepo dev may fall back to repo `skills/mohou-mini-app` when the copy is absent.
 - **K is set from S by script** (`scripts/sync/skill-into-shell.mjs`). `check:skill` fails if `SKILL.md` version ≠ `@mohou/shell` version. Shipping shell always ships a skill whose version string matches that shell.
 
 ### Package update loop (product)
@@ -38,7 +38,7 @@ Without one picture of version lines, agents and pack scripts disagree on what a
 ### Skill copy loop (agents)
 
 1. **K_source** = skill tree inside the installed shell package.
-2. Panel “install/update writing skill” copies K_source → assistant `skills/monkey-mini-app`.
+2. Panel “install/update writing skill” copies K_source → assistant `skills/mohou-mini-app`.
 3. `updateAvailable` when K_source > K_dest (semver compare on SKILL.md). After S upgrades, user updates skill copies so agents match the new tools/kit story.
 
 ### UI kit vs skill vs vendor
@@ -49,7 +49,7 @@ Without one picture of version lines, agents and pack scripts disagree on what a
 
 ### Local distribution proof
 
-`pnpm dist:local` packs workspace tarballs into `artifacts/npm/`, installs them into `artifacts/local-app/prefix` from **file:** tarballs only for `@mohou/*` (public deps still come from the registry), copies the window binary, and writes `artifacts/local-app/run`. The run script starts shell via `node --import tsx` because Node refuses `--experimental-strip-types` under `node_modules`. Proved: installed shell resolves skill from `…/shell/skill/monkey-mini-app`, Host boots, `/api/about` and `/api/author-skill` answer with skill version === shell version.
+`pnpm dist:local` packs workspace tarballs into `artifacts/npm/`, installs them into `artifacts/local-app/prefix` from **file:** tarballs only for `@mohou/*` (public deps still come from the registry), copies the window binary, and writes `artifacts/local-app/run`. The run script starts shell via `node --import tsx` because Node refuses `--experimental-strip-types` under `node_modules`. Proved: installed shell resolves skill from `…/shell/skill/mohou-mini-app`, Host boots, `/api/about` and `/api/author-skill` answer with skill version === shell version.
 
 ## Alternatives considered
 

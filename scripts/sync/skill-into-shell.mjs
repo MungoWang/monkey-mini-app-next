@@ -2,9 +2,9 @@
 /**
  * Align skill version with @mohou/shell and copy the skill tree into the shell package.
  *
- * Inputs: packages/shell/package.json, skills/monkey-mini-app/**
- * Writes: skills/monkey-mini-app/SKILL.md version field;
- *         packages/shell/skill/monkey-mini-app/** (packaged copy)
+ * Inputs: packages/shell/package.json, skills/mohou-mini-app/**
+ * Writes: skills/mohou-mini-app/SKILL.md version field;
+ *         packages/shell/skill/mohou-mini-app/** (packaged copy)
  * Run as: node scripts/sync/skill-into-shell.mjs
  *         pnpm sync:skill
  */
@@ -14,9 +14,9 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 export const shellPkgPath = join(root, 'packages/shell/package.json')
-export const skillSrc = join(root, 'skills/monkey-mini-app')
+export const skillSrc = join(root, 'skills/mohou-mini-app')
 export const skillMd = join(skillSrc, 'SKILL.md')
-export const skillDest = join(root, 'packages/shell/skill/monkey-mini-app')
+export const skillDest = join(root, 'packages/shell/skill/mohou-mini-app')
 
 export function readShellVersion(file = shellPkgPath) {
   const pkg = JSON.parse(readFileSync(file, 'utf8'))
@@ -50,9 +50,9 @@ export function setSkillVersion(markdown, version) {
 /** Write K≡S into SKILL.md and copy skills/ → packages/shell/skill/. */
 export function syncSkillIntoShell(repoRoot = root) {
   const shellFile = join(repoRoot, 'packages/shell/package.json')
-  const src = join(repoRoot, 'skills/monkey-mini-app')
+  const src = join(repoRoot, 'skills/mohou-mini-app')
   const md = join(src, 'SKILL.md')
-  const dest = join(repoRoot, 'packages/shell/skill/monkey-mini-app')
+  const dest = join(repoRoot, 'packages/shell/skill/mohou-mini-app')
   if (!existsSync(md)) throw new Error(`missing ${md}`)
   const shellVersion = readShellVersion(shellFile)
   const previous = readSkillVersion(md)
@@ -68,6 +68,6 @@ export function syncSkillIntoShell(repoRoot = root) {
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const result = syncSkillIntoShell()
   console.log(
-    `skill version ${result.previous ?? '(none)'} → ${result.shellVersion}; copied to packages/shell/skill/monkey-mini-app`,
+    `skill version ${result.previous ?? '(none)'} → ${result.shellVersion}; copied to packages/shell/skill/mohou-mini-app`,
   )
 }

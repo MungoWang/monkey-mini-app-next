@@ -8,7 +8,7 @@ Moving the monorepo to another computer needed a repeatable archive. Copying the
 
 ## Decision
 
-`pnpm pack:source` runs `scripts/pack/source.mjs`. The file list is `git ls-files -co --exclude-standard` (tracked plus untracked source, minus gitignore). The archive is `artifacts/source-pack/monkey-mini-app-next-<shell-version>-source-<YYYYMMDD>.tgz` and includes a generated `SOURCE-PACK.md` with unpack and run steps. [Development](../../../docs/development.md) owns the command.
+`pnpm pack:source` runs `scripts/pack/source.mjs`. The file list is `git ls-files -co --exclude-standard` (tracked plus untracked source, minus gitignore). The archive is `artifacts/source-pack/mohou-mini-app-<shell-version>-source-<YYYYMMDD>.tgz` and includes a generated `SOURCE-PACK.md` with unpack and run steps. [Development](../../../docs/development.md) owns the command.
 
 ## Alternatives considered
 

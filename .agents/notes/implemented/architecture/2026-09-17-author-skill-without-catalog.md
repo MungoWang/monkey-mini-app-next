@@ -8,7 +8,7 @@ The write loop and the style slots were specified, and no skill file existed. An
 
 ## Decision
 
-`skills/monkey-mini-app/SKILL.md` documents the write loop, the mounted tool names, `ctx`, and the two style slots. It does not contain a component catalog. The catalog waits for the kit. The skill forbids a direct write into the app directory, a kit import, and a second colour name.
+`skills/mohou-mini-app/SKILL.md` documents the write loop, the mounted tool names, `ctx`, and the two style slots. It does not contain a component catalog. The catalog waits for the kit. The skill forbids a direct write into the app directory, a kit import, and a second colour name.
 
 ## Alternatives considered
 

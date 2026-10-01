@@ -146,8 +146,8 @@ async function startHost(
  */
 export function resolveAuthorSkillSource(fromFile = import.meta.url): string {
   const here = path.dirname(fileURLToPath(fromFile))
-  const packaged = path.resolve(here, '../skill/monkey-mini-app')
-  const monorepo = path.resolve(here, '../../../skills/monkey-mini-app')
+  const packaged = path.resolve(here, '../skill/mohou-mini-app')
+  const monorepo = path.resolve(here, '../../../skills/mohou-mini-app')
   if (existsSync(path.join(packaged, 'SKILL.md'))) return packaged
   if (existsSync(path.join(monorepo, 'SKILL.md'))) return monorepo
   return packaged

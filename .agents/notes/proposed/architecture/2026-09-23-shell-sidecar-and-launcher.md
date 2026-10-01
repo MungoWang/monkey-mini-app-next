@@ -43,7 +43,7 @@ That coupling teaches the wrong update story: a window binary rebuild looks requ
 - **Shipped path:** `packages/launcher/tauri` holds the window crate. Shell npm `files` must not ship a Tauri tree (enforced in `publish:check`).
 - Shell exposes a **stable process entry** the launcher can spawn. Composition stays in shell; the launcher does not `createHost`.
 - Panel document build may stay a shell (or panel) concern served by the sidecar.
-- Skill **source** is resolved from the shell package (`skill/monkey-mini-app`), not beside the Tauri tree.
+- Skill **source** is resolved from the shell package (`skill/mohou-mini-app`), not beside the Tauri tree.
 
 ### On-the-fly shell update (Settings)
 
@@ -62,7 +62,7 @@ Failure and UX details (rollback, mid-update crash, Windows file locks, permissi
 
 ### Skill inside shell
 
-Decided: skill tree ships **inside** `@mohou/shell` (`skill/monkey-mini-app`), not a second npm package. K≡S via sync script. Details: [update loops](./2026-09-23-update-loops.md).
+Decided: skill tree ships **inside** `@mohou/shell` (`skill/mohou-mini-app`), not a second npm package. K≡S via sync script. Details: [update loops](./2026-09-23-update-loops.md).
 
 ### What this is not
 

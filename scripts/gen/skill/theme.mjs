@@ -1,9 +1,9 @@
 /**
- * Generate skills/monkey-mini-app/references/theme.md from the locked token list
+ * Generate skills/mohou-mini-app/references/theme.md from the locked token list
  * plus one builtin theme file for sample values.
  *
  * Inputs: packages/host/src/theme/tokens.ts, packages/host/themes/theme-slate.css
- * Writes: skills/monkey-mini-app/references/theme.md
+ * Writes: skills/mohou-mini-app/references/theme.md
  * Side effects: repo tracked files
  * Run as: pnpm gen:skill
  */
@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url"
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..")
 const tokensPath = path.join(root, "packages/host/src/theme/tokens.ts")
 const sampleThemePath = path.join(root, "packages/host/themes/theme-slate.css")
-const outPath = path.join(root, "skills/monkey-mini-app/references/theme.md")
+const outPath = path.join(root, "skills/mohou-mini-app/references/theme.md")
 
 const CLASS_HINT = {
   background: "bg-background",

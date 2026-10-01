@@ -82,7 +82,7 @@ describe('httpPanelClients', () => {
     expect(policy.theme).toBe('dark')
     await client.deleteApp('com.example.app')
     await client.reload?.('com.example.app')
-    expect((await client.readSkill?.())?.skillId).toBe('monkey-mini-app')
+    expect((await client.readSkill?.())?.skillId).toBe('mohou-mini-app')
     expect((await client.readAuthorMcp?.())?.agents[0]?.id).toBe('pi')
     expect((await client.listMcp?.())?.[0]?.env?.K).toBe('v')
     expect((await client.checkMcp?.({ id: 'echo', command: 'echo' }))?.ok).toBe(true)
@@ -210,9 +210,9 @@ function dense(url: string): unknown {
 function wire(url: string): unknown {
   if (url.includes('/api/author-skill')) {
     if (url.includes('custom=')) {
-      return { ok: true, result: { skillId: 'monkey-mini-app', agents: [{ id: 'pi' }], customs: [{ dest: '/tmp/x' }] } }
+      return { ok: true, result: { skillId: 'mohou-mini-app', agents: [{ id: 'pi' }], customs: [{ dest: '/tmp/x' }] } }
     }
-    return { ok: true, result: { skillId: 'monkey-mini-app', version: '1.0.2', agents: [{ id: 'pi', label: 'Pi', dest: '/tmp/skills/x', skillsDir: '/tmp/skills', homePresent: true, installed: true, version: '1.0.2', updateAvailable: false }], customs: [] } }
+    return { ok: true, result: { skillId: 'mohou-mini-app', version: '1.0.2', agents: [{ id: 'pi', label: 'Pi', dest: '/tmp/skills/x', skillsDir: '/tmp/skills', homePresent: true, installed: true, version: '1.0.2', updateAvailable: false }], customs: [] } }
   }
   if (url.includes('/api/author-mcp')) {
     return { ok: true, result: { agents: [{ id: 'pi', label: 'Pi', dest: '/tmp/mcp.json', homePresent: true, installed: true, updateAvailable: false }, { dest: '/tmp/x' }] } }
