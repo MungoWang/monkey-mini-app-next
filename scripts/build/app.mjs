@@ -343,9 +343,8 @@ console.log(`prune: removed ${pruned.files} files / ${pruned.dirs} dirs (~${prun
 // 3. Tauri binary is the app executable. It spawns the sidecar.
 const builtName = process.platform === 'win32' ? 'mini-app-window.exe' : 'mini-app-window'
 const built = join(root, 'packages/launcher/tauri/target/release', builtName)
-if (!existsSync(built)) {
-  run('cargo', ['build', '--release', '--manifest-path', 'packages/launcher/tauri/Cargo.toml'])
-}
+// Always rebuild. A leftover release binary hides launcher fixes such as shell PATH.
+run('cargo', ['build', '--release', '--manifest-path', 'packages/launcher/tauri/Cargo.toml'])
 if (!existsSync(built)) throw new Error(`window binary missing: ${built}`)
 
 if (process.platform === 'win32') {

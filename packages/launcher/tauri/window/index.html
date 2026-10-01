@@ -66,9 +66,9 @@
     animation: pulse 1.8s ease-in-out infinite;
   }
   .status {
-    gap: .16em;
     margin-top: 16px;
     font-size: 12px;
+    letter-spacing: .12em;
     color: var(--quiet);
   }
   @keyframes rise {
@@ -87,5 +87,11 @@
   <p class="mark"><span>墨</span><span>猴</span></p>
   <p class="latin"><span>M</span><span>O</span><span>H</span><span>O</span><span>U</span></p>
   <div class="rule"></div>
-  <p class="status"><span>启</span><span>动</span><span>中</span></p>
+  <p class="status" id="mohou-splash">启动中</p>
 </main>
+<script>
+  window.mohouSplash = function (text) {
+    var node = document.getElementById('mohou-splash')
+    if (node && text) node.textContent = text
+  }
+</script>

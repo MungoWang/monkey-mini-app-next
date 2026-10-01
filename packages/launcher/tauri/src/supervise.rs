@@ -18,6 +18,7 @@ use crate::admit_origin;
 
 pub const RESTART_EXIT: i32 = 75;
 const READY_LIMIT: Duration = Duration::from_secs(60);
+const UPDATE_BUDGET: Duration = Duration::from_secs(120);
 
 pub enum ChildStop {
     Restart,
@@ -101,14 +102,10 @@ fn is_exec(path: &Path) -> bool {
 }
 
 pub fn find_node(path_env: &str, home: &Path) -> Option<PathBuf> {
-    let candidates = node_candidates(path_env, home);
-    // Pi is an optional global peer. Prefer a Node that actually has it so a
-    // saved `runtimeProvider: pi` can boot. Otherwise keep the first Node.
-    candidates
-        .iter()
-        .find(|node| has_pi_peer(node, home))
-        .cloned()
-        .or_else(|| candidates.into_iter().next())
+    // Same lookup as `command -v node` on this PATH. Do not skip ahead to
+    // another install that happens to contain Pi.
+    let _ = home;
+    node_candidates(path_env, home).into_iter().next()
 }
 
 fn node_candidates(path_env: &str, home: &Path) -> Vec<PathBuf> {
@@ -118,14 +115,9 @@ fn node_candidates(path_env: &str, home: &Path) -> Vec<PathBuf> {
             found.push(candidate);
         }
     };
+    let _ = home;
     for dir in path_env.split(path_sep()).filter(|dir| !dir.is_empty()) {
         push(Path::new(dir).join(node_file_name()));
-    }
-    #[cfg(unix)]
-    {
-        for node in nvm_nodes(home) {
-            push(node);
-        }
     }
     #[cfg(windows)]
     {
@@ -142,44 +134,7 @@ fn node_candidates(path_env: &str, home: &Path) -> Vec<PathBuf> {
     found
 }
 
-/// Global module roots for one Node. Unix installs use `lib/node_modules`.
-/// Windows installs use the directory beside `node.exe`, and npm's user prefix.
-fn module_roots(node: &Path, home: &Path) -> Vec<PathBuf> {
-    let mut roots = Vec::new();
-    if let Some(dir) = node.parent() {
-        if let Some(prefix) = dir.parent() {
-            roots.push(prefix.join("lib/node_modules"));
-        }
-        roots.push(dir.join("node_modules"));
-        roots.push(dir.join("lib/node_modules"));
-    }
-    roots.push(home.join("AppData").join("Roaming").join("npm").join("node_modules"));
-    if let Some(appdata) = std::env::var_os("APPDATA") {
-        let prefixed = PathBuf::from(appdata).join("npm").join("node_modules");
-        if !roots.iter().any(|item| item == &prefixed) {
-            roots.push(prefixed);
-        }
-    }
-    roots
-}
-
-fn has_pi_peer(node: &Path, home: &Path) -> bool {
-    module_roots(node, home)
-        .iter()
-        .any(|global| pi_package(global, "pi-coding-agent").is_some())
-}
-
-fn pi_package(global: &Path, pkg: &str) -> Option<PathBuf> {
-    let direct = global.join("@earendil-works").join(pkg);
-    if direct.is_dir() {
-        return Some(direct);
-    }
-    let nested = global
-        .join("@earendil-works/pi-coding-agent/node_modules/@earendil-works")
-        .join(pkg);
-    nested.is_dir().then_some(nested)
-}
-
+#[cfg(windows)]
 fn version_nodes(root: &Path, file_name: &str) -> Vec<PathBuf> {
     let Ok(entries) = fs::read_dir(root) else {
         return Vec::new();
@@ -199,12 +154,6 @@ fn version_nodes(root: &Path, file_name: &str) -> Vec<PathBuf> {
             is_exec(&candidate).then_some(candidate)
         })
         .collect()
-}
-
-#[cfg(unix)]
-fn nvm_nodes(home: &Path) -> Vec<PathBuf> {
-    // nvm-sh keeps the binary at versions/node/v22.x/bin/node, not beside the version directory.
-    version_nodes(&home.join(".nvm/versions/node"), "bin/node")
 }
 
 #[cfg(windows)]
@@ -247,7 +196,7 @@ struct Launch {
     gui: bool,
 }
 
-fn launch_plan(prefix: &Path) -> Result<Launch, String> {
+fn launch_plan(prefix: &Path, app: &AppHandle, announce: bool) -> Result<(Launch, bool), String> {
     let entry = shell_entry(prefix);
     if !entry.is_file() {
         return Err(format!("shell entry is missing: {}", entry.display()));
@@ -255,19 +204,29 @@ fn launch_plan(prefix: &Path) -> Result<Launch, String> {
     let home = home_dir();
     let gui = is_app_bundle(prefix);
     let inherited = std::env::var("PATH").unwrap_or_default();
-    let base_path = if gui {
-        login_path().unwrap_or_else(|| {
-            let mut path = "/usr/bin:/bin:/usr/sbin:/sbin".to_string();
-            path = prepend_path(&path, "/opt/homebrew/bin");
-            path = prepend_path(&path, "/usr/local/bin");
-            path = prepend_path(&path, &home.join(".local/bin").display().to_string());
-            prepend_path(&path, &home.join(".cargo/bin").display().to_string())
-        })
+    let runtime = runtime_dir(prefix, std::env::var("MINI_APP_RUNTIME").ok().as_deref(), &home);
+    fs::create_dir_all(&runtime).map_err(|error| format!("could not create runtime: {error}"))?;
+    // A Dock launch does not read .zshrc. Ask the login shell, the same way
+    // shell-env and VS Code do, so nvm, fnm, volta, and asdf apply themselves.
+    // A remembered PATH skips that wait. A background refresh updates the next open.
+    let (base_path, cached) = if gui {
+        if let Some(path) = read_shell_cache(&runtime) {
+            if find_node(&path, &home).is_some() {
+                if announce {
+                    set_splash(app, &runtime, Splash::Platform);
+                }
+                (path, true)
+            } else {
+                fresh_gui_path(&runtime, &home, app, announce)
+            }
+        } else {
+            fresh_gui_path(&runtime, &home, app, announce)
+        }
     } else {
         let mut path = inherited;
         path = prepend_path(&path, "/opt/homebrew/bin");
         path = prepend_path(&path, "/usr/local/bin");
-        prepend_path(&path, &home.join(".local/bin").display().to_string())
+        (prepend_path(&path, &home.join(".local/bin").display().to_string()), false)
     };
     let node = find_node(&base_path, &home).ok_or_else(|| {
         "Mohou needs Node.js 22+ . Install it from https://nodejs.org and open Mohou again.".to_string()
@@ -277,17 +236,115 @@ fn launch_plan(prefix: &Path) -> Result<Launch, String> {
         .map(|dir| dir.display().to_string())
         .unwrap_or_default();
     let path = prepend_path(&base_path, &node_bin);
-    let runtime = runtime_dir(prefix, std::env::var("MINI_APP_RUNTIME").ok().as_deref(), &home);
-    fs::create_dir_all(&runtime).map_err(|error| format!("could not create runtime: {error}"))?;
-    link_pi_peers(prefix, &node, &home, &base_path);
-    Ok(Launch {
-        node,
-        path,
-        entry,
-        runtime,
-        panel: prefix.join("node_modules/@mini-app/shell/dist"),
-        gui,
-    })
+    Ok((
+        Launch {
+            node,
+            path,
+            entry,
+            runtime,
+            panel: prefix.join("node_modules/@mini-app/shell/dist"),
+            gui,
+        },
+        cached,
+    ))
+}
+
+fn fresh_gui_path(runtime: &Path, home: &Path, app: &AppHandle, announce: bool) -> (String, bool) {
+    if announce {
+        set_splash(app, runtime, Splash::Environment);
+    }
+    if let Some(path) = shell_path().or_else(login_path) {
+        write_shell_cache(runtime, &path);
+        if announce {
+            set_splash(app, runtime, Splash::Platform);
+        }
+        return (path, false);
+    }
+    let mut path = "/usr/bin:/bin:/usr/sbin:/sbin".to_string();
+    path = prepend_path(&path, "/opt/homebrew/bin");
+    path = prepend_path(&path, "/usr/local/bin");
+    path = prepend_path(&path, &home.join(".local/bin").display().to_string());
+    if announce {
+        set_splash(app, runtime, Splash::Platform);
+    }
+    (prepend_path(&path, &home.join(".cargo/bin").display().to_string()), false)
+}
+
+fn shell_cache_file(runtime: &Path) -> PathBuf {
+    runtime.join("shell-path.json")
+}
+
+fn read_shell_cache(runtime: &Path) -> Option<String> {
+    let text = fs::read_to_string(shell_cache_file(runtime)).ok()?;
+    let value: serde_json::Value = serde_json::from_str(&text).ok()?;
+    let path = value.get("path")?.as_str()?;
+    if path.contains('/') || path.contains('\\') {
+        Some(path.to_string())
+    } else {
+        None
+    }
+}
+
+fn write_shell_cache(runtime: &Path, path: &str) {
+    let _ = fs::create_dir_all(runtime);
+    let body = serde_json::json!({ "path": path });
+    let _ = fs::write(shell_cache_file(runtime), format!("{body}\n"));
+}
+
+fn refresh_shell_cache(runtime: PathBuf) {
+    thread::spawn(move || {
+        let Some(path) = shell_path().or_else(login_path) else {
+            return;
+        };
+        if find_node(&path, &home_dir()).is_some() {
+            write_shell_cache(&runtime, &path);
+        }
+    });
+}
+
+enum Splash {
+    Environment,
+    Platform,
+    Update,
+}
+
+fn splash_label(locale: &str, kind: Splash) -> &'static str {
+    let zh = locale.to_ascii_lowercase().starts_with("zh");
+    match (zh, kind) {
+        (true, Splash::Environment) => "正在检测运行环境",
+        (false, Splash::Environment) => "Checking the runtime",
+        (true, Splash::Platform) => "正在启动运行平台",
+        (false, Splash::Platform) => "Starting the platform",
+        (true, Splash::Update) => "正在安装更新",
+        (false, Splash::Update) => "Installing the update",
+    }
+}
+
+fn splash_locale(runtime: &Path) -> String {
+    let Ok(text) = fs::read_to_string(runtime.join("host.json")) else {
+        return "zh-CN".to_string();
+    };
+    serde_json::from_str::<serde_json::Value>(&text)
+        .ok()
+        .and_then(|value| value.get("locale")?.as_str().map(str::to_string))
+        .filter(|locale| !locale.is_empty())
+        .unwrap_or_else(|| "zh-CN".to_string())
+}
+
+fn set_splash(app: &AppHandle, runtime: &Path, kind: Splash) {
+    let text = splash_label(&splash_locale(runtime), kind);
+    let script = format!(
+        "window.mohouSplash&&window.mohouSplash({})",
+        serde_json::to_string(text).unwrap_or_else(|_| "\"\"".to_string())
+    );
+    for _ in 0..40 {
+        if let Some(window) = app.get_webview_window("main") {
+            if window.eval(&script).is_ok() {
+                return;
+            }
+        }
+        thread::sleep(Duration::from_millis(25));
+    }
 }
 
 fn home_dir() -> PathBuf {
@@ -295,6 +352,58 @@ fn home_dir() -> PathBuf {
         .or_else(|| std::env::var_os("USERPROFILE"))
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."))
+}
+
+const SHELL_ENV_MARK: &str = "_MOHOU_SHELL_ENV_";
+
+/// PATH from an interactive login shell. `None` on Windows: the user PATH is already in the process.
+fn shell_path() -> Option<String> {
+    #[cfg(not(unix))]
+    {
+        return None;
+    }
+    #[cfg(unix)]
+    {
+        let shell = std::env::var("SHELL").ok().filter(|value| !value.is_empty())?;
+        if !Path::new(&shell).is_file() {
+            return None;
+        }
+        let script = format!(
+            "printf '%s' '{SHELL_ENV_MARK}'; command env; printf '%s' '{SHELL_ENV_MARK}'; exit"
+        );
+        let child = Command::new(&shell)
+            .args(["-ilc", &script])
+            .env("DISABLE_AUTO_UPDATE", "true")
+            .env("ZSH_TMUX_AUTOSTARTED", "true")
+            .env("ZSH_TMUX_AUTOSTART", "false")
+            .stdin(Stdio::null())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .spawn()
+            .ok()?;
+        let (tx, rx) = mpsc::channel();
+        thread::spawn(move || {
+            let _ = tx.send(child.wait_with_output());
+        });
+        let output = rx.recv_timeout(Duration::from_secs(8)).ok()?.ok()?;
+        let text = String::from_utf8_lossy(&output.stdout);
+        path_from_shell_env(&text, SHELL_ENV_MARK)
+    }
+}
+
+fn path_from_shell_env(text: &str, mark: &str) -> Option<String> {
+    let start = text.find(mark)? + mark.len();
+    let rest = &text[start..];
+    let end = rest.find(mark).unwrap_or(rest.len());
+    for line in rest[..end].lines() {
+        let Some(value) = line.strip_prefix("PATH=") else {
+            continue;
+        };
+        if value.contains('/') || value.contains('\\') {
+            return Some(value.to_string());
+        }
+    }
+    None
 }
 
 fn login_path() -> Option<String> {
@@ -318,81 +427,8 @@ fn login_path() -> Option<String> {
         .map(|line| line.to_string())
 }
 
-fn link_pi_peers(prefix: &Path, node: &Path, home: &Path, path_env: &str) {
-    let dest_root = prefix.join("node_modules/@earendil-works");
-    if fs::create_dir_all(&dest_root).is_err() {
-        return;
-    }
-    let roots = pi_search_roots(node, home, path_env);
-    for pkg in ["pi-coding-agent", "pi-ai"] {
-        let dest = dest_root.join(pkg);
-        if let Some(src) = roots.iter().find_map(|global| pi_package(global, pkg)) {
-            place_peer_link(&dest, &src);
-        }
-    }
-}
-
-fn pi_search_roots(node: &Path, home: &Path, path_env: &str) -> Vec<PathBuf> {
-    let mut roots = module_roots(node, home);
-    let mut push = |root: PathBuf| {
-        if root.is_dir() && !roots.iter().any(|item| item == &root) {
-            roots.push(root);
-        }
-    };
-    for candidate in node_candidates(path_env, home) {
-        for root in module_roots(&candidate, home) {
-            push(root);
-        }
-    }
-    #[cfg(unix)]
-    if let Ok(entries) = fs::read_dir(home.join(".nvm/versions/node")) {
-        for entry in entries.flatten() {
-            push(entry.path().join("lib/node_modules"));
-        }
-    }
-    roots
-}
-
-fn remove_peer_link(dest: &Path) {
-    let Ok(meta) = dest.symlink_metadata() else {
-        return;
-    };
-    if meta.file_type().is_symlink() {
-        let _ = fs::remove_file(dest);
-        return;
-    }
-    // A Windows junction is a directory reparse point, not a symlink.
-    // remove_dir drops the link and leaves the target.
-    let _ = fs::remove_dir(dest);
-}
-
-fn place_peer_link(dest: &Path, src: &Path) {
-    remove_peer_link(dest);
-    #[cfg(unix)]
-    {
-        let _ = std::os::unix::fs::symlink(src, dest);
-    }
-    #[cfg(windows)]
-    {
-        if !junction(dest, src) {
-            let _ = std::os::windows::fs::symlink_dir(src, dest);
-        }
-    }
-}
-
-#[cfg(windows)]
-fn junction(dest: &Path, src: &Path) -> bool {
-    Command::new("cmd")
-        .args(["/C", "mklink", "/J"])
-        .arg(dest)
-        .arg(src)
-        .status()
-        .map(|status| status.success())
-        .unwrap_or(false)
-}
-
-fn spawn_sidecar(prefix: &Path) -> Result<Child, String> {
-    let launch = launch_plan(prefix)?;
+fn spawn_sidecar(prefix: &Path, app: &AppHandle) -> Result<(Child, bool, PathBuf), String> {
+    let (launch, cached) = launch_plan(prefix, app, true)?;
     if launch.gui && !launch.node.is_file() {
         return Err("Mohou needs Node.js 22+ . Install it from https://nodejs.org and open Mohou again.".to_string());
     }
@@ -425,7 +461,7 @@ fn spawn_sidecar(prefix: &Path) -> Result<Child, String> {
     // process_group(0) keeps grandchildren killable, but then a dead parent
     // does not take the sidecar with it. A watcher notices that and kills the group.
     spawn_parent_watch(child.id());
-    Ok(child)
+    Ok((child, cached, launch.runtime))
 }
 
 fn spawn_parent_watch(child_pid: u32) {
@@ -562,9 +598,114 @@ fn npm_bin(node: &Path) -> PathBuf {
     node.parent().map(|dir| dir.join(name)).unwrap_or_else(|| PathBuf::from(name))
 }
 
-/// Sidecar writes this, then exits 75. Install after it has released native modules.
-fn apply_pending_update(prefix: &Path, gui: bool) {
-    let path = prefix.join("update.json");
+fn update_request(prefix: &Path) -> PathBuf {
+    prefix.join("update.json")
+}
+
+fn update_snapshot_dir(prefix: &Path) -> PathBuf {
+    prefix.join("update-snapshot")
+}
+
+enum InstallWait {
+    Finished(Option<i32>),
+    TimedOut,
+    Closed,
+}
+
+/// Optional Pi peers are linked by the launcher. Required UI imports are direct dependencies, not peers.
+pub fn harden_install_args(mut args: Vec<String>) -> Vec<String> {
+    if args.first().map(String::as_str) != Some("install") {
+        return args;
+    }
+    for flag in ["--omit=peer", "--fetch-retries=1", "--fetch-timeout=20000"] {
+        if !args.iter().any(|arg| arg == flag) {
+            args.push(flag.to_string());
+        }
+    }
+    args
+}
+
+fn save_update_snapshot(prefix: &Path) -> bool {
+    let dir = update_snapshot_dir(prefix);
+    if fs::create_dir_all(&dir).is_err() {
+        return false;
+    }
+    if fs::copy(prefix.join("package.json"), dir.join("package.json")).is_err() {
+        return false;
+    }
+    let lock = prefix.join("package-lock.json");
+    if lock.is_file() && fs::copy(&lock, dir.join("package-lock.json")).is_err() {
+        return false;
+    }
+    true
+}
+
+fn restore_update_snapshot(prefix: &Path) {
+    let dir = update_snapshot_dir(prefix);
+    let manifest = dir.join("package.json");
+    if manifest.is_file() {
+        let _ = fs::copy(&manifest, prefix.join("package.json"));
+    }
+    let lock = dir.join("package-lock.json");
+    if lock.is_file() {
+        let _ = fs::copy(&lock, prefix.join("package-lock.json"));
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+fn quarantine_update(prefix: &Path, note: &str) {
+    let path = update_request(prefix);
+    if path.is_file() {
+        let _ = fs::rename(&path, prefix.join("update.failed.json"));
+    }
+    if let Ok(mut file) = fs::OpenOptions::new().create(true).append(true).open(prefix.join("update.log")) {
+        use std::io::Write;
+        let _ = file.write_all(format!("update stopped: {note}\n").as_bytes());
+    }
+}
+
+fn stop_locked_install(prefix: &Path) {
+    let Ok(text) = fs::read_to_string(prefix.join("update.lock")) else {
+        return;
+    };
+    if let Ok(locked) = text.trim().parse::<u32>() {
+        stop_process(locked);
+    }
+    let _ = fs::remove_file(prefix.join("update.lock"));
+}
+
+/// A file left by a dead process must not install, and must not block open.
+fn park_leftover_update(prefix: &Path, gui: bool) {
+    stop_locked_install(prefix);
+    restore_update_snapshot(prefix);
+    if !update_request(prefix).is_file() {
+        return;
+    }
+    quarantine_update(prefix, "left by a previous process");
+    tell_user_later(
+        "The previous update did not finish. Mohou opened the installed version.",
+        gui,
+    );
+}
+
+fn wait_budget(child: &mut Child, budget: Duration, closing: &AtomicBool) -> InstallWait {
+    let started = Instant::now();
+    loop {
+        if closing.load(Ordering::SeqCst) {
+            return InstallWait::Closed;
+        }
+        match child.try_wait() {
+            Ok(Some(status)) => return InstallWait::Finished(status.code()),
+            Ok(None) if started.elapsed() >= budget => return InstallWait::TimedOut,
+            Ok(None) => thread::sleep(Duration::from_millis(200)),
+            Err(_) => return InstallWait::Finished(None),
+        }
+    }
+}
+
+/// Sidecar exit 75 in this process is the only install. Failure boots the prefix as it was.
+fn apply_pending_update(prefix: &Path, gui: bool, closing: &AtomicBool, pid: &AtomicU32, app: &AppHandle) {
+    let path = update_request(prefix);
     let Ok(text) = fs::read_to_string(&path) else {
         return;
     };
@@ -580,30 +721,89 @@ fn apply_pending_update(prefix: &Path, gui: bool) {
         return;
     };
     let args: Vec<String> = args.iter().filter_map(|item| item.as_str().map(str::to_string)).collect();
-    let launch = match launch_plan(prefix) {
-        Ok(launch) => launch,
+    if args.is_empty() {
+        let _ = fs::remove_file(&path);
+        return;
+    }
+    let launch = match launch_plan(prefix, app, false) {
+        Ok((launch, _)) => launch,
         Err(message) => {
-            let _ = fs::remove_file(&path);
-            tell_user(&message, gui);
+            quarantine_update(prefix, &message);
+            tell_user_later(&message, gui);
             return;
         }
     };
-    let output = Command::new(npm_bin(&launch.node))
-        .args(&args)
+    if !save_update_snapshot(prefix) {
+        quarantine_update(prefix, "could not snapshot the prefix manifest");
+        tell_user_later("Mohou could not install the update. The installed version is still running.", gui);
+        return;
+    }
+    let args = harden_install_args(args);
+    let log = match fs::File::create(prefix.join("update.log")) {
+        Ok(file) => file,
+        Err(error) => {
+            restore_update_snapshot(prefix);
+            quarantine_update(prefix, &error.to_string());
+            tell_user_later("Mohou could not install the update. The installed version is still running.", gui);
+            return;
+        }
+    };
+    let log_err = match log.try_clone() {
+        Ok(file) => file,
+        Err(error) => {
+            restore_update_snapshot(prefix);
+            quarantine_update(prefix, &error.to_string());
+            tell_user_later("Mohou could not install the update. The installed version is still running.", gui);
+            return;
+        }
+    };
+    let mut cmd = Command::new(npm_bin(&launch.node));
+    cmd.args(&args)
         .current_dir(prefix)
         .env("PATH", &launch.path)
-        .output();
-    let _ = fs::remove_file(&path);
-    match output {
-        Ok(output) => {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            let _ = fs::write(prefix.join("update.log"), format!("{stdout}\n{stderr}"));
-            if !output.status.success() {
-                tell_user("Mohou could not install the update.", gui);
+        .stdin(Stdio::null())
+        .stdout(Stdio::from(log))
+        .stderr(Stdio::from(log_err));
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::CommandExt;
+        cmd.process_group(0);
+    }
+    let mut child = match cmd.spawn() {
+        Ok(child) => child,
+        Err(error) => {
+            restore_update_snapshot(prefix);
+            quarantine_update(prefix, &error.to_string());
+            tell_user_later("Mohou could not install the update. The installed version is still running.", gui);
+            return;
+        }
+    };
+    let install_pid = child.id();
+    pid.store(install_pid, Ordering::SeqCst);
+    let _ = fs::write(prefix.join("update.lock"), install_pid.to_string());
+    spawn_parent_watch(install_pid);
+    let waited = wait_budget(&mut child, UPDATE_BUDGET, closing);
+    pid.store(0, Ordering::SeqCst);
+    let _ = fs::remove_file(prefix.join("update.lock"));
+    match waited {
+        InstallWait::Finished(Some(0)) => {
+            let _ = fs::remove_dir_all(update_snapshot_dir(prefix));
+            let _ = fs::remove_file(&path);
+        }
+        other => {
+            stop_process(install_pid);
+            let _ = child.wait();
+            restore_update_snapshot(prefix);
+            let note = match other {
+                InstallWait::TimedOut => "timed out".to_string(),
+                InstallWait::Closed => "closed".to_string(),
+                InstallWait::Finished(code) => format!("exit {code:?}"),
+            };
+            quarantine_update(prefix, &note);
+            if !matches!(other, InstallWait::Closed) {
+                tell_user_later("Mohou could not install the update. The installed version is still running.", gui);
             }
         }
-        Err(_) => tell_user("Mohou could not install the update.", gui),
     }
 }
 
@@ -614,12 +814,34 @@ fn tell_user(message: &str, gui: bool) {
     }
     #[cfg(target_os = "macos")]
     {
-        let text = message.replace('"', "'");
-        let script = format!(
-            "display dialog \"{text}\" buttons {{\"OK\"}} default button 1 with title \"Mohou\""
-        );
-        let _ = Command::new("osascript").arg("-e").arg(script).status();
+        let _ = dialog(message).status();
     }
+}
+
+fn tell_user_later(message: &str, gui: bool) {
+    eprintln!("{message}");
+    if !gui {
+        return;
+    }
+    #[cfg(target_os = "macos")]
+    {
+        let _ = dialog(message)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn();
+    }
+}
+
+#[cfg(target_os = "macos")]
+fn dialog(message: &str) -> Command {
+    let text = message.replace('"', "'");
+    let script = format!(
+        "display dialog \"{text}\" buttons {{\"OK\"}} default button 1 with title \"Mohou\""
+    );
+    let mut cmd = Command::new("osascript");
+    cmd.arg("-e").arg(script);
+    cmd
 }
 
 pub fn supervise(
@@ -630,20 +852,34 @@ pub fn supervise(
     app: AppHandle,
 ) {
     let gui = is_app_bundle(&prefix);
+    let mut install_after_restart = false;
     loop {
         if closing.load(Ordering::SeqCst) {
             app.exit(0);
             return;
         }
-        apply_pending_update(&prefix, gui);
-        let mut child = match spawn_sidecar(&prefix) {
-            Ok(child) => child,
+        if install_after_restart {
+            let runtime = runtime_dir(&prefix, std::env::var("MINI_APP_RUNTIME").ok().as_deref(), &home_dir());
+            set_splash(&app, &runtime, Splash::Update);
+            apply_pending_update(&prefix, gui, &closing, &pid, &app);
+        } else {
+            park_leftover_update(&prefix, gui);
+        }
+        if closing.load(Ordering::SeqCst) {
+            app.exit(0);
+            return;
+        }
+        let (mut child, cached, runtime) = match spawn_sidecar(&prefix, &app) {
+            Ok(spawned) => spawned,
             Err(message) => {
                 tell_user(&message, gui);
                 app.exit(1);
                 return;
             }
         };
+        if cached {
+            refresh_shell_cache(runtime);
+        }
         pid.store(child.id(), Ordering::SeqCst);
         if closing.load(Ordering::SeqCst) {
             stop_process(child.id());
@@ -664,7 +900,10 @@ pub fn supervise(
             OriginRead::Exited(code) => {
                 pid.store(0, Ordering::SeqCst);
                 match child_stop(code) {
-                    ChildStop::Restart => continue,
+                    ChildStop::Restart => {
+                        install_after_restart = true;
+                        continue;
+                    }
                     ChildStop::Exit(code) => {
                         tell_user("Mohou's sidecar exited before it was ready.", gui);
                         app.exit(code);
@@ -698,7 +937,10 @@ pub fn supervise(
         }
         let code = status.ok().and_then(|status| status.code());
         match child_stop(code) {
-            ChildStop::Restart => continue,
+            ChildStop::Restart => {
+                install_after_restart = true;
+                continue;
+            }
             ChildStop::Exit(code) => {
                 app.exit(code);
                 return;
@@ -709,7 +951,7 @@ pub fn supervise(
 
 #[cfg(test)]
 mod tests {
-    use super::{child_stop, find_node, is_app_bundle, npm_bin, prefix_from_exe, prepend_path, runtime_dir, shell_entry, ChildStop, RESTART_EXIT};
+    use super::{child_stop, find_node, harden_install_args, is_app_bundle, npm_bin, path_from_shell_env, prefix_from_exe, prepend_path, read_shell_cache, restore_update_snapshot, runtime_dir, save_update_snapshot, shell_entry, splash_label, update_snapshot_dir, write_shell_cache, ChildStop, Splash, RESTART_EXIT};
     use std::fs;
     use std::path::Path;
 
@@ -722,6 +964,47 @@ mod tests {
     }
 
     #[test]
+    fn a_remembered_shell_path_is_reused_when_node_is_still_there() {
+        let root = std::env::temp_dir().join(format!("mohou-shell-cache-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        write_shell_cache(&root, "/Users/me/.nvm/versions/node/v22.23.1/bin:/usr/bin");
+        assert_eq!(
+            read_shell_cache(&root).as_deref(),
+            Some("/Users/me/.nvm/versions/node/v22.23.1/bin:/usr/bin")
+        );
+        assert_eq!(splash_label("zh-CN", Splash::Environment), "正在检测运行环境");
+        assert_eq!(splash_label("en", Splash::Platform), "Starting the platform");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn install_args_omit_peers_and_limit_fetch() {
+        let args = harden_install_args(vec!["install".into(), "file:a.tgz".into(), "--no-fund".into()]);
+        assert!(args.contains(&"--omit=peer".to_string()));
+        assert!(args.contains(&"--fetch-retries=1".to_string()));
+        assert!(args.contains(&"--fetch-timeout=20000".to_string()));
+        let again = harden_install_args(args.clone());
+        assert_eq!(again.iter().filter(|arg| *arg == "--omit=peer").count(), 1);
+        assert_eq!(harden_install_args(vec!["run".into()]), vec!["run".to_string()]);
+    }
+
+    #[test]
+    fn a_failed_install_restores_the_prefix_manifest() {
+        let root = std::env::temp_dir().join(format!("mohou-update-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        fs::create_dir_all(&root).unwrap();
+        fs::write(root.join("package.json"), "{\"version\":\"1\"}\n").unwrap();
+        fs::write(root.join("package-lock.json"), "{\"lock\":1}\n").unwrap();
+        assert!(save_update_snapshot(&root));
+        fs::write(root.join("package.json"), "{\"version\":\"2\"}\n").unwrap();
+        restore_update_snapshot(&root);
+        assert_eq!(fs::read_to_string(root.join("package.json")).unwrap(), "{\"version\":\"1\"}\n");
+        assert_eq!(fs::read_to_string(root.join("package-lock.json")).unwrap(), "{\"lock\":1}\n");
+        assert!(!update_snapshot_dir(&root).exists());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
     fn update_npm_sits_beside_node() {
         let node = if cfg!(windows) {
             Path::new(r"C:\nvm\v22\node.exe")
@@ -731,6 +1014,16 @@ mod tests {
         let npm = npm_bin(node);
         assert_eq!(npm.file_name().unwrap(), if cfg!(windows) { "npm.cmd" } else { "npm" });
         assert_eq!(npm.parent(), node.parent());
+    }
+
+    #[test]
+    fn shell_env_path_is_the_marked_block() {
+        let text = "banner\n_MOHOU_SHELL_ENV_\nHOME=/Users/me\nPATH=/Users/me/.nvm/versions/node/v22.23.1/bin:/usr/bin\n_MOHOU_SHELL_ENV_\n";
+        assert_eq!(
+            path_from_shell_env(text, "_MOHOU_SHELL_ENV_").as_deref(),
+            Some("/Users/me/.nvm/versions/node/v22.23.1/bin:/usr/bin")
+        );
+        assert!(path_from_shell_env("no mark", "_MOHOU_SHELL_ENV_").is_none());
     }
 
     #[test]
@@ -824,21 +1117,8 @@ mod tests {
         )
         .unwrap();
         let path = format!("{}:{}", plain.display(), with_pi.display());
-        assert_eq!(find_node(&path, &root).unwrap(), pi_node);
-
-        #[cfg(unix)]
-        {
-            let nvm = root.join(".nvm/versions/node/v22.23.1/bin");
-            fs::create_dir_all(&nvm).unwrap();
-            let nvm_node = nvm.join("node");
-            fs::write(&nvm_node, "").unwrap();
-            use std::os::unix::fs::PermissionsExt;
-            let mut permissions = fs::metadata(&nvm_node).unwrap().permissions();
-            permissions.set_mode(0o755);
-            fs::set_permissions(&nvm_node, permissions).unwrap();
-            fs::create_dir_all(root.join(".nvm/versions/node/v22.23.1/lib/node_modules/@earendil-works/pi-coding-agent")).unwrap();
-            assert_eq!(find_node(&plain.display().to_string(), &root).unwrap(), nvm_node);
-        }
+        assert_eq!(find_node(&path, &root).unwrap(), plain_node);
+        let _ = pi_node;
         let _ = fs::remove_dir_all(&root);
     }
 

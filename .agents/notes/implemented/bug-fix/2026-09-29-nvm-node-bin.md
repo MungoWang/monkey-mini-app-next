@@ -2,6 +2,8 @@
 
 Status: implemented
 
+Superseded by [Shell PATH for the Dock launch](2026-09-29-shell-env-path.md).
+
 ## Problem
 
 A Dock launch ran Homebrew Node 26. `pnpm dev:host` ran nvm Node 22. Calendar MCP `tools/list` against `127.0.0.1:4466` returns on Node 22 and times out on Node 26 (`MCP error -32001: Request timed out`). The launcher meant to prefer the Node that has Pi, but it looked for `~/.nvm/versions/node/v22.x/node`. nvm-sh puts that binary at `bin/node`, so the candidate was never executable and the first `PATH` Node won.
