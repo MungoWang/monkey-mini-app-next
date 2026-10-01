@@ -7,9 +7,25 @@ updated: 2026-09-29
 
 This page owns released version notes. The product version is the `version` field of `@mini-app/shell`. `@mini-app/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
 
+## 1.0.9
+
+The palette list kept `origin`, but the panel client dropped it. Every row stayed marked system. The client now keeps `builtin` and `custom`.
+
+## 1.0.8
+
+Scrollbars in an app and in the panel are thin on macOS and Windows. A shipped palette is marked system. A file in the themes directory is marked custom. An app `theme.css` is marked app, and the row uses that file's name when the header has one.
+
+## 1.0.7
+
+The status row stays above the workbench and is not covered by it. The probe result sits in the space beside the probe button, not over the model fields. A package update that does not finish opens the installed version. It does not stay pending. The install still omits peer dependencies, so optional Pi peers are not fetched. `react-is` is a direct dependency, so that omit does not remove it. Pi registers itself after the sidecar starts. A failed load does not keep the splash up. A later open reuses the last shell PATH instead of waiting for the login shell. The splash names the step in progress.
+
+## 1.0.6
+
+The agent probe result sits beside the probe button. Settings, history, and storage cover the status row. The status row is one line again. A finished mini-app call does not clear the live runtime provider.
+
 ## 1.0.5
 
-When a workbench fills the slot, the status row chip names a custom home, more in a tab, and an open-in-new-tab arrow. Clicking current home on a workbench tab writes the builtin library. Opening settings, history, or storage, and closing a tab, no longer flash a window scrollbar. An in-app update runs the same Node's npm that boots the sidecar. Dock launch uses the nvm Node under `bin/node` when that Node has Pi, not the first Node on `PATH`. An MCP reconnect that exhausts its budget leaves the server registered; `mcp-not-connected` is an unknown id only.
+When a workbench fills the slot, the status row chip names a custom home, more in a tab, and an open-in-new-tab arrow. Clicking current home on a workbench tab writes the builtin library. Opening settings, history, or storage, and closing a tab, no longer flash a window scrollbar. An in-app update runs the same Node's npm that boots the sidecar. Dock launch reads PATH from an interactive login shell, the same way a terminal finds node and npm. An MCP reconnect that exhausts its budget leaves the server registered; `mcp-not-connected` is an unknown id only.
 
 ## 1.0.4
 

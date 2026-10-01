@@ -1,6 +1,6 @@
 {
   "name": "@mini-app/shell",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "license": "MIT",
   "type": "module",
   "engines": {
