@@ -5,6 +5,9 @@ import { platformImportMap } from './allowlist.ts'
 import { leaveGuardSource } from './leave.ts'
 import { hostWrapperBinding, renderHostWrapper } from './wrapper.ts'
 
+/** Thin bar on WKWebView and WebView2. `scrollbar-width` covers the rest. */
+const thinScrollbarCss = 'html{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,CanvasText 32%,transparent) transparent}*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,CanvasText 32%,transparent) transparent}::-webkit-scrollbar{-webkit-appearance:none;width:8px;height:8px}::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}::-webkit-scrollbar-thumb{background:color-mix(in srgb,CanvasText 32%,transparent);border:2px solid transparent;border-radius:999px;background-clip:padding-box}'
+
 /**
  * The first document for one app. The iframe runner route serves it.
  * Boot art is cleared before the component mounts. The host injects the error boundary.
@@ -27,7 +30,7 @@ export function renderRunnerDocument(input: {
 <meta charset="utf-8">
 <link rel="stylesheet" href="${appResource(input.appId, httpLayout.ui, httpLayout.sheet)}">
 <style id="mma-first-paint">${escapeStyle(input.style)}</style>
-<style>html,body,#root{height:100%;margin:0}#root>div{height:100%;min-height:0;display:flex;flex-direction:column}</style>
+<style>html,body,#root{height:100%;margin:0}#root>div{height:100%;min-height:0;display:flex;flex-direction:column}${thinScrollbarCss}</style>
 <script type="importmap">
 ${JSON.stringify({ imports: platformImportMap() })}
 </script>

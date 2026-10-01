@@ -31,6 +31,7 @@ describe('renderRunnerDocument', () => {
     expect(html).toContain('<\\/style>')
     expect(html).not.toContain('#fff}</style>')
     expect(html.indexOf("getElementById('boot')")).toBeLessThan(html.indexOf('await import('))
+    expect(html).toContain('scrollbar-width:thin')
     expect(html).toContain('/api/app/com.example.app/ui/ui.css')
     expect(html).toContain(diagnosticUrl('com.example.app', 'alive'))
     expect(html).toContain(diagnosticUrl('com.example.app', 'errors'))
