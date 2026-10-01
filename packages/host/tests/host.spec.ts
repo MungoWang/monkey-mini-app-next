@@ -49,6 +49,19 @@ describe('bindBrain', () => {
     await brain.stop()
   })
 
+  it('does not stop the shared provider when the call ends', async () => {
+    const provider = createEchoProvider()
+    const brain = await bindBrain({
+      provider,
+      appDir: dirs.appDir,
+      processDirectory: dirs.processDirectory,
+      createTemp: dirs.createTemp,
+      push: () => undefined,
+    })
+    await brain.stop()
+    expect(provider.healthy()).toBe(true)
+  })
+
   it('stops the run after the caller maxIterations', async () => {
     const provider: RuntimeProvider = {
       id: 'turns',

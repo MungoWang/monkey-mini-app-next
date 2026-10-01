@@ -86,7 +86,8 @@ export async function bindBrain(binding: BrainBinding, policy: ModelPolicy = DEF
         throw namedAgent(error)
       }
     },
-    stop: () => binding.provider.stop(),
+    // The host owns the shared provider. A finished app call must not clear it.
+    stop: () => Promise.resolve(),
   }
 }
 

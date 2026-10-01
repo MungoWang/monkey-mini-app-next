@@ -373,18 +373,21 @@ function AgentSection(props: {
         <h4 className="m-0">{props.label('section-model')}</h4>
         <p className="mt-1 mb-4 text-sm text-muted-foreground">{props.label('agent-apps-help')}</p>
         {runtimes.length === 0 ? <p className="text-sm text-muted-foreground">{props.label('runtime-missing')}</p> : (
-          <div className="mb-4 flex max-w-md flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <select className="h-9 min-w-0 flex-1 rounded-lg border bg-card px-3 text-sm outline-none" value={props.state.providerId} onChange={event => props.onRuntime(event.target.value)}>
-                {runtimes.map(item => <option key={item.id} value={item.id}>{item.label ?? item.id}</option>)}
-              </select>
-              <button type="button" className="inline-flex size-9 items-center justify-center rounded-lg border hover:bg-muted" aria-label={props.label('refresh')} onClick={props.onRefresh}>
-                <RefreshCw size={14} className={props.busy ? 'animate-spin' : ''} />
-              </button>
-              <button type="button" className="h-9 rounded-lg border px-3 text-sm hover:bg-muted" onClick={props.onProbe}>{props.label('probe')}</button>
+          <>
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex w-full max-w-md shrink-0 items-center gap-2">
+                <select className="h-9 min-w-0 flex-1 rounded-lg border bg-card px-3 text-sm outline-none" value={props.state.providerId} onChange={event => props.onRuntime(event.target.value)}>
+                  {runtimes.map(item => <option key={item.id} value={item.id}>{item.label ?? item.id}</option>)}
+                </select>
+                <button type="button" className="inline-flex size-9 items-center justify-center rounded-lg border hover:bg-muted" aria-label={props.label('refresh')} onClick={props.onRefresh}>
+                  <RefreshCw size={14} className={props.busy ? 'animate-spin' : ''} />
+                </button>
+                <button type="button" className="h-9 shrink-0 rounded-lg border px-3 text-sm hover:bg-muted" onClick={props.onProbe}>{props.label('probe')}</button>
+              </div>
+              {props.state.probe === undefined ? null : <span className="min-w-0 text-sm leading-5 text-muted-foreground">{probeText(props.state.probe, props.label)}</span>}
             </div>
             {runtimeRestartNote(props)}
-          </div>
+          </>
         )}
         {vendors.length === 0 ? <p className="text-sm text-muted-foreground">{props.label('model-empty')}</p> : (
           <div className="grid max-w-md gap-3 min-[720px]:grid-cols-2">
@@ -406,7 +409,6 @@ function AgentSection(props: {
             </label>
           </div>
         )}
-        {props.state.probe === undefined ? null : <p className="mt-3 text-sm">{probeText(props.state.probe, props.label)}</p>}
       </section>
       <section>
         <h4 className="m-0">{props.label('agent-others')}</h4>
