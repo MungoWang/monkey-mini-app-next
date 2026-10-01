@@ -27,6 +27,7 @@
     "dist:local": "node scripts/local-app/index.mjs",
     "dist:app:local": "node scripts/build/app.mjs --channel=tarball",
     "dist:app:release": "node scripts/build/app.mjs --channel=registry",
+    "migrate:legacy": "node scripts/migrate/legacy-names.mjs",
     "pack:source": "node scripts/pack/source.mjs",
     "postinstall": "node scripts/install-lefthook.mjs"
   },

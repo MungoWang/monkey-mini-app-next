@@ -1,6 +1,6 @@
 ---
 status: locked
-updated: 2026-10-01
+updated: 2026-10-02
 ---
 
 # Development
@@ -31,6 +31,7 @@ pnpm check:skill      # MCP tools, ctx members, generated contracts, skill versi
 pnpm dist:local       # pack tarballs + install artifacts/local-app from file: tarballs; write run
 pnpm dist:app:local   # unsigned bundle under artifacts/app/. Prefix from artifacts/npm tarballs. Copies them to ~/.mini-app/packages and stamps that directory as the tarball channel
 pnpm dist:app:release # same bundle shape. Prefix from the npm registry. Channel registry. That shell version must already be published
+pnpm migrate:legacy   # dry run: rewrite app source off the retired npm scopes under the runtime root. --write applies it behind a backup
 pnpm pack:source      # source tarball under artifacts/source-pack/ (no node_modules / build caches)
 ```
 
