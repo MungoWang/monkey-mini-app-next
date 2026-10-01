@@ -13,8 +13,8 @@ import {
   type CredentialProvider,
   type HostSession,
 } from '@mini-app/host'
-import { createPiProvider, probePiRuntime } from '@mini-app/runtime-pi'
-import { createEchoProvider } from '@mini-app/runtime-provider'
+import { registerPiRuntime } from '@mini-app/runtime-pi'
+import { createEchoProvider, createProviderRegistry } from '@mini-app/runtime-provider'
 
 import { builtinMcpAgents } from './mcp-agents.ts'
 import { resolvePortConflict, type PortConflictMode } from './port-conflict.ts'
@@ -56,8 +56,10 @@ export async function bootHost(options: {
   const home = options.home ?? homedir()
   const runtimeRoot = options.runtimeRoot ?? defaultRuntimeRoot(home)
   const echo = createEchoProvider()
-  // Pi is an optional peer of runtime-pi: resolve from the environment, do not bundle it into the app.
-  const providers = [echo, ...await probePiRuntime() ? [createPiProvider()] : []]
+  const registry = createProviderRegistry()
+  registry.register(echo)
+  registerPiRuntime(registry)
+  const providers = registry.ids().map(id => registry.get(id))
   const open = () => createHost({
     runtimeRoot,
     seed: { ...shellSeed, ...options.hostPort === undefined ? {} : { hostPort: options.hostPort } },
