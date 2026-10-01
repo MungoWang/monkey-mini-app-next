@@ -1,11 +1,19 @@
 ---
 status: locked
-updated: 2026-10-01
+updated: 2026-10-02
 ---
 
 # Changelog
 
 This page owns released version notes. The product version is the `version` field of `@mohou/shell`. `@mohou/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
+
+## 1.0.10
+
+Agent settings install into DSH: the writing skill goes to `~/.dsh/skills`, and the authoring MCP connection is written into the active DSH profile's patch layer, which survives a profile rebuild.
+
+`pnpm migrate:legacy` rewrites app source under a runtime root that predates the rename, clears a `.autogen` bundle that still names a retired scope, and moves `mini-app-*.tgz` aside. [development.md](development.md) owns the command.
+
+The kit owns its component examples: `packages/app/ui/examples/` is compiled by `pnpm typecheck` and published into the skill. The look pages are hand-written skill pages rather than generator output.
 
 ## 1.0.9
 
