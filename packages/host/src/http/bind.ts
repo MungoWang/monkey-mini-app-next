@@ -1,3 +1,4 @@
+import type { McpClient } from '@mohou/mcp-client'
 import type { RuntimeProvider } from '@mohou/runtime-provider'
 
 import { listedApp, type AppSummary } from '../apps/registry.ts'
@@ -49,6 +50,8 @@ export function bindLoopback(input: {
   readonly author: Author
   readonly owner: OwnerSlice
   readonly registry: RegistrySlice
+  /** Live MCP sessions. A written server file is handed to this client, so it takes effect now. */
+  readonly mcp: McpClient
   readonly policy: () => HostPolicy
   readonly writePolicy: (raw: unknown) => Promise<{ policy: HostPolicy; restartRequired: boolean }>
   readonly probe: (id: string) => ReturnType<typeof probeBrain>
@@ -159,7 +162,9 @@ export function bindLoopback(input: {
       revealAuthorMcp: dest => revealAuthorMcp(mcpAgents, dest),
     },
     readMcp: () => readMcpEditor(input.runtimeRoot, input.env),
-    writeMcp: servers => writeMcpEditor(input.runtimeRoot, servers, input.env),
+    writeMcp: async (servers) => {
+      await input.mcp.setServers(await writeMcpEditor(input.runtimeRoot, servers, input.env))
+    },
     checkMcp: server => checkMcpEditor(server, input.env),
     admitMcp: text => admitMcpText(text),
     importMcp: (source) => {

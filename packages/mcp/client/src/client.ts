@@ -1,3 +1,5 @@
+import { isDeepStrictEqual } from 'node:util'
+
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js'
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
@@ -6,8 +8,7 @@ import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
 
 import { McpError } from './codes.ts'
 import type { McpServerSpec } from './config.ts'
-
-const SENSITIVE_ENV = /KEY|SECRET|TOKEN|PASSWORD/i
+import { mayHoldCredential } from './secrets.ts'
 
 /** Reconnects after a live session drops. Not a locked number. */
 const DEFAULT_RECONNECT_BUDGET = 2
@@ -27,6 +28,7 @@ interface Session {
  * External MCP sessions. The first call opens a server. One session per id.
  * A dropped live session reconnects until the budget is spent, then that call fails.
  * The next call may open the server again.
+ * The set can be replaced while running: {@link setServers} closes the sessions it retires.
  * This client does not register tools on a model. It does not unwrap `{ input: string }`.
  */
 export class McpClient {
@@ -79,6 +81,22 @@ export class McpClient {
   /** Server ids still registered. Does not open a connection. */
   serverIds(): string[] {
     return [...this.servers.keys()]
+  }
+
+  /**
+   * Replace the whole set. An id whose spec is deep-equal keeps its session and its budget.
+   * A removed id, or one whose spec changed, closes its session: the next call opens the new spec.
+   * The set is switched before any session closes, so a call that starts during this sees the new set.
+   * @param servers - resolved specs; the client copies the map
+   */
+  async setServers(servers: Record<string, McpServerSpec>): Promise<void> {
+    const retired = [...this.servers].filter(([id, spec]) => {
+      const next = servers[id]
+      return next === undefined || !isDeepStrictEqual(spec, next)
+    })
+    this.servers.clear()
+    for (const [id, spec] of Object.entries(servers)) this.servers.set(id, spec)
+    for (const [id] of retired) await this.closeServer(id)
   }
 
   /**
@@ -159,8 +177,13 @@ export class McpClient {
     const pending = this.opening.get(serverId)
     if (pending !== undefined) return pending
     const opening = this.open(serverId, spec).then((session) => {
-      this.sessions.set(serverId, session)
       this.opening.delete(serverId)
+      // The set may have been replaced or disposed while this was opening. Do not adopt it.
+      if (this.generation.get(serverId) !== session.generation) {
+        void session.client.close().catch(() => undefined)
+        throw new McpError('mcp-not-connected', `mcp server was replaced while opening: ${serverId}`)
+      }
+      this.sessions.set(serverId, session)
       return session
     }, (error: unknown) => {
       this.opening.delete(serverId)
@@ -193,6 +216,24 @@ export class McpClient {
     const current = [...this.sessions.entries()].find(([, live]) => live === session)
     if (current !== undefined) this.sessions.delete(current[0])
     await session.client.close().catch(() => undefined)
+  }
+
+  /**
+   * Retire one id: invalidate its generation, wait for an open in flight, close the live session,
+   * and forget its reconnect budget. The next call opens the spec this client holds now.
+   */
+  private async closeServer(serverId: string): Promise<void> {
+    this.generation.set(serverId, (this.generation.get(serverId) ?? 0) + 1)
+    const pending = this.opening.get(serverId)
+    if (pending !== undefined) await pending.catch(() => undefined)
+    const live = this.sessions.get(serverId)
+    if (live !== undefined) {
+      this.sessions.delete(serverId)
+      await live.client.close().catch(() => undefined)
+    }
+    this.reconnects.delete(serverId)
+    this.dropped.delete(serverId)
+    this.recovering.delete(serverId)
   }
 
   private redact(message: string, spec: McpServerSpec | undefined): string {
@@ -235,7 +276,7 @@ function transportFor(spec: McpServerSpec, parent: Record<string, string>) {
 function scrubEnv(env: NodeJS.ProcessEnv): Record<string, string> {
   const next: Record<string, string> = {}
   for (const [key, value] of Object.entries(env)) {
-    if (value !== undefined && !SENSITIVE_ENV.test(key)) next[key] = value
+    if (value !== undefined && !mayHoldCredential(key)) next[key] = value
   }
   return next
 }

@@ -9,6 +9,8 @@ This page owns released version notes. The product version is the `version` fiel
 
 ## 1.0.10
 
+The authoring surface adds and removes MCP servers (`mini_app_mcp_add`, `mini_app_mcp_remove`), and a saved server list takes effect without a host restart: the MCP client can replace the set it holds while it runs.
+
 Agent settings install into DSH: the writing skill goes to `~/.dsh/skills`, and the authoring MCP connection is written into the active DSH profile's patch layer, which survives a profile rebuild.
 
 `pnpm migrate:legacy` rewrites app source under a runtime root that predates the rename, clears a `.autogen` bundle that still names a retired scope, and moves `mini-app-*.tgz` aside. [development.md](development.md) owns the command.

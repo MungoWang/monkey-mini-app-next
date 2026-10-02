@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { McpClient, McpError, resolveMcpConfig } from '../src/index.ts'
+import { McpClient, McpError, resolveMcpConfig, type McpServerSpec } from '../src/index.ts'
 
 describe('resolveMcpConfig', () => {
   it('accepts a wrapper and skips settings', () => {
@@ -114,6 +114,34 @@ describe('McpClient', () => {
       const next = Number(await client.call('echo', 'pid'))
       expect(next).not.toBe(pid)
       expect(client.serverIds()).toContain('echo')
+    } finally {
+      await client.dispose()
+    }
+  })
+
+  it('replaces the live set: a kept spec keeps its session, a changed or removed one does not', async () => {
+    const spec: McpServerSpec = { command: 'node', args: ['packages/mcp/client/tests/fixture-server.ts'] }
+    const client = new McpClient({ echo: spec })
+    try {
+      const first = Number(await client.call('echo', 'pid'))
+
+      // An identical spec keeps the child: the set can be re-applied without dropping sessions.
+      await client.setServers({ echo: { ...spec }, added: spec })
+      expect(client.serverIds()).toEqual(['echo', 'added'])
+      expect(Number(await client.call('echo', 'pid'))).toBe(first)
+
+      // A changed spec retires the session. The next call opens the new one.
+      await client.setServers({ echo: { ...spec, env: { FIXTURE: 'two' } } })
+      expect(client.serverIds()).toEqual(['echo'])
+      const second = Number(await client.call('echo', 'pid'))
+      expect(second).not.toBe(first)
+      await waitUntil(() => !processAlive(first))
+
+      // A removed id is not connected, and its child exits.
+      await client.setServers({})
+      expect(client.serverIds()).toEqual([])
+      await expect(client.call('echo', 'pid')).rejects.toMatchObject({ code: 'mcp-not-connected' })
+      await waitUntil(() => !processAlive(second))
     } finally {
       await client.dispose()
     }

@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
-import { McpClient, McpError, resolveMcpConfig, type McpServerSpec } from '@mohou/mcp-client'
+import { isCredential, maskCredential, McpClient, McpError, resolveMcpConfig, type McpServerSpec } from '@mohou/mcp-client'
 
 import { hostMcpPath } from './layout.ts'
 import { admitMcpText } from './mcp-import.ts'
@@ -27,12 +27,24 @@ export interface McpCheck {
   readonly message?: string
 }
 
-/** Servers currently in the file. A missing default file is an empty list. */
-export async function readMcpEditor(runtimeRoot: string, env: NodeJS.ProcessEnv = process.env): Promise<McpEditorServer[]> {
+/**
+ * Servers currently in the file. A missing default file is an empty list.
+ * @param runtimeRoot - directory that holds the default file
+ * @param env - process environment; only `MINI_APP_MCP_CONFIG` is read
+ * @param sanitize - mask the values that {@link isCredential} recognizes: a name segment that says
+ * credential, or a shape that gives it away. A caller whose output reaches a model or a log sets
+ * it; the panel reads the true values because it has to edit them.
+ */
+export async function readMcpEditor(
+  runtimeRoot: string,
+  env: NodeJS.ProcessEnv = process.env,
+  sanitize = false,
+): Promise<McpEditorServer[]> {
   const text = await readFile(mcpFile(runtimeRoot, env), 'utf8').catch(() => undefined)
   if (text === undefined || text.trim().length === 0) return []
   try {
-    return admitMcpText(text)
+    const servers = admitMcpText(text)
+    return sanitize ? servers.map(maskServer) : servers
   } catch (error) {
     if (error instanceof McpError && error.message === 'mcp import has no servers') return []
     throw error
@@ -40,14 +52,15 @@ export async function readMcpEditor(runtimeRoot: string, env: NodeJS.ProcessEnv 
 }
 
 /**
- * Replace the file with these servers. Invalid rows throw and the file stays.
+ * Replace the file with these servers and return the specs they resolved to, so a caller that
+ * holds a live client can hand it the same set it just wrote. Invalid rows throw and the file stays.
  * An explicit `MINI_APP_MCP_CONFIG` writes that path.
  */
 export async function writeMcpEditor(
   runtimeRoot: string,
   servers: readonly McpEditorServer[],
   env: NodeJS.ProcessEnv = process.env,
-): Promise<void> {
+): Promise<Record<string, McpServerSpec>> {
   const resolved = editorToConfig(servers)
   const body: Record<string, unknown> = {}
   for (const server of servers) {
@@ -63,6 +76,7 @@ export async function writeMcpEditor(
   const file = mcpFile(runtimeRoot, env)
   await mkdir(path.dirname(file), { recursive: true })
   await writeFile(file, `${JSON.stringify(body, null, 2)}\n`, 'utf8')
+  return resolved
 }
 
 /**
@@ -126,6 +140,19 @@ export function editorToConfig(servers: readonly McpEditorServer[]): Record<stri
     }
   }
   return resolveMcpConfig(raw)
+}
+
+/** Mask the credential entries of a map. Keys stay, and an ordinary setting keeps its value. */
+function maskServer(row: McpEditorServer): McpEditorServer {
+  return {
+    ...row,
+    ...row.env === undefined ? {} : { env: maskValues(row.env) },
+    ...row.headers === undefined ? {} : { headers: maskValues(row.headers) },
+  }
+}
+
+function maskValues(values: Readonly<Record<string, string>>): Record<string, string> {
+  return Object.fromEntries(Object.entries(values).map(([key, value]) => [key, isCredential(key, value) ? maskCredential(value) : value]))
 }
 
 /** Read one import file. Shell chooses the path. Host does not name another product's home. */

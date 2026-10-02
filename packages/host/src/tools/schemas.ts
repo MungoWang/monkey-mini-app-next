@@ -101,6 +101,34 @@ export const authorToolInputs: Record<AuthorToolName, ToolInput> = {
       required: ['serverId'],
     },
   },
+  mini_app_mcp_add: {
+    description: 'Add or replace one MCP server in the host config, and check it by opening it once. The row is live after the next host start.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        description: { type: 'string' },
+        command: { type: 'string' },
+        args: { type: 'array', items: { type: 'string' } },
+        env: { type: 'object' },
+        url: { type: 'string' },
+        transport: { type: 'string', enum: ['sse', 'streamable-http'] },
+        headers: { type: 'object' },
+        enabled: { type: 'boolean' },
+        check: { type: 'boolean' },
+        force: { type: 'boolean' },
+      },
+      required: ['id'],
+    },
+  },
+  mini_app_mcp_remove: {
+    description: 'Remove one MCP server from the host config by id. The removal is live after the next host start.',
+    inputSchema: {
+      type: 'object',
+      properties: { id: { type: 'string' } },
+      required: ['id'],
+    },
+  },
   mini_app_credential_list: {
     description: 'List credential names. Values are not returned.',
     inputSchema: { type: 'object', properties: {} },

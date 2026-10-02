@@ -145,6 +145,8 @@ describe('author tools', () => {
     expect(batch.results.map(item => item.ok)).toEqual([true, false])
     expect(await author.invoke('mini_app_mcp_list', {})).toEqual({ servers: [] })
     await expect(author.invoke('mini_app_mcp_tools', {})).rejects.toMatchObject({ code: 'tool-args' })
+    await expect(author.invoke('mini_app_mcp_add', { id: 'x' })).rejects.toMatchObject({ code: 'tool-args' })
+    await expect(author.invoke('mini_app_mcp_remove', {})).rejects.toMatchObject({ code: 'tool-args' })
     await expect(author.invoke('mini_app_nope', {})).rejects.toMatchObject({ code: 'unknown-tool' })
     await expect(author.invoke('mini_app_call', { appId: 'com.example.app', calls: Array.from({ length: 21 }, () => ({ method: 'ping' })) })).rejects.toMatchObject({ code: 'call-batch' })
     await author.invoke('mini_app_write', {
@@ -184,6 +186,8 @@ describe('author tools', () => {
     expect(names).toContain('mini_app_register')
     expect(names).toContain('mini_app_mcp_list')
     expect(names).toContain('mini_app_mcp_tools')
+    expect(names).toContain('mini_app_mcp_add')
+    expect(names).toContain('mini_app_mcp_remove')
     expect(names).not.toContain('mini_app_write')
     expect(names).not.toContain('mini_app_edit')
     expect(names).not.toContain('mini_app_delete')

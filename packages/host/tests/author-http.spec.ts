@@ -45,6 +45,9 @@ describe('author skill and mcp owner routes', () => {
       expect(listed).toMatchObject({ ok: true, result: { servers: [] } })
       const saved = await post(started.port, httpLayout.mcpServers, JSON.stringify({ servers: [{ id: 'echo', command: 'echo', args: ['hi'] }] }))
       expect(objectBody(saved.body).ok).toBe(true)
+      // A panel save is live: the client holds the row, so no restart is needed to see it.
+      const liveServers = await host.author.invoke('mini_app_mcp_list', {}) as { servers: Array<{ id: string }> }
+      expect(liveServers.servers.map(server => server.id)).toEqual(['echo'])
       const check = await post(started.port, httpLayout.mcpCheck, JSON.stringify({ id: 'missing', command: 'mini-app-no-such-mcp-bin' }))
       expect(objectBody(check.body)).toMatchObject({ ok: true, result: { ok: false, code: 'mcp-start-failed' } })
       const admitted = await post(started.port, httpLayout.mcpAdmit, JSON.stringify({ text: '{"from":{"command":"npx"}}' }))

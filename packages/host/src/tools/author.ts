@@ -21,6 +21,7 @@ import { DEFAULT_STORAGE_NOTICE_BYTES } from '../storage/open.ts'
 import { restoreStorageBackup } from '../storage/schema.ts'
 import type { CredentialProvider } from '../credentials/provider.ts'
 import { hostAuthoringToken } from '../host/layout.ts'
+import { checkMcpEditor, readMcpEditor, writeMcpEditor, type McpEditorServer } from '../host/mcp-editor.ts'
 import { recordOpen } from '../host/activity.ts'
 import { InstallError } from '../install/codes.ts'
 import { installApp, type InstallRequest, type NpmRun } from '../install/install.ts'
@@ -45,6 +46,8 @@ export const authorToolNames = [
   'mini_app_call',
   'mini_app_mcp_list',
   'mini_app_mcp_tools',
+  'mini_app_mcp_add',
+  'mini_app_mcp_remove',
   'mini_app_credential_list',
   'mini_app_history_commit',
   'mini_app_history_list',
@@ -113,6 +116,8 @@ interface Registry {
 export function createAuthorTools(options: {
   readonly registry: Registry
   readonly mcp: McpClient
+  /** Process environment. Names the MCP server file when `MINI_APP_MCP_CONFIG` is set. */
+  readonly env?: NodeJS.ProcessEnv
   readonly ports: AuthorCallPorts
   /** Called when a commit or a reset changes the tree. The session publishes `app:reload`. */
   readonly onTreeChanged?: (appId: string) => void
@@ -210,6 +215,7 @@ async function invoke(
   options: {
     registry: Registry
     mcp: McpClient
+    env?: NodeJS.ProcessEnv
     ports: AuthorCallPorts
     onTreeChanged?: (appId: string) => void
     hostEvents: ReturnType<typeof createHostEvents>
@@ -270,6 +276,10 @@ async function invoke(
       return listMcpForAuthor(options.mcp)
     case 'mini_app_mcp_tools':
       return toolsMcpForAuthor(options.mcp, requiredString(input, 'serverId'), optionalString(input, 'toolName'))
+    case 'mini_app_mcp_add':
+      return addMcpServer(options, input)
+    case 'mini_app_mcp_remove':
+      return removeMcpServer(options, input)
     case 'mini_app_credential_list':
       return { credentials: await options.ports.credentials.list() }
     case 'mini_app_history_commit':
@@ -789,6 +799,98 @@ function optionalCleanCaches(value: unknown): boolean {
   if (value === undefined) return true
   if (typeof value !== 'boolean') throw new AuthorError('tool-args', 'cleanCaches must be a boolean')
   return value
+}
+
+/**
+ * Add or replace one MCP server: check it by opening it, write the row, and hand the live client
+ * the set it just wrote, so the server is usable without a restart. A failed check leaves both the
+ * file and the client alone unless `force` is true.
+ */
+async function addMcpServer(
+  options: { registry: Registry; mcp: McpClient; env?: NodeJS.ProcessEnv },
+  input: Record<string, unknown>,
+) {
+  const env = options.env ?? process.env
+  const root = options.registry.runtimeRoot
+  const server = mcpServerRow(input)
+  const check = input.check === false ? undefined : await checkMcpEditor(server, env)
+  const servers = await readMcpEditor(root, env, true)
+  if (check !== undefined && !check.ok && input.force !== true) {
+    return { added: false, id: server.id, check, servers }
+  }
+  const specs = await writeMcpEditor(root, [...servers.filter(row => row.id !== server.id), server], env)
+  await options.mcp.setServers(specs)
+  return {
+    added: true,
+    id: server.id,
+    ...check === undefined ? {} : { check },
+    servers: await readMcpEditor(root, env, true),
+  }
+}
+
+/** Remove one MCP server by id, live. An unknown id changes nothing. */
+async function removeMcpServer(
+  options: { registry: Registry; mcp: McpClient; env?: NodeJS.ProcessEnv },
+  input: Record<string, unknown>,
+) {
+  const env = options.env ?? process.env
+  const root = options.registry.runtimeRoot
+  const id = requiredString(input, 'id')
+  const servers = await readMcpEditor(root, env, true)
+  if (!servers.some(row => row.id === id)) return { removed: false, id, servers }
+  const specs = await writeMcpEditor(root, servers.filter(row => row.id !== id), env)
+  await options.mcp.setServers(specs)
+  return { removed: true, id, servers: await readMcpEditor(root, env, true) }
+}
+
+function mcpServerRow(input: Record<string, unknown>): McpEditorServer {
+  const id = requiredString(input, 'id')
+  const command = optionalString(input, 'command')
+  const url = optionalString(input, 'url')
+  if (command === undefined && url === undefined) throw new AuthorError('tool-args', 'give command or url')
+  const description = optionalString(input, 'description')
+  const transport = mcpTransport(input.transport)
+  const args = stringList(input.args, 'args')
+  const env = stringMap(input.env, 'env')
+  const headers = stringMap(input.headers, 'headers')
+  return {
+    id,
+    ...description === undefined ? {} : { description },
+    ...input.enabled === false ? { enabled: false } : {},
+    ...command === undefined ? {} : { command },
+    ...args === undefined ? {} : { args },
+    ...env === undefined ? {} : { env },
+    ...url === undefined ? {} : { url },
+    ...transport === undefined ? {} : { transport },
+    ...headers === undefined ? {} : { headers },
+  }
+}
+
+function mcpTransport(value: unknown): McpEditorServer['transport'] {
+  if (value === undefined) return undefined
+  if (value !== 'sse' && value !== 'streamable-http') throw new AuthorError('tool-args', 'transport must be sse or streamable-http')
+  return value
+}
+
+function stringList(value: unknown, key: string): string[] | undefined {
+  if (value === undefined) return undefined
+  if (!Array.isArray(value) || value.some(item => typeof item !== 'string')) {
+    throw new AuthorError('tool-args', `${key} must be an array of text`)
+  }
+  return value as string[]
+}
+
+function stringMap(value: unknown, key: string): Record<string, string> | undefined {
+  if (value === undefined) return undefined
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    throw new AuthorError('tool-args', `${key} must be an object of text`)
+  }
+  const out: Record<string, string> = {}
+  for (const [name, item] of Object.entries(value)) {
+    if (typeof item !== 'string') throw new AuthorError('tool-args', `${key}.${name} must be text`)
+    out[name] = item
+  }
+  return out
 }
 
 function windowOf(args: Record<string, unknown>): { start?: number; end?: number } | undefined {

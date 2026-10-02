@@ -59,6 +59,20 @@ describe('mcp editor', () => {
     ])
   })
 
+  it('masks only the values it recognizes as credentials', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'mma-mcp-mask-'))
+    await writeMcpEditor(root, [
+      { id: 'local', command: 'node', env: { GITHUB_TOKEN: 'ghp_1234567890', PASSWORD: 'abc', TOKEN: '', NODE_ENV: 'production', SHORT: 'abc' } },
+      { id: 'remote', url: 'https://example.com/mcp', headers: { authorization: 'Bearer abcdefgh', accept: 'application/json' } },
+    ], {})
+    expect(await readMcpEditor(root, {}, true)).toEqual([
+      { id: 'local', command: 'node', env: { GITHUB_TOKEN: 'ghp_12*****90', PASSWORD: '*****', TOKEN: '', NODE_ENV: 'production', SHORT: 'abc' } },
+      { id: 'remote', url: 'https://example.com/mcp', transport: 'streamable-http', headers: { authorization: 'Bearer ab*****gh', accept: 'application/json' } },
+    ])
+    // The panel reads the true values, because it has to edit them.
+    expect((await readMcpEditor(root, {}))[0]?.env).toEqual({ GITHUB_TOKEN: 'ghp_1234567890', PASSWORD: 'abc', TOKEN: '', NODE_ENV: 'production', SHORT: 'abc' })
+  })
+
   it('reports a server that cannot start and closes it', async () => {
     const result = await checkMcpEditor({ id: 'missing', command: 'mini-app-no-such-mcp-bin' }, {})
     expect(result.ok).toBe(false)

@@ -122,6 +122,7 @@ export async function createHost(options: {
   const author = createAuthorTools({
     registry,
     mcp,
+    ...options.env === undefined ? {} : { env: options.env },
     onTreeChanged: (appId) => {
       author.hostEvents.publish({ type: 'app:reload', appId })
     },
@@ -249,6 +250,7 @@ export async function createHost(options: {
             author,
             owner,
             registry,
+            mcp,
             policy: () => policy,
             writePolicy: async (raw) => {
               const written = await writeHostPolicy(options.runtimeRoot, policy, raw)
