@@ -7,9 +7,13 @@ updated: 2026-10-02
 
 This page owns released version notes. The product version is the `version` field of `@mohou/shell`. `@mohou/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
 
-## 1.0.10
+## 1.0.11
 
 The authoring surface adds and removes MCP servers (`mini_app_mcp_add`, `mini_app_mcp_remove`), and a saved server list takes effect without a host restart: the MCP client can replace the set it holds while it runs.
+
+A returned server row masks the credential values it recognizes, by name segment or by value shape, and keeps the label that says what the value is: `Bearer ab*****gh`, `ghp_12*****90`. An ordinary setting such as `NODE_ENV` comes back unchanged.
+
+## 1.0.10
 
 Agent settings install into DSH: the writing skill goes to `~/.dsh/skills`, and the authoring MCP connection is written into the active DSH profile's patch layer, which survives a profile rebuild.
 
