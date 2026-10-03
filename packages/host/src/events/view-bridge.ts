@@ -18,7 +18,8 @@ interface BridgeElement {
   nodeType: number
   tagName: string
   id: string
-  className: string
+  /** An SVG element exposes `SVGAnimatedString` here, not a string. */
+  className: string | { readonly baseVal: string }
   isConnected: boolean
   parentElement: BridgeElement | null
   firstElementChild: BridgeElement | null
@@ -273,7 +274,9 @@ export function installViewBridge(deps: ViewBridgeDeps): void {
   }
 
   function classNames(element: BridgeElement): string[] {
-    return element.className.trim().split(/\s+/).filter((name) => {
+    const raw = element.className
+    const text = typeof raw === 'string' ? raw : raw.baseVal
+    return text.trim().split(/\s+/).filter((name) => {
       return name.length > 0
     })
   }

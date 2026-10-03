@@ -287,6 +287,7 @@ describe('view bridge', () => {
     const dom = new JSDOM(`<!doctype html><html><body>
       <div id="root"><span>hi</span><span class="note">yo</span></div>
       <em style="display:none">gone</em>
+      <svg id="mark" class="icon star"><circle r="4"></circle></svg>
     </body></html>`)
     const posts: Array<{ url: string; body: string }> = []
     const win = dom.window
@@ -314,6 +315,8 @@ describe('view bridge', () => {
         code: 'const el = document.createElement("p"); el.textContent = "loose"; return el',
       })
       sendDom(win, { ...query, requestId: 'hidden', code: 'return mma.$("em")' })
+      // An SVG element answers `className` with SVGAnimatedString, not a string.
+      sendDom(win, { ...query, requestId: 'svg', code: 'return mma.$("#mark")' })
       await Promise.resolve()
       await Promise.resolve()
       const byId = Object.fromEntries(posts.map((item) => {
@@ -332,6 +335,8 @@ describe('view bridge', () => {
       expect(byId.loose?.result).not.toContain('x=')
       expect(byId.hidden?.result).toContain('display:none')
       expect(byId.hidden?.result).toContain('"gone"')
+      expect(byId.svg?.error).toBeUndefined()
+      expect(byId.svg?.result).toContain('svg#mark.icon.star')
     } finally {
       previous.window = saved.window
       previous.document = saved.document
