@@ -108,4 +108,15 @@ describe('loadBackend', () => {
     await writeFile(join(dir, 'main.api.ts'), 'import "left-pad"\nexport default {}\n')
     await expect(loadBackend(dir, 'silent')).rejects.toMatchObject({ code: 'backend-invalid' })
   })
+
+  it('reports the esbuild text for a name the module does not export', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'mma-backend-export-'))
+    await writeFile(join(dir, 'helper.ts'), 'export const other = 1\n')
+    await writeFile(join(dir, 'main.api.ts'), "import { missing } from './helper.ts'\nexport default missing\n")
+    const failure = await loadBackend(dir, 'silent').catch((error: unknown) => error)
+    expect(failure).toMatchObject({ code: 'backend-invalid' })
+    const message = failure instanceof Error ? failure.message : ''
+    expect(message).toContain('main.api.ts:1:')
+    expect(message).toContain('No matching export in "helper.ts" for import "missing"')
+  })
 })

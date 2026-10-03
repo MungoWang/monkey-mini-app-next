@@ -6,6 +6,7 @@ import { appEntries, ContractError, type AppApiMethod } from '@mohou/contract'
 import * as esbuild from 'esbuild'
 
 import { CompileError } from './codes.ts'
+import { buildFailureText } from './failure.ts'
 import { importDecision, sideOf } from './imports.ts'
 
 const require = createRequire(import.meta.url)
@@ -39,10 +40,8 @@ export async function loadBackend(appDir: string, logLevel?: 'silent'): Promise<
     if (code === 'import-forbidden' || code === 'import-escape') {
       throw new ContractError(code, stopped.message, { cause: error })
     }
-    if (stopped.code === 'backend-invalid') {
-      throw new CompileError('backend-invalid', stopped.message, { cause: error })
-    }
-    throw new CompileError('backend-invalid', 'backend failed to load', { cause: error })
+    const message = stopped.message || buildFailureText(error) || 'backend failed to load'
+    throw new CompileError('backend-invalid', message, { cause: error })
   }
   const output = result.outputFiles?.[0]?.text
   if (output === undefined) throw new CompileError('backend-invalid', 'backend produced no module')

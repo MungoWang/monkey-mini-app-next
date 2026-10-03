@@ -7,6 +7,7 @@ import * as esbuild from 'esbuild'
 
 import { platformBundled } from './allowlist.ts'
 import { CompileError } from './codes.ts'
+import { buildFailureText } from './failure.ts'
 import { importDecision, sideOf } from './imports.ts'
 
 const require = createRequire(import.meta.url)
@@ -42,7 +43,8 @@ export async function bundleUi(appDir: string, logLevel?: 'silent'): Promise<UiB
     if (code === 'import-forbidden' || code === 'import-escape') {
       throw new ContractError(code, stopped.message, { cause: error })
     }
-    throw new CompileError('ui-invalid', stopped.message || 'ui failed to bundle', { cause: error })
+    const message = stopped.message || buildFailureText(error) || 'ui failed to bundle'
+    throw new CompileError('ui-invalid', message, { cause: error })
   }
   const code = result.outputFiles?.[0]?.text
   if (code === undefined) throw new CompileError('ui-invalid', 'ui produced no bundle')

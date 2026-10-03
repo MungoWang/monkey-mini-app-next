@@ -45,6 +45,17 @@ describe('bundleUi', () => {
     await expect(bundleUi(dir, 'silent')).rejects.toMatchObject({ code: 'ui-invalid' })
   })
 
+  it('reports the esbuild text for a name the module does not export', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'mma-ui-export-'))
+    await writeFile(join(dir, 'shared.ts'), 'export const other = 1\n')
+    await writeFile(join(dir, 'ui.tsx'), "import { MCP_PRESETS } from './shared.ts'\nexport const value = MCP_PRESETS\n")
+    const failure = await bundleUi(dir, 'silent').catch((error: unknown) => error)
+    expect(failure).toMatchObject({ code: 'ui-invalid' })
+    const message = failure instanceof Error ? failure.message : ''
+    expect(message).toContain('ui.tsx:1:9')
+    expect(message).toContain('No matching export in "shared.ts" for import "MCP_PRESETS"')
+  })
+
   it('rejects an import of an assets file', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'mma-ui-asset-'))
     await writeFile(join(dir, 'ui.tsx'), "import mark from './assets/mark.svg'\nexport const src = mark\n")

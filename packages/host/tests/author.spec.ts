@@ -155,9 +155,33 @@ describe('author tools', () => {
       content: 'export default {}\n',
       commit: false,
     })
-    const failed = await author.invoke('mini_app_reload', { appId: 'com.example.app' }) as { ok: boolean }
+    const failed = await author.invoke('mini_app_reload', { appId: 'com.example.app' }) as { ok: boolean; errors: Array<{ message: string }> }
     expect(failed.ok).toBe(false)
+    expect(failed.errors[0]?.message).toContain('defineApp')
     expect(await author.invoke('mini_app_call', { appId: 'com.example.app', method: 'ping' })).toEqual({ ok: true, value: 'pong' })
+    author.dispose()
+  })
+
+  it('keeps the esbuild text in a reload failure', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'mma-author-text-'))
+    const author = createAuthorTools({
+      registry: createAppRegistry(root),
+      mcp: new McpClient({}),
+      ports: ports(),
+    })
+    await registerWithFiles(author, 'com.example.app', {
+      'manifest.json': manifest,
+      'main.api.ts': backend,
+      'shared/mcp.ts': 'export const OTHER = 1\n',
+      'ui.tsx': "import { MCP_PRESETS } from './shared/mcp.ts'\nexport default function App() { return <div>{MCP_PRESETS}</div> }\n",
+    })
+    const failed = await author.invoke('mini_app_reload', { appId: 'com.example.app' }) as {
+      ok: boolean
+      errors: Array<{ code: string; message: string }>
+    }
+    expect(failed.ok).toBe(false)
+    expect(failed.errors[0]?.code).toBe('ui-invalid')
+    expect(failed.errors[0]?.message).toContain('No matching export in "shared/mcp.ts" for import "MCP_PRESETS"')
     author.dispose()
   })
 
