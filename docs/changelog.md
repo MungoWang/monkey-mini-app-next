@@ -1,11 +1,19 @@
 ---
 status: locked
-updated: 2026-10-02
+updated: 2026-10-03
 ---
 
 # Changelog
 
 This page owns released version notes. The product version is the `version` field of `@mohou/shell`. `@mohou/host` carries the same string because the about block prints it. The window crate uses the same string. [development.md](development.md) owns the build command.
+
+## 1.0.12
+
+A failed backend or UI build keeps the text esbuild produced. `mini_app_reload` reports the file, line, and symbol that failed — `No matching export in "shared/mcp.ts" for import "MCP_PRESETS"` — in place of the sentence `ui failed to bundle`. A resolve rule Host names for itself still wins.
+
+A view query for an app the panel has not opened returns `not-open` at once. The panel reports that it holds no frame for the app, and that report clears the liveness marker a closed tab would otherwise leave behind. `stuck` therefore means a thread that really is blocked, and `runner-not-booted` means a frame that never started; the timeout hint names the step, open or reload the app in the panel.
+
+A rendered outline no longer stops at an inline SVG: the class list of an SVG element is read the way the DOM stores it.
 
 ## 1.0.11
 
