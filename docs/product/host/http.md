@@ -1,7 +1,7 @@
 ---
 status: shape-locked
 progress: settled
-updated: 2026-10-01
+updated: 2026-10-03
 ---
 
 # HTTP surface
@@ -68,6 +68,7 @@ Layer: [Host](README.md). Index: [features.md](../features.md).
 | `POST /api/app/:appId/errors` | iframe | always 204 |
 | `GET /api/app/:appId/errors` | authoring tool | retained errors |
 | `POST /api/app/:appId/alive` | iframe | always 204 |
+| `POST /api/app/:appId/absent` | panel | always 204; the app has no frame to take a query |
 | `POST /api/app/:appId/view/eval` | iframe | always 204 |
 
 - Failure: invalid JSON on `POST /api/call` is `{ ok: false, error: "invalid json" }`. A missing method is `{ ok: false, error: "missing appId or method" }`. Those two failures stay JSON even when the client asked for a stream. A method failure on a stream is `{ error }` and then the response ends. Host-unreachable is the client's error to show. Diagnostic posts never return an error status.

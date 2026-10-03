@@ -78,13 +78,18 @@ describe('mini_app_view_eval', () => {
     author.hostEvents.subscribe((event) => {
       seen.push(event)
     })
-    const booting = await author.invoke('mini_app_view_eval', { appId: 'com.example.app', timeoutMs: 20 }) as { view: string }
+    const booting = await author.invoke('mini_app_view_eval', { appId: 'com.example.app', timeoutMs: 20 }) as { view: string; hint?: string }
     expect(booting.view).toBe('runner-not-booted')
+    expect(booting.hint).toContain('open or reload')
     expect(seen[0]).toMatchObject({ type: 'app:eval', code: DEFAULT_VIEW_CODE, appId: 'com.example.app' })
     author.views.markAlive('com.example.app')
     const blocked = await author.invoke('mini_app_view_eval', { appId: 'com.example.app', timeoutMs: 20 }) as { view: string; hint?: string }
     expect(blocked.view).toBe('stuck')
     expect(blocked.hint).toContain('reload')
+    // A panel that reports no frame takes the stale alive flag with it.
+    author.views.absent('com.example.app')
+    const gone = await author.invoke('mini_app_view_eval', { appId: 'com.example.app', timeoutMs: 20 }) as { view: string }
+    expect(gone.view).toBe('runner-not-booted')
     const evalEvent = seen.find(event => event.type === 'app:eval')
     expect(author.views.answer('missing', 'com.example.app', { result: 1 })).toBe(false)
     if (evalEvent?.type === 'app:eval') {

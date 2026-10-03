@@ -30,6 +30,10 @@
       "types": "./src/http/layout.ts",
       "default": "./src/http/layout.ts"
     },
+    "./diagnostics": {
+      "types": "./src/tools/diagnostics.ts",
+      "default": "./src/tools/diagnostics.ts"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {

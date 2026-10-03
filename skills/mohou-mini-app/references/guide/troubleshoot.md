@@ -29,7 +29,7 @@ at render (`kind: render` in `mini_app_errors`). Fix the key against the contrac
 
 | `view` | Meaning | Next step |
 |---|---|---|
-| `not-open` | no browser is attached, or nothing is showing this app | `mini_app_open`, then retry |
+| `not-open` | no browser is attached, or the panel has no frame for this app | `mini_app_open`, then retry |
 | `runner-not-booted` | the iframe exists but its script never ran | `mini_app_errors` (a `module` error), then `mini_app_open` |
 | `pending` | your query is **still running** in a healthy view | raise `timeoutMs` (default 1500, max 8000) or return before awaiting. Nothing is broken and the user must not be told to reload — the host proved that by getting an answer to a trivial probe |
 | `stuck` | the script ran, then stopped answering, and even the trivial probe went unanswered — the thread really is blocked | a `while (true)` in your own `code` does this, and it wedges the panel page too: tell the user to reload the tab |

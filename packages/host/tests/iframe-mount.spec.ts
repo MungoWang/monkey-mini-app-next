@@ -52,6 +52,7 @@ describe('iframe mount', () => {
       diagnostics: {
         recordError: () => recorded.push('error'),
         markAlive: () => recorded.push('alive'),
+        markAbsent: () => recorded.push('absent'),
         answerView: () => true,
         maxBodyBytes: 32,
       },
@@ -79,9 +80,10 @@ describe('iframe mount', () => {
     expect((await app.request('/app/com.example.missing')).status).toBe(400)
     expect((await app.request('/api/app/not-an-id/errors', { method: 'POST', body: 'x' })).status).toBe(204)
     expect((await app.request('/api/app/com.example.app/alive', { method: 'POST', body: '{}' })).status).toBe(204)
+    expect((await app.request('/api/app/com.example.app/absent', { method: 'POST', body: '{}' })).status).toBe(204)
     expect((await app.request('/api/app/com.example.app/errors', { method: 'POST', body: '{"k":1}' })).status).toBe(204)
     expect((await app.request('/api/app/com.example.app/errors', { method: 'POST', body: 'too-big-to-keep-this-payload' })).status).toBe(204)
-    expect(recorded).toEqual(['alive', 'error'])
+    expect(recorded).toEqual(['alive', 'absent', 'error'])
     expect((await app.request('/api/app/com.example.bad/ui/ui.css')).status).toBe(400)
     // Compile failure stays a JS module so the iframe can show the message (not JSON 400).
     const entry = await app.request('/api/app/com.example.bad/ui/entry.js')

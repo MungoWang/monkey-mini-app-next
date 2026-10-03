@@ -15,6 +15,8 @@ describe('buildPanelPage', () => {
     }
     expect(page.html).toContain('.bg-background')
     expect(page.html).toContain('#mma-host{height:100%;min-height:0;overflow:hidden')
+    // A query with no frame settles at once, so the panel reports the absence rather than let Host time out.
+    expect(page.script).toContain('reportAbsent')
     expect(page.script.length).toBeGreaterThan(1000)
   }, 60_000)
 

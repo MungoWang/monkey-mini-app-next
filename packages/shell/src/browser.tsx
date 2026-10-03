@@ -1,3 +1,4 @@
+import { diagnosticUrl } from '@mohou/host/diagnostics'
 import { httpLayout, runnerPath } from '@mohou/host/http'
 import { PanelSurface, isPanelLocale, type PanelControls } from '@mohou/panel'
 import { createRoot } from 'react-dom/client'
@@ -37,15 +38,7 @@ if (root) {
   )
 }
 
-const frames = createFrameBus((appId, message) => {
-  let posted = false
-  for (const frame of document.querySelectorAll('iframe')) {
-    if (!(frame instanceof HTMLIFrameElement) || frame.title !== appId) continue
-    frame.contentWindow?.postMessage(message, window.location.origin)
-    posted = true
-  }
-  return posted
-})
+const frames = createFrameBus(postToAppFrame)
 
 const events = new EventSource(httpLayout.events)
 events.onmessage = (event) => {
@@ -77,15 +70,24 @@ events.onmessage = (event) => {
     controls?.showNotice(data.appId, data.table)
   }
   if ((data.type === 'app:reload' || data.type === 'app:eval') && typeof data.appId === 'string') {
-    postFrame(data.appId, data)
+    if (!postToAppFrame(data.appId, data) && data.type === 'app:eval') reportAbsent(data.appId)
   }
 }
 
-function postFrame(appId: string, message: unknown): void {
+/** The panel document holds one iframe per open app, titled with the app id. A missing frame is the panel's to report. */
+function postToAppFrame(appId: string, message: unknown): boolean {
+  let posted = false
   for (const frame of document.querySelectorAll('iframe')) {
     if (!(frame instanceof HTMLIFrameElement) || frame.title !== appId) continue
     frame.contentWindow?.postMessage(message, window.location.origin)
+    posted = true
   }
+  return posted
+}
+
+/** Tells Host the query has no frame to run in, so its caller gets `not-open` now and not a timeout sentence. */
+function reportAbsent(appId: string): void {
+  void fetch(diagnosticUrl(appId, 'absent'), { method: 'POST', body: '{}' }).catch(() => undefined)
 }
 
 function watchAppFrames(): void {

@@ -65,6 +65,7 @@ function mountDiagnostics(app: Hono<HostEnv>, ports: DiagnosticPorts): void {
   }
   app.post(`${diagnosticLayout.root}/:appId/${diagnosticLayout.errors}`, post(diagnosticLayout.errors))
   app.post(`${diagnosticLayout.root}/:appId/${diagnosticLayout.alive}`, post(diagnosticLayout.alive))
+  app.post(`${diagnosticLayout.root}/:appId/${diagnosticLayout.absent}`, post(diagnosticLayout.absent))
   app.post(`${diagnosticLayout.root}/:appId/${diagnosticLayout.viewEval}`, post(diagnosticLayout.viewEval))
 }
 

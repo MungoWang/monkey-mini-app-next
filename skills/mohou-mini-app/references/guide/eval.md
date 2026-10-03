@@ -93,7 +93,7 @@ div#root.panel.flex  x=16 y=64 w=380 h=812  (2 children)
 | `view` | Meaning | Next step |
 |---|---|---|
 | `live` + `ok: false` | your JavaScript failed — `error.kind` is `syntax` or `runtime`, with `line`/`source`/`caret` into **your** code | fix the query |
-| `not-open` | nothing is rendering this app | `mini_app_open`, then retry |
+| `not-open` | nothing is rendering this app — no panel is attached, or the panel has no frame for it | `mini_app_open`, then retry |
 | `runner-not-booted` | the iframe exists but its script never ran | the bundle or the page is broken → `mini_app_errors`, then `mini_app_open` |
 | `stuck` | the script ran and then stopped answering | the main thread is blocked (an app loop, or one of yours) — **no tool fixes this**: ask the user to reload the tab |
 

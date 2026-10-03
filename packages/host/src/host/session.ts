@@ -242,6 +242,9 @@ export async function createHost(options: {
             markAlive: (appId) => {
               author.views.markAlive(appId)
             },
+            markAbsent: (appId) => {
+              author.views.absent(appId)
+            },
             answerView: (requestId, appId, raw) => {
               return author.views.answer(requestId, appId, raw)
             },

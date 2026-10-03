@@ -62,7 +62,9 @@ export function createViewQueries(defaults?: { timeoutMs?: number; maxBytes?: nu
     forgetAlive(appId: string) {
       alive.delete(appId)
     },
+    /** A client that has no frame for this app. Pending queries settle `not-open`, and the stale flag goes. */
     absent(appId: string) {
+      alive.delete(appId)
       for (const [id, query] of [...pending]) {
         if (query.appId !== appId) continue
         pending.delete(id)
@@ -116,7 +118,7 @@ export function createViewQueries(defaults?: { timeoutMs?: number; maxBytes?: nu
             stoppedBy: 'timeout',
             hint: alive.has(input.appId)
               ? 'the main thread is blocked; reload the tab'
-              : 'the runner has not booted since reload',
+              : 'no live frame for this app; open or reload it in the panel',
             tookMs: budgetMs,
           }))
         }, budgetMs)

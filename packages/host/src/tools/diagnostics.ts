@@ -6,16 +6,19 @@ export const diagnosticLayout = {
   root: '/api/app',
   errors: 'errors',
   alive: 'alive',
+  absent: 'absent',
   viewEval: 'view/eval',
 } as const
 
-export function diagnosticUrl(appId: string, kind: 'errors' | 'alive' | 'viewEval'): string {
+export function diagnosticUrl(appId: string, kind: 'errors' | 'alive' | 'absent' | 'viewEval'): string {
   return `${diagnosticLayout.root}/${encodeURIComponent(appId)}/${diagnosticLayout[kind]}`
 }
 
 export interface DiagnosticPorts {
   recordError(appId: string, raw: unknown): void
   markAlive(appId: string): void
+  /** The panel has no frame for this app. */
+  markAbsent(appId: string): void
   answerView(requestId: string, appId: string, raw: unknown): boolean
   maxBodyBytes?: number
 }
@@ -30,6 +33,10 @@ export function acceptDiagnostic(ports: DiagnosticPorts, appId: string, kind: st
   }
   if (kind === diagnosticLayout.alive) {
     ports.markAlive(appId)
+    return
+  }
+  if (kind === diagnosticLayout.absent) {
+    ports.markAbsent(appId)
     return
   }
   if (kind === diagnosticLayout.errors) {

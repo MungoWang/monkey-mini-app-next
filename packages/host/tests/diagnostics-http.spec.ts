@@ -6,7 +6,7 @@ import { join } from 'node:path'
 
 import { McpClient } from '@mohou/mcp-client'
 import { createEchoProvider } from '@mohou/runtime-provider'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   emptyCredentials, createAppRegistry, createAuthorTools, diagnosticUrl, startAuthorHttp, type AuthorCallPorts } from '../src/index.ts'
@@ -29,6 +29,9 @@ describe('diagnostic posts', () => {
         markAlive: (appId) => {
           author.views.markAlive(appId)
         },
+        markAbsent: (appId) => {
+          author.views.absent(appId)
+        },
         answerView: (requestId, appId, raw) => author.views.answer(requestId, appId, raw),
         maxBodyBytes: 80,
       },
@@ -40,6 +43,9 @@ describe('diagnostic posts', () => {
       expect((await post(http.port, diagnosticUrl('com.example.app', 'errors'), '{"kind":"render","message":"boom"}')).status).toBe(204)
       expect((await post(http.port, diagnosticUrl('com.example.app', 'alive'), '{}')).status).toBe(204)
       expect(author.errors.read('com.example.app').errors.map(item => item.message)).toEqual(['boom'])
+      const absent = vi.spyOn(author.views, 'absent')
+      expect((await post(http.port, diagnosticUrl('com.example.app', 'absent'), '{}')).status).toBe(204)
+      expect(absent).toHaveBeenCalledWith('com.example.app')
     } finally {
       await http.close()
       author.dispose()
